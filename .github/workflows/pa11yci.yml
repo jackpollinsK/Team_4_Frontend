@@ -1,0 +1,29 @@
+name: Run pa11yci
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs: 
+  pa11yci:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 20.14.0
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install pa11y-ci
+      run: npm install -g pa11y-ci
+
+    - name: Run pa11y-ci
+      run: pa11y-ci
+  

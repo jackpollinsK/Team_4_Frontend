@@ -7,3 +7,7 @@
 
 ## Backend
 1. Follow the steps to run the backend for this application <a href="https://github.com/shaunganley/java-dropwizard-flyway-starter" target="_blank">here</a>
+
+## How to run the accessibillity tests (pa11y-ci) locally
+1. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
+2. run `pa11y-ci`in the terminal 
