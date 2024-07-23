@@ -6,7 +6,7 @@ COPY package*.json ./
 
 ARG API_URL
 
-ENV API_URL = ${API_URL}
+ENV API_URL ${API_URL}
 
 RUN npm install
 
