@@ -1,7 +1,7 @@
-export type JobRoleResponse ={
-    roleName: String;
-    location: String;
-    capability: String;
-    band: String;
+export type JobRole ={
+    roleName: string;
+    location: string;
+    capability: string;
+    band: string;
     closingDate: Date;
 }
