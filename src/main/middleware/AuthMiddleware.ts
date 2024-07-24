@@ -1,6 +1,5 @@
 import express from "express";
-import { jwtDecode } from "jwt-decode";
-import { JwtToken, UserRole } from "../models/JwtToken";
+import { UserRole } from "../models/JwtToken";
 import "core-js/stable/atob";
 
 export const allowRoles = (allowedRoles: UserRole[]) => {

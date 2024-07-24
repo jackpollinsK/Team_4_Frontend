@@ -2,7 +2,7 @@ import express from "express";
 import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
-import { getLoginForm, postLoginForm } from "./main/controllers/AuthControllers";
+import { getLoginForm, getLogoutForm, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 
 const app = express();
 
@@ -31,3 +31,5 @@ app.listen(3000, () => {
 
 app.get('/loginForm', getLoginForm);
 app.post('/loginForm', postLoginForm);
+app.get('/logoutForm', getLogoutForm);
+app.post('/logoutForm', postLogoutForm);
