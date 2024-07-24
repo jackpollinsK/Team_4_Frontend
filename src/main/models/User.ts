@@ -1,5 +1,6 @@
 export type User = {
     email: String,
-    password: String,
-    roleID: Number
+    salt: String,
+    hash: String,
+    roleId: Number
 }
