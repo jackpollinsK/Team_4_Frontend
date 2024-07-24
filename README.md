@@ -11,3 +11,12 @@
 ## How to run the accessibillity tests (pa11y-ci) locally
 1. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
 2. run `pa11y-ci`in the terminal 
+
+## How to make a new page
+1. Create a html file in the views/pages directory
+2. Add these nunjucks arround the div you are adding:
+    {% extends "siteTemplate.html" %}
+    {% block content %}
+        //Your Content here
+    {% endblock %}
+3. Test it to make sure it works
