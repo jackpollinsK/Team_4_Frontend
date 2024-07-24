@@ -7,8 +7,8 @@ import { getHomePage } from "./controllers/HomeController";
 
 const app = express();
 
-nunjucks.configure('views', {
-    autoescape: true,
+nunjucks.configure('views/', {
+    autoescape: false,
     express: app
 });
 
