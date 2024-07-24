@@ -31,16 +31,13 @@ describe('AuthController', function () {
     describe('postLoginForm', function () {
       it('should post login form and redirect to logout form view', async () => {
 
-        const jwtToken = "";
-        sinon.stub(AuthService, 'getTokenByloggingIn').resolves(jwtToken);
-
-        const loginRequest: LoginRequest = {
+        const loginRequestObj: LoginRequest = {
           email: "adam@random.com",
           password: "pass123"
         }
 
         const req = {
-          body: loginRequest
+          body: loginRequestObj
         };
         const res = { 
           render: sinon.spy(),
@@ -50,9 +47,8 @@ describe('AuthController', function () {
 
         await AuthController.postLoginForm(req as any, res as any);
 
-        //expect(res.render.calledOnce).to.be.true;
         expect(res.redirect.calledOnce).to.be.true;
-        //expect(res.redirect.calledWith('/logoutForm')).to.be.true;
+        expect(res.redirect.calledWith('/logoutForm')).to.be.true;
       });
   });
 

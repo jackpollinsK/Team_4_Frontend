@@ -1,3 +1,4 @@
+import { LoginRequest } from "../models/LoginRequest";
 import { getTokenByloggingIn} from "../services/AuthService";
 import express from "express";
 
@@ -7,9 +8,18 @@ export const getLoginForm = async (req: express.Request, res: express.Response):
 
 export const postLoginForm  = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
-        req.session.token = await getTokenByloggingIn(req.body);
+        const loginResquest4: LoginRequest = {
+            email: "adam@random.com",
+            password: "pass123"
+          }
+        console.log(loginResquest4);
+        const loginRequest: LoginRequest = req.body;
+        console.log(req.body);
+        req.session.token = await getTokenByloggingIn(loginRequest);
+        console.log(req.session.token);
         res.redirect('/logoutForm')
     } catch (e) {
+        console.log(e.message);
         res.locals.errormessage = e.message;
         res.render('loginForm.html', req.body);
     }
