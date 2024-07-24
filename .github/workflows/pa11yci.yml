@@ -24,6 +24,9 @@ jobs:
     - name: Install pa11y-ci
       run: npm install -g pa11y-ci
 
+    - name: Start the application
+      run: npm start & npx wait-on https://nczcbkjcc7.eu-west-1.awsapprunner.com/
+      
     - name: Run pa11y-ci
       run: pa11y-ci
   
