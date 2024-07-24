@@ -2,12 +2,12 @@
 
 :root {
     --bs-body-font-family: "Poppins", sans-serif;
-    --bs-primary-color: #1B2DB5;
-    --bs-primary-rgb: 27, 45, 181;
+    --bs-primary-color: #283583;
+    --bs-primary-rgb: 40, 53, 131;
     --bs-secondary-color: #EDF3FF;
     --bs-secondary-rgb: 237, 243, 255;
 }
 
 .card:hover {
     background-color: #EDF3FF;
-    }
+}
