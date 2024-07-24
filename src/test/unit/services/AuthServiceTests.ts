@@ -6,12 +6,6 @@ import { getTokenByloggingIn, URL } from '../../../main/services/AuthService';
 import { User } from "../../../main/models/User";
 import { LoginRequest } from "../../../main/models/LoginRequest";
 
-const user: User = {
-    email: "adam@random.com",
-    salt: "$2a$10$afbxPpBpCOVzLV2ftr4gGe",
-    hash: "$2a$10$afbxPpBpCOVzLV2ftr4gGeTn1YZo8yPwIbLY5byCdQ9hbuFPEfq8e",
-    roleId: 2
-}
 const loginResquest: LoginRequest = {
   email: "adam@random.com",
   password: "pass123"

@@ -11,8 +11,6 @@ export const getTokenByloggingIn = async (loginRequest: LoginRequest): Promise<s
 
         return response.data;
     } catch (e) {
-        console.log(URL);
-        console.log(e.response.status);
         if(e.response.status == 404){
             throw new Error("User does not exist.");
         }
