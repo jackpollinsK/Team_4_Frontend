@@ -1,0 +1,12 @@
+{% extends "siteTemplate.html" %}
+{% block content %}
+<h1>Login out</h1>
+
+{% if errormessage %}
+    <h3>{{ errormessage }}</h3>
+{% endif %}
+
+<form class="form" action="/logoutForm" method="post">
+    <button id="submit">Logout</button>
+</form>
+{% endblock %}
