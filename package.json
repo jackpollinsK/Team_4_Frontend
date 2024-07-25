@@ -1,4 +1,9 @@
 {
+  "name": "nodejs-express-axios-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+
   "scripts": {
     "start": "tsc && node dist/app.js",
     "dev": "nodemon src/app.ts",
@@ -23,11 +28,12 @@
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@types/axios": "^0.14.0",
+    "@types/body-parser": "^1.19.5",
     "@types/chai": "^4.3.14",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
-    "@types/mocha": "^10.0.7",
     "@types/node": "^20.14.12",
+    "@types/mocha": "^10.0.7",
     "@types/nunjucks": "^3.2.6",
     "@types/selenium-webdriver": "^4.1.22",
     "@types/sinon": "^17.0.3",
@@ -41,8 +47,8 @@
     "selenium-webdriver": "^4.9.0",
     "sinon": "^17.0.1",
     "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.4",
+    "tsconfig-paths": "^4.2.0",
     "typescript-eslint": "^7.6.0"
   }
 }
