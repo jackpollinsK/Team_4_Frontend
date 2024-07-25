@@ -1,24 +1,27 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
+<div class="m-5 text-center">
+    <div class="container">
 <h1>Login</h1>
 
 {% if errormessage %}
-    <h3>{{ errormessage }}</h3>
+<h3>{{ errormessage }}</h3>
 {% endif %}
-
 <form class="form" action="/loginForm" method="post">
     <h3><label for="email">
-        Email:
-    </label></h3>
+            Email:
+        </label></h3>
     <input id="email" name="email" value="{{email}}" type="text">
 
     <h3><label for="password">
-        Password:
-    </label></h3>
+            Password:
+        </label></h3>
     <input id="password" name="password" value="{{password}}" type="password">
 
     </br></br>
 
     <button id="submit">Submit</button>
 </form>
+</div>
+</div>
 {% endblock %}
