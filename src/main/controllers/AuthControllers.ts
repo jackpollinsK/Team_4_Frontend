@@ -13,7 +13,8 @@ export const postLoginForm  = async (req: express.Request, res: express.Response
         res.redirect('/logoutForm')
     } catch (e) {
         res.locals.errormessage = e.message;
-        res.render('pages/loginPage.html', {pageName: 'Login page'}, req.body);
+        res.locals.pageName = "Login Page"
+        res.render('pages/loginPage.html', req.body);
     }
 }
 
