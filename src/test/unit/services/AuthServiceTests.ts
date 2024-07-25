@@ -3,7 +3,6 @@ import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { describe, it } from "node:test";
 import { getTokenByloggingIn, URL } from '../../../main/services/AuthService';
-import { User } from "../../../main/models/User";
 import { LoginRequest } from "../../../main/models/LoginRequest";
 
 const loginResquest: LoginRequest = {
