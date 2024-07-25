@@ -6,6 +6,7 @@ import { Request, Response } from 'express';
 import { LoginRequest } from "../../../main/models/LoginRequest";
 import { JwtToken } from "../../../main/models/JwtToken";
 import "express-session";
+import session from "express-session";
 declare module "express-session" {
   interface SessionData {
     token: string;
@@ -36,13 +37,16 @@ describe('AuthController', function () {
           password: "pass123"
         }
 
+        sinon.stub(AuthService, 'getTokenByloggingIn').resolves('12345');
+
         const req = {
           body: loginRequestObj
         };
+
         const res = { 
           render: sinon.spy(),
           redirect: sinon.spy(),
-          locals: {}
+          session: {token: '12345'}
         };
 
         await AuthController.postLoginForm(req as any, res as any);
