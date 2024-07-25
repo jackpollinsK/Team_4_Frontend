@@ -23,9 +23,7 @@ export const getLogoutForm = async (req: express.Request, res: express.Response)
 
 export const postLogoutForm = async(req: express.Request, res: express.Response): Promise<void> => {
 
-    console.log('Before: '+ req.session.token)
     req.session.token = "";
-    console.log('After: '+req.session.token)
     res.redirect('/loginForm')
 
 }
