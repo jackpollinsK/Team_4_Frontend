@@ -40,13 +40,13 @@ describe('AuthController', function () {
         sinon.stub(AuthService, 'getTokenByloggingIn').resolves('12345');
 
         const req = {
-          body: loginRequestObj
+          body: loginRequestObj,
+          session: {token: '12345'}
         };
 
         const res = { 
           render: sinon.spy(),
-          redirect: sinon.spy(),
-          session: {token: '12345'}
+          redirect: sinon.spy()
         };
 
         await AuthController.postLoginForm(req as any, res as any);
