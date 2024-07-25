@@ -1,7 +1,5 @@
 {
     "urls": [
-        "http://localhost:3000//",
-        "http://localhost:3000//logoutForm",
-        "http://localhost:3000//loginForm"
+        
     ]
 }
