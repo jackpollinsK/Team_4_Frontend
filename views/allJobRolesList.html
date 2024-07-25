@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en">
     <head>
         <title>Job Roles List</title>
@@ -25,37 +24,4 @@
             {% endfor %}
         </table>
     </body>
-=======
-<html>
-
-<head>
-    <title>Job Roles List</title>
-</head>
-
-<body>
-    <h1>Job Roles</h1>
-    {% if errormessage %}
-    <div >{{ errormessage }}</div>
-    {% endif %}
-    <table>
-        <tr>
-            <th>Role Name</th>
-            <th>Location</th>
-            <th>Capability</th>
-            <th>Band</th>
-            <th>Closing Date</th>
-        </tr>
-        {% for jobRole in jobRoles %}
-        <tr>
-            <td>{{ jobRole.roleName }}</td>
-            <td>{{ jobRole.location }}</td>
-            <td>{{ jobRole.capability }}</td>
-            <td>{{ jobRole.band }}</td>
-            <td>{{ jobRole.closingDate | date }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-
->>>>>>> refs/remotes/origin/US001-view-job-roles
 </html>
