@@ -1,27 +1,29 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
-<div class="m-5 text-center">
-    <div class="container">
-<h1>Login</h1>
+    <div class="col-sm-3 text-center">
+        <div class="card border-0 m-5 shadow bg-body-secondary text-center">
+            <div class="card-body">
+                <h2 class="card-title">Login</h2>
+                {% if errormessage %}
+                <h3>{{ errormessage }}</h3>
+                {% endif %}
+                <form class="form mt-3" action="/loginForm" method="post">
+                    <h3><label for="email">
+                            Email:
+                        </label></h3>
+                    <input class="form-control" id="email" name="email" value="{{email}}" type="text">
 
-{% if errormessage %}
-<h3>{{ errormessage }}</h3>
-{% endif %}
-<form class="form" action="/loginForm" method="post">
-    <h3><label for="email">
-            Email:
-        </label></h3>
-    <input id="email" name="email" value="{{email}}" type="text">
+                    <h3><label for="password">
+                            Password:
+                        </label></h3>
+                    <input class="form-control" id="password" name="password" value="{{password}}" type="password">
 
-    <h3><label for="password">
-            Password:
-        </label></h3>
-    <input id="password" name="password" value="{{password}}" type="password">
+                    </br></br>
 
-    </br></br>
+                    <button class="btn bg-primary text-white" id="submit">Submit</button>
+                </form>
 
-    <button id="submit">Submit</button>
-</form>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

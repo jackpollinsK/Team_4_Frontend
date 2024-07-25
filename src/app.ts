@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 
 import { getLoginForm, getLogoutForm, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
-import { getHomePage } from "./controllers/HomeController";
+import { getHomePage } from "./main/controllers/HomeController";
 
 const app = express();
 

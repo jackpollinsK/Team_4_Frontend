@@ -3,7 +3,7 @@ import { getTokenByloggingIn} from "../services/AuthService";
 import express from "express";
 
 export const getLoginForm = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/loginPage.html');
+    res.render('pages/loginPage.html', {pageName: 'Login page'});
 }
 
 export const postLoginForm  = async (req: express.Request, res: express.Response): Promise<void> => {
@@ -21,12 +21,12 @@ export const postLoginForm  = async (req: express.Request, res: express.Response
     } catch (e) {
         console.log(e.message);
         res.locals.errormessage = e.message;
-        res.render('pages/loginPage.html', req.body);
+        res.render('pages/loginPage.html', {pageName: 'Login page'}, req.body);
     }
 }
 
 export const getLogoutForm = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/logoutPage.html');
+    res.render('pages/logoutPage.html', {pageName: 'Logout page'});
 }
 
 export const postLogoutForm = async(req: express.Request, res: express.Response): Promise<void> => {
