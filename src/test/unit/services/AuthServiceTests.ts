@@ -32,7 +32,7 @@ describe('AuthService', function () {
         try {
           await getTokenByloggingIn(loginResquest2);
         } catch (e) {
-          expect(e.message).to.equal('User does not exist.');
+          expect(e.message).to.equal('user does not exist.');
           return;
         }
     })
