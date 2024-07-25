@@ -1,7 +1,9 @@
 
 import axios, { AxiosResponse } from "axios";
 import { JobRoleResponse } from "../models/JobRoleResponse";
+axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
 
+export const URL: string = "/api/JobRoles";
 export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
     try {
         //Change url to AWS
@@ -9,13 +11,6 @@ export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
 
         return response.data;        
     } catch (e) {
-        console.log(e);
-        if (e.response?.status === 500){
-            throw new Error('Server Error');
-        }
-        if (e.response?.status === 400){
-            throw new Error('No data found');
-        }
-        throw new Error(e.message);
+        throw new Error('Failed to get JobRoles')
     }
 }
