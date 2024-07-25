@@ -2,11 +2,9 @@ import * as AuthController from "../../../main/controllers/AuthControllers";
 import * as AuthService from "../../../main/services/AuthService";
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { Request, Response } from 'express';
+import express from "express";
 import { LoginRequest } from "../../../main/models/LoginRequest";
-import { JwtToken } from "../../../main/models/JwtToken";
 import "express-session";
-import session from "express-session";
 declare module "express-session" {
   interface SessionData {
     token: string;
@@ -23,7 +21,7 @@ describe('AuthController', function () {
       const req = {};
       const res = { render: sinon.spy() };
 
-      await AuthController.getLoginForm(req as any, res as any);
+      await AuthController.getLoginForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
     });
@@ -49,7 +47,7 @@ describe('AuthController', function () {
         redirect: sinon.spy()
       };
 
-      await AuthController.postLoginForm(req as any, res as any);
+      await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/logoutForm')).to.be.true;
@@ -75,7 +73,7 @@ describe('AuthController', function () {
         locals: { errormessage: '' }
       };
 
-      await AuthController.postLoginForm(req as any, res as any);
+      await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
       expect(res.locals.errormessage).to.equal(errorMessage);
@@ -101,7 +99,7 @@ describe('AuthController', function () {
         locals: { errormessage: '' }
       };
 
-      await AuthController.postLoginForm(req as any, res as any);
+      await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
       expect(res.locals.errormessage).to.equal(errorMessage);
@@ -113,7 +111,7 @@ describe('AuthController', function () {
       const req = {};
       const res = { render: sinon.spy() };
 
-      await AuthController.getLogoutForm(req as any, res as any);
+      await AuthController.getLogoutForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
     });
@@ -131,7 +129,7 @@ describe('AuthController', function () {
         redirect: sinon.spy()
       };
 
-      await AuthController.postLogoutForm(req as any, res as any);
+      await AuthController.postLogoutForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/loginForm')).to.be.true;
