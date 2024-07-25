@@ -10,6 +10,12 @@ export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
         return response.data;        
     } catch (e) {
         console.log(e);
-        throw new Error('Failed to get JobRoles')
+        if (e.response?.status === 500){
+            throw new Error('Server Error');
+        }
+        if (e.response?.status === 400){
+            throw new Error('No data found');
+        }
+        throw new Error(e.message);
     }
 }
