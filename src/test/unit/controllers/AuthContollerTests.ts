@@ -82,7 +82,7 @@ describe('AuthController', function () {
     });
 
     it('should render loginForm view with  User is not valid: Invalid Credentials. when said error is thrown', async () => {
-      const errorMessage: string = 'User does not exist.';
+      const errorMessage: string = 'User is not valid: Invalid Credentials.';
       sinon.stub(AuthService, 'getTokenByloggingIn').resolves('12345').rejects(new Error(errorMessage));
 
       const invalidPasswordLoginRequestObj: LoginRequest = {
