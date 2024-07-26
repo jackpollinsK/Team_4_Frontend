@@ -1,9 +1,8 @@
 name: Run pa11yci
 
 on:
-  pull_request:
-    branches:
-      - main
+  schedule:
+    - cron: '0 0 * * *'  
 
 jobs: 
   pa11yci:
@@ -26,4 +25,3 @@ jobs:
 
     - name: Run pa11y-ci
       run: pa11y-ci
-  
