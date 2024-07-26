@@ -7,7 +7,7 @@ export const URL: string = "/api/JobRoles";
 export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
     try {
         //Change url to AWS
-        const response: AxiosResponse = await axios.get("http://localhost:8080/api/JobRoles")
+        const response: AxiosResponse = await axios.get(URL)
 
         return response.data;        
     } catch (e) {
