@@ -9,7 +9,7 @@
 1. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
 2. Run `pa11y-ci`in the terminal
 
-## How to run integration and unit tests locally
+## How to run unit tests locally
 1. Make sure that your have ran `npm install` to install dependencies
 2. Run `npm test` in the terminal
 
@@ -23,4 +23,6 @@
 3. Test it to make sure it works
 
 ## Backend
-1. Follow the steps to run the backend for this application <a href="https://github.com/shaunganley/java-dropwizard-flyway-starter" target="_blank">here</a>
+1. Follow the steps to run the backend for this application [here](https://github.com/shaunganley/java-dropwizard-flyway-starter")
+2. To test the backend you can check out the API [here](https://ivpztrmt3p.eu-west-1.awsapprunner.com/swagger)
+
