@@ -20,9 +20,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 20.x
-
-    - name: Install pa11y-ci
-      run: npm install -g pa11y-ci
     
     - name: Install dependencies
       run: npm install
