@@ -24,5 +24,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Install pa11y-ci
+      run: npm install -g pa11y-ci
+
     - name: Run pa11y-ci
-      run: pa11y-ci
+      run: pa11y-ci https://nczcbkjcc7.eu-west-1.awsapprunner.com/
