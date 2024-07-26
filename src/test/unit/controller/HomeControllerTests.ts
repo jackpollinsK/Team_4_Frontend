@@ -1,4 +1,4 @@
-import * as HomeController from "../../../controllers/HomeController";
+import * as HomeController from "../../../main/controllers/HomeController";
 import { expect } from 'chai';
 import sinon from 'sinon';
 import express from "express";

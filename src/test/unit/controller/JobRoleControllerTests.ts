@@ -1,6 +1,6 @@
-import * as JobRoleController from "../../../controllers/JobRoleController";
-import * as JobRoleService from "../../../../src/services/JobRoleService";
-import { JobRoleResponse } from "../../../models/JobRoleResponse";
+import * as JobRoleController from "../../../main/controllers/JobRoleController";
+import * as JobRoleService from "../../../main/services/JobRoleService";
+import { JobRoleResponse } from "../../../main/models/JobRoleResponse";
 import { expect } from 'chai';
 import sinon from 'sinon';
 

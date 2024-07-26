@@ -1,5 +1,7 @@
 {
     "urls": [
-
+        "https://nczcbkjcc7.eu-west-1.awsapprunner.com/",
+        "https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm",
+        "https://nczcbkjcc7.eu-west-1.awsapprunner.com/logoutForm"
     ]
 }
