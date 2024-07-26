@@ -39,12 +39,12 @@ describe('AuthController', function () {
 
       const req = {
         body: loginRequestObj,
-        session: { token: '12345' }
+        session: {token: ''}
       };
 
       const res = {
         render: sinon.spy(),
-        redirect: sinon.spy()
+        redirect: sinon.spy(),
       };
 
       await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
@@ -64,7 +64,7 @@ describe('AuthController', function () {
 
       const req = {
         body: invalidEmailLoginRequestObj,
-        session: { token: '12345' }
+        session: { token: '' }
       };
 
       const res = {
@@ -105,6 +105,7 @@ describe('AuthController', function () {
 
       await AuthController.postLogoutForm(req as express.Request, res as unknown as express.Response);
 
+      expect(req.session.token).to.equal('');
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/')).to.be.true;
     });
