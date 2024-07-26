@@ -16,11 +16,11 @@ describe('AuthService', function () {
 
     describe('getToken', function () {
       it('should get Jwt token', async () => {
-        mock.onPost(URL).reply(200);
+        mock.onPost(URL).reply(200, 123);
 
         const result = await getTokenByloggingIn(loginResquest);
 
-        expect(result).toString.length > 100;
+        expect(result).to.equal(123);
       })
 
       it('should throw exception when 404 error returned from axios', async () => {

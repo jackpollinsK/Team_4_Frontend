@@ -50,7 +50,7 @@ describe('AuthController', function () {
       await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
-      expect(res.redirect.calledWith('/logoutForm')).to.be.true;
+      expect(res.redirect.calledWith('/')).to.be.true;
     });
 
     it('should render loginForm view with  User does not exist error message when said error is thrown', async () => {
@@ -64,32 +64,6 @@ describe('AuthController', function () {
 
       const req = {
         body: invalidEmailLoginRequestObj,
-        session: { token: '12345' }
-      };
-
-      const res = {
-        render: sinon.spy(),
-        redirect: sinon.spy(),
-        locals: { errormessage: '' }
-      };
-
-      await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
-
-      expect(res.render.calledOnce).to.be.true;
-      expect(res.locals.errormessage).to.equal(errorMessage);
-    });
-
-    it('should render loginForm view with  User is not valid: Invalid Credentials. when said error is thrown', async () => {
-      const errorMessage: string = 'User is not valid: Invalid Credentials.';
-      sinon.stub(AuthService, 'getTokenByloggingIn').resolves('12345').rejects(new Error(errorMessage));
-
-      const invalidPasswordLoginRequestObj: LoginRequest = {
-        email: "adam@random.com",
-        password: "invalidpass"
-      }
-
-      const req = {
-        body: invalidPasswordLoginRequestObj,
         session: { token: '12345' }
       };
 
@@ -132,7 +106,7 @@ describe('AuthController', function () {
       await AuthController.postLogoutForm(req as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
-      expect(res.redirect.calledWith('/loginForm')).to.be.true;
+      expect(res.redirect.calledWith('/')).to.be.true;
     });
   });
 

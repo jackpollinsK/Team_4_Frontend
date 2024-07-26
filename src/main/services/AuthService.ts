@@ -7,7 +7,7 @@ export const URL: string = "/api/auth/login";
 
 export const getTokenByloggingIn = async (loginRequest: LoginRequest): Promise<string> => {
     try{
-        const response: AxiosResponse = await axios.post("http://localhost:8080/api/auth/login", loginRequest);
+        const response: AxiosResponse = await axios.post(URL, loginRequest);
 
         return response.data;
     } catch (e) {

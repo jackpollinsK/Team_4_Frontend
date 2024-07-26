@@ -10,7 +10,7 @@ export const postLoginForm  = async (req: express.Request, res: express.Response
     try {
         const loginRequest: LoginRequest = req.body;
         req.session.token = await getTokenByloggingIn(loginRequest);
-        res.redirect('/logoutForm')
+        res.redirect('/')
     } catch (e) {
         res.locals.errormessage = e.message;
         res.locals.pageName = "Login Page"
@@ -25,6 +25,6 @@ export const getLogoutForm = async (req: express.Request, res: express.Response)
 export const postLogoutForm = async(req: express.Request, res: express.Response): Promise<void> => {
 
     req.session.token = "";
-    res.redirect('/loginForm')
+    res.redirect('/')
 
 }
