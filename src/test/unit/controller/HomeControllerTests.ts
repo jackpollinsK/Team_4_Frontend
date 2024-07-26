@@ -9,7 +9,7 @@ describe('HomeController',function() {
     });
 
     describe('getHomeForm', function () {
-        it('should render login form view', async () => {
+        it('should render home form view', async () => {
           const req = {};
           const res = { render: sinon.spy() };
     
