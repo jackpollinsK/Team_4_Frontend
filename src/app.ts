@@ -3,10 +3,11 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import { getAllJobRoles } from "./main/controllers/JobRoleController";
+import { getAllJobRoles, getJobRole } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
 import { getLoginForm, getLogoutForm, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 import { getHomePage } from "./main/controllers/HomeController";
+import { getJobRoleById } from "./main/services/JobRoleService";
 
 const app = express();
 
@@ -38,7 +39,9 @@ declare module "express-session" {
 }
 
 app.get('/', getHomePage);
+
 app.get('/job-roles', getAllJobRoles);
+app.get('job-roles-:id', getJobRole)
 
 
 app.get('/loginForm', getLoginForm);

@@ -14,3 +14,13 @@ export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
         throw new Error('Failed to get JobRoles')
     }
 }
+
+export const getJobRoleById = async (id: String): Promise<JobRoleResponse> => {
+    try {
+        const response: AxiosResponse = await axios.get(URL + "/" + id)
+
+        return response.data;        
+    } catch (e) {
+        throw new Error('Failed to get JobRole')
+    }
+}

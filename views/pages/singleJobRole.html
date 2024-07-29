@@ -1,0 +1,20 @@
+{% extends "siteTemplate.html" %}
+{% block content %}
+<div class="container m-5 text-center">
+    <h1>{{jobRole.roleName}}</h1>
+    <table>
+        <tr>
+            <th>Location</th>
+            <th>Capability</th>
+            <th>Band</th>
+            <th>Closing Date</th>
+        </tr>
+        <tr>
+            <td>{{ jobRole.location }}</td>
+            <td>{{ jobRole.capability }}</td>
+            <td>{{ jobRole.band }}</td>
+            <td>{{ jobRole.closingDate | date }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
