@@ -8,9 +8,7 @@
             <div class="right"></div>
             {% if not token.length %}
                 <a class="nav-item nav-link" href="/loginForm">Login</span></a>
-            {% endif %}
-            
-            {% if token.length %}
+            {% elif token.length %}
                 <a class="nav-item nav-link" href="/logoutForm">Logout</span></a>
             {% endif %}
         </div>
