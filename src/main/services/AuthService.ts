@@ -15,7 +15,7 @@ export const getTokenByloggingIn = async (loginRequest: LoginRequest): Promise<s
             throw new Error("Invalid Email - Try Again.");
         }
         else if(e.response.status == 400){
-            throw new Error("Incorrect Password - Try Again.");
+            throw new Error("Invalid Credentials.");
         }
         else if(e.response.status == 500){
             throw new Error("Internal Server Error.");

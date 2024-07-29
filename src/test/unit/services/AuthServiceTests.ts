@@ -46,7 +46,7 @@ describe('AuthService', function () {
       try {
         await getTokenByloggingIn(loginResquest3);
       } catch (e) {
-        expect(e.message).to.equal('Incorrect Password - Try Again.');
+        expect(e.message).to.equal('Invalid Credentials.');
         return;
       }
   })
