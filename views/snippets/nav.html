@@ -6,11 +6,11 @@
             <a class="nav-item nav-link" href="/job-roles">Jobs</span></a>
             <a class="nav-item nav-link" href="/">About Us</span></a>
             <div class="right"></div>
-            {% if not token %}
+            {% if not token.length %}
                 <a class="nav-item nav-link" href="/loginForm">Login</span></a>
             {% endif %}
             
-            {% if token %}
+            {% if token.length %}
                 <a class="nav-item nav-link" href="/logoutForm">Logout</span></a>
             {% endif %}
         </div>
