@@ -5,7 +5,7 @@ import session from "express-session";
 
 import { getAllJobRoles } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
-import { getLoginForm, getLogoutForm, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
+import { getLoginForm, getLogoutForm, getNotLoggedIn, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 import { getHomePage } from "./main/controllers/HomeController";
 import { allowRoles } from "./main/middleware/AuthMiddleware";
 import { UserRole } from "./main/models/JwtToken";
@@ -49,3 +49,4 @@ app.post('/loginForm', postLoginForm);
 app.get('/logoutForm', getLogoutForm);
 app.post('/logoutForm', postLogoutForm);
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
+app.get('/notLoggedOn', getNotLoggedIn);
