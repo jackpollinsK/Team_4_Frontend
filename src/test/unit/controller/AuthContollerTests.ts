@@ -136,6 +136,18 @@ describe('AuthController', function () {
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/')).to.be.true;
     });
+
+    describe('getNotLoggedIn', function () {
+      it('should render notLoggedIn form view', async () => {
+        const req = {};
+        const res = { render: sinon.spy() };
+  
+        await AuthController.getNotLoggedIn(req as express.Request, res as unknown as express.Response);
+  
+        expect(res.render.calledOnce).to.be.true;
+      });
+    });
+
   });
 
 });
