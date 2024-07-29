@@ -12,10 +12,10 @@ export const getTokenByloggingIn = async (loginRequest: LoginRequest): Promise<s
         return response.data;
     } catch (e) {
         if(e.response.status == 404){
-            throw new Error("user does not exist.");
+            throw new Error("Invalid Email - Try Again.");
         }
         else if(e.response.status == 400){
-            throw new Error("user is not valid: Invalid Credentials.");
+            throw new Error("Incorrect Password - Try Again.");
         }
         else if(e.response.status == 500){
             throw new Error("Internal Server Error.");
