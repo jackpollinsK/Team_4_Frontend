@@ -3,7 +3,7 @@ import { getJobRoles } from "../services/JobRoleService"
 
 export const getAllJobRoles = async (req: Express.Request, res: Express.Response): Promise<void> => {
     try{
-        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(), pageName: "Job Roles", token: req.session.token});
+        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(), pageName: "Job Roles", token: req.session.cookie});
     }catch (e) {
         res.locals.errormessage = e.message;
         res.locals.pageName = "Job Roles";
