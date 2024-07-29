@@ -8,12 +8,15 @@
     --bs-secondary-rgb: 237, 243, 255;
 }
 
+.nav-link:hover{
+    text-decoration: underline;
+}
+
 .card:hover {
     background-color: #EDF3FF;
 }
 
 .footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
