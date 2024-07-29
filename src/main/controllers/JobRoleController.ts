@@ -1,7 +1,7 @@
-import Express from "express";
+import express from "express";
 import { getJobRoles } from "../services/JobRoleService"
 
-export const getAllJobRoles = async (req: Express.Request, res: Express.Response): Promise<void> => {
+export const getAllJobRoles = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
         res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles"});
     }catch (e) {
