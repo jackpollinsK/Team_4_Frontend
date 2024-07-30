@@ -47,7 +47,7 @@ describe('JobRoleController', function () {
         const errorMessage: string = 'Failed to get JobRoles';
 
         const req = {
-            session: { token: '12345' } //token = logged in
+            session: { token: '12345' }
         };
 
         const res = {
