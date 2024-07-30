@@ -7,7 +7,6 @@ import { getAllJobRoles, getJobRole } from "./main/controllers/JobRoleController
 import { dateFilter } from "./main/filters/DateFilter";
 import { getLoginForm, getLogoutForm, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 import { getHomePage } from "./main/controllers/HomeController";
-import { getJobRoleById } from "./main/services/JobRoleService";
 
 const app = express();
 
