@@ -6,7 +6,7 @@ import "core-js/stable/atob";
 export const allowRoles = (allowedRoles: UserRole[]) => {
     return (req: express.Request, res: express.Response, next: express.NextFunction) => {
         if(!req.session.token){
-            res.redirect("/notLoggedOn")
+            res.redirect("/notLoggedIn")
             return res.status(401);
         }
 

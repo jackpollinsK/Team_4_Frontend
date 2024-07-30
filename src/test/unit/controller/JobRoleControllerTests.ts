@@ -82,13 +82,13 @@ describe('JobRoleController', function () {
         
         let returnedStatus = 0;
         if(!req.session.token){ //From AuthMiddleware
-            res.redirect("/notLoggedOn")
+            res.redirect("/notLoggedIn")
             returnedStatus = 401;
         }
 
         expect(req.session.token).to.equal('');
         expect(returnedStatus).to.equal(401);
         expect(res.redirect.calledOnce).to.be.true;
-        expect(res.redirect.calledWith('/notLoggedOn')).to.be.true;
+        expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
     });
 })
