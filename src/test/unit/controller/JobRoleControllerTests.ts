@@ -73,7 +73,7 @@ describe('getJobRole', function () {
         const req = { params: {id: 1}};
         const res = { render: sinon.spy() };
 
-        await JobRoleController.getJobRole(req as any, res as any);
+        await JobRoleController.getJobRole(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
 
         expect(res.render.calledOnce).to.be.true;
         expect(res.render.calledWith('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job})).to.be.true;

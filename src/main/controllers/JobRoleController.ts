@@ -1,6 +1,5 @@
 import Express from "express";
 import { getJobRoleById, getJobRoles } from "../services/JobRoleService"
-import { JobRoleResponse } from "../models/JobRoleResponse";
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 
 export const getAllJobRoles = async (req: Express.Request, res: Express.Response): Promise<void> => {
