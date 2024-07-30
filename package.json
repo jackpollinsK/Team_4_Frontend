@@ -7,8 +7,15 @@
     "start": "tsc && node dist/app.js",
     "dev": "nodemon src/app.ts",
     "linter": "npx eslint .",
-    "test": "mocha --require ts-node/register src/test/unit/**/*.ts",
+    "test": "nyc mocha --require ts-node/register src/test/unit/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts"
+  },
+  "nyc": {
+    "include": ["src/**/*.ts"],
+    "exclude": ["src/test/**/*.ts"],
+    "reporter": ["html", "text-summary"],
+    "all": true,
+    "require": ["ts-node/register"]
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",
@@ -46,6 +53,7 @@
     "eslint": "^8.57.0",
     "mocha": "^10.7.0",
     "nodemon": "^3.1.0",
+    "nyc": "^17.0.0",
     "sass": "^1.75.0",
     "selenium-webdriver": "^4.9.0",
     "sinon": "^17.0.1",
