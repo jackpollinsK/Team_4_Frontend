@@ -54,3 +54,7 @@
 .nav-Link:hover{
     text-decoration: underline;
 }
+
+.errorMessage {
+    color:red
+}

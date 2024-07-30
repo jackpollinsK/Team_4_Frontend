@@ -1,6 +1,7 @@
 name: Run pa11yci
 
 on:
+    
   schedule:
     - cron: '0 0 * * *'  
 
@@ -16,7 +17,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 20.14.0
-
+    
     - name: Install dependencies
       run: npm install
 

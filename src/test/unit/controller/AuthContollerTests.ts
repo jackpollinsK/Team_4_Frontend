@@ -49,17 +49,44 @@ describe('AuthController', function () {
 
       await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
 
+      expect(req.session.token).to.equal('12345');
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/')).to.be.true;
     });
 
-    it('should render loginForm view with  User does not exist error message when said error is thrown', async () => {
-      const errorMessage: string = 'User does not exist.';
-      sinon.stub(AuthService, 'getTokenByloggingIn').resolves('12345').rejects(new Error(errorMessage));
+    it('should render loginForm view with, user does not exist, error message when said error is thrown', async () => {
+      const errorMessage: string = 'user does not exist.';
+      sinon.stub(AuthService, 'getTokenByloggingIn').rejects(new Error(errorMessage));
 
       const invalidEmailLoginRequestObj: LoginRequest = {
         email: "invalid@random.com",
         password: "pass123"
+      }
+
+      const req = {
+        body: invalidEmailLoginRequestObj,
+        session: { token: '' }
+      };
+
+      const res = {
+        render: sinon.spy(),
+        redirect: sinon.spy(),
+        locals: { errormessage: '' }
+      };
+
+      await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.locals.errormessage).to.equal(errorMessage);
+    });
+
+    it('should render loginForm view with, user is not valid: Invalid Credentials., error message when said error is thrown', async () => {
+      const errorMessage: string = 'user is not valid: Invalid Credentials.';
+      sinon.stub(AuthService, 'getTokenByloggingIn').rejects(new Error(errorMessage));
+
+      const invalidEmailLoginRequestObj: LoginRequest = {
+        email: "adam@random.com",
+        password: "invalidPass"
       }
 
       const req = {
