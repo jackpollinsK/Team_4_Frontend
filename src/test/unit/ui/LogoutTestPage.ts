@@ -1,29 +1,20 @@
-import { By, WebDriver } from 'selenium-webdriver';
+import { ChromeDriver } from './ChromeDriver';
+import { WebDriver } from 'selenium-webdriver';
 
-export class LogoutTestPage {
-    private driver: WebDriver;
-    
-    // Locators
-    private logoutButton: By = By.id('submit');
-    private logoutText: By = By.xpath("/html/body/footer/div[1]/div/div[1]/h5");
+export class LogoutTestPage extends ChromeDriver {
 
     constructor(driver: WebDriver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    // Actions
-    async open(url: string): Promise<void> {
-        await this.driver.get(url);
+    async open(theURL:string): Promise<void> {
+        await this.go_to_url(theURL);
     }
-
 
     async clickLogout(): Promise<void> {
-        const element = await this.driver.findElement(this.logoutButton);
-        await element.click();
+        const element = 'submit';
+        await this.clickById(element);
     }
 
-    async getLogoutText(): Promise<string> {
-        const element = await this.driver.findElement(this.logoutText);
-        return await element.getText();
-    }
 }
+

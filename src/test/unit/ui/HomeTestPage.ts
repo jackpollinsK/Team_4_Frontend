@@ -1,22 +1,19 @@
-import { By, WebDriver } from 'selenium-webdriver';
+import { WebDriver } from 'selenium-webdriver';
+import { ChromeDriver } from './ChromeDriver';
 
-export class HomeTestPage {
-    private driver: WebDriver;
-    
-    // Locators
-    private titleMessage: By = By.xpath("/html/body/div[1]/div/h2");
+
+export class HomeTestPage extends ChromeDriver {
 
     constructor(driver: WebDriver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    // Actions
-    async open(url: string): Promise<void> {
-        await this.driver.get(url);
+    async open(theURL:string): Promise<void> {
+        await this.go_to_url(theURL);
     }
 
     async getTitleText(): Promise<string> {
-        const element = await this.driver.findElement(this.titleMessage);
-        return await element.getText();
+        const element = '/html/body/div[1]/div/h2'; //Placeholder, waiting for hotfix for better solution
+        return await this.getTextByXpath(element);
     }
 }

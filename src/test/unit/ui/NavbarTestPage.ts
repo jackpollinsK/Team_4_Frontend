@@ -1,42 +1,30 @@
-import { By, WebDriver } from 'selenium-webdriver';
+import { ChromeDriver } from './ChromeDriver';
+import { WebDriver } from 'selenium-webdriver';
 
-export class NavbarTestPage {
-    private driver: WebDriver;
-    
-    // Locators
-    private homeButton: By = By.linkText("Home");
-    private jobsButton: By = By.linkText("Jobs");
-    private aboutUsButton: By = By.linkText("About Us");
-    private loginButton: By = By.linkText("Login");
-    private logoutButton: By = By.linkText("Logout");
+export class NavbarTestPage extends ChromeDriver {
 
     constructor(driver: WebDriver) {
-        this.driver = driver;
-    }
-
-    // Actions
-    async open(url: string): Promise<void> {
-        await this.driver.get(url);
+        super(driver);
     }
 
     async clickHomeButton(): Promise<void> {
-        const element = await this.driver.findElement(this.homeButton);
-        await element.click();
+        const element = 'Home';
+        await this.clickByLinkText(element);
     }
     async clickJobsButton(): Promise<void> {
-        const element = await this.driver.findElement(this.jobsButton);
-        await element.click();
+        const element = 'Jobs';
+        await this.clickByLinkText(element);
     }
     async clickAboutUsButton(): Promise<void> {
-        const element = await this.driver.findElement(this.aboutUsButton);
-        await element.click();
+        const element = 'About Us';
+        await this.clickByLinkText(element);
     }
     async clickoginButton(): Promise<void> {
-        const element = await this.driver.findElement(this.loginButton);
-        await element.click();
+        const element = 'Login';
+        await this.clickByLinkText(element);
     }
     async clickLogoutButton(): Promise<void> {
-        const element = await this.driver.findElement(this.logoutButton);
-        await element.click();
+        const element = 'Logout';
+        await this.clickByLinkText(element);
     }
 }
