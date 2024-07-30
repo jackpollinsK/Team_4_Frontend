@@ -41,7 +41,7 @@ declare module "express-session" {
 app.get('/', getHomePage);
 
 app.get('/job-roles', getAllJobRoles);
-app.get('job-roles-:id', getJobRole)
+app.get('/job-roles-:id', getJobRole)
 
 
 app.get('/loginForm', getLoginForm);

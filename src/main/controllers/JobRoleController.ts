@@ -1,6 +1,7 @@
 import Express from "express";
 import { getJobRoleById, getJobRoles } from "../services/JobRoleService"
 import { JobRoleResponse } from "../models/JobRoleResponse";
+import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 
 export const getAllJobRoles = async (req: Express.Request, res: Express.Response): Promise<void> => {
     try{
@@ -14,11 +15,11 @@ export const getAllJobRoles = async (req: Express.Request, res: Express.Response
 
 export const getJobRole = async (req: Express.Request, res: Express.Response): Promise<void> => {
     try{
-        const jobRole: JobRoleResponse = await getJobRoleById(req.params.id);
-        res.render('pages/allJobRolesList.html', {jobRole});
+        const job : JobRoleSingleResponse = await getJobRoleById(req.params.id)
+        res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job});
     }catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "Job Roles";
-        res.render("pages/allJobRolesList.html", res);
+        res.locals.pageName = "An Error Ocured";
+        res.render("pages/errorPage.html", res);
     }
 }

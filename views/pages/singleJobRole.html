@@ -1,20 +1,15 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
-<div class="container m-5 text-center">
+<div class="m-5 text-center">
+    <div class="bg-body-secondary card">
     <h1>{{jobRole.roleName}}</h1>
-    <table>
-        <tr>
-            <th>Location</th>
-            <th>Capability</th>
-            <th>Band</th>
-            <th>Closing Date</th>
-        </tr>
-        <tr>
-            <td>{{ jobRole.location }}</td>
-            <td>{{ jobRole.capability }}</td>
-            <td>{{ jobRole.band }}</td>
-            <td>{{ jobRole.closingDate | date }}</td>
-        </tr>
-    </table>
+    <h3>{{job.capability}} : {{job.band}}</h3>
+    <h4>{{job.location}}</h4>
+    <h5>{{job.status}}</h5>
+    <div>{{job.description}}</div>
+    <h5>Responsibilities</h5>
+    <div>{{job.responsibilities}}</div>
+    <a href="{{job.jobSpec}}">Job spec</a>
+    </div>
 </div>
 {% endblock %}
