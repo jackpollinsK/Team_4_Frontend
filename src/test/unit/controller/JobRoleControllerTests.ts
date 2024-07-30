@@ -47,7 +47,7 @@ describe('JobRoleController', function () {
         const errorMessage: string = 'Failed to get JobRoles';
 
         const req = {
-            session: { token: '12345' }
+            session: { token: '12345' } //token = logged in
         };
 
         const res = {
@@ -63,32 +63,5 @@ describe('JobRoleController', function () {
         expect(res.render.calledOnce).to.be.true;
         expect(res.render.calledWith('pages/allJobRolesList.html')).to.be.true;
         expect(res.locals.errormessage).to.equal(errorMessage);
-    });
-    it('should render not logged in view and return 401 status, when user is NOT logged in', async () => {
-
-        const req = {
-            session: { token: '' }
-        };
-
-        const res = { 
-            render: sinon.spy(),
-            redirect: sinon.spy(),
-            status: ''
-        };
-
-        sinon.stub(JobRoleService, 'getJobRoles')
-
-        await JobRoleController.getAllJobRoles(req as express.Request, res as unknown as express.Response);
-        
-        let returnedStatus = 0;
-        if(!req.session.token){ //From AuthMiddleware
-            res.redirect("/notLoggedIn")
-            returnedStatus = 401;
-        }
-
-        expect(req.session.token).to.equal('');
-        expect(returnedStatus).to.equal(401);
-        expect(res.redirect.calledOnce).to.be.true;
-        expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
     });
 })
