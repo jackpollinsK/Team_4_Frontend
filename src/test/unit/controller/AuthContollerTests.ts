@@ -28,7 +28,7 @@ describe('AuthController', function () {
   });
 
   describe('postLoginForm', function () {
-    it('should post login form and redirect to logout form view', async () => {
+    it('should post login form and redirect to home form view', async () => {
 
       const loginRequestObj: LoginRequest = {
         email: "adam@random.com",
@@ -44,7 +44,7 @@ describe('AuthController', function () {
 
       const res = {
         render: sinon.spy(),
-        redirect: sinon.spy(),
+        redirect: sinon.spy()
       };
 
       await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);

@@ -23,7 +23,7 @@ describe('JobRoleService', function () {
 
             mock.onGet(URL).reply(200,data);
 
-            const results = await getJobRoles("123");
+            const results = await getJobRoles("12345");
   
             expect(results[0].id).to.deep.equal(expected.id);
             expect(results[0].roleName).to.deep.equal(expected.roleName);
@@ -40,7 +40,7 @@ describe('JobRoleService', function () {
 it('should throw exception when 500 error returned from axios', async () => {
     mock.onGet(URL).reply(500);
     try {
-      await getJobRoles("");
+      await getJobRoles("12345");
     } catch (e) {
       expect(e.message).to.equal('Failed to get JobRoles');
       return;

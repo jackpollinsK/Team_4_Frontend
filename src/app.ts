@@ -48,5 +48,7 @@ app.get('/loginForm', getLoginForm);
 app.post('/loginForm', postLoginForm);
 app.get('/logoutForm', getLogoutForm);
 app.post('/logoutForm', postLogoutForm);
+app.get('/notLoggedIn', getNotLoggedIn);
+app.get('/notAuthorised', getNotLoggedIn);
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
-app.get('/notLoggedOn', getNotLoggedIn);
+
