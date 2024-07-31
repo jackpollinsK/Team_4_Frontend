@@ -2,12 +2,12 @@
 import axios, { AxiosResponse } from "axios";
 import { JobRoleResponse } from "../models/JobRoleResponse";
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
+import { getHeader } from "../services/AuthUtil";
 
 export const URL: string = "/api/JobRoles";
-export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
+export const getJobRoles = async (token: string): Promise<JobRoleResponse[]> => {
     try {
-        //Change url to AWS
-        const response: AxiosResponse = await axios.get(URL)
+        const response: AxiosResponse = await axios.get(URL, getHeader(token))
 
         return response.data;        
     } catch (e) {
