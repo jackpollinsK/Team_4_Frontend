@@ -5,10 +5,12 @@ export class LoginTestPage extends ChromeDriver {
 
     constructor(driver: WebDriver) {
         super(driver);
-    }        
+    }   
+         
  
-    async open(theURL:string): Promise<void> {
-        await this.go_to_url(theURL);
+    async open(): Promise<void> {
+        const url : string = "https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm"
+        await this.go_to_url(url);
     }
 
     async enterEmail(email: string): Promise<void> {
