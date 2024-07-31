@@ -5,6 +5,12 @@ export class ChromeDriver {
     driver: WebDriver;
 
     constructor(driver?: WebDriver) {
+        const options = new chrome.Options();
+            options.addArguments('headless'); // Ensure Chrome is running in headless mode
+            options.addArguments('disable-gpu');
+            options.addArguments('no-sandbox');
+            options.addArguments('disable-dev-shm-usage');
+
         this.driver = driver || new Builder()
             .forBrowser('chrome')
             .setChromeOptions(new chrome.Options())
