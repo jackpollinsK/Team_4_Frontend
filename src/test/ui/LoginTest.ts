@@ -72,7 +72,7 @@ describe('Login Test', function () {
         
     });
 
-    it('Should fail login with invalid email and password', async function () {
+    it('Should fail login with invalid email and valid password', async function () {
         const EMAIL = 'adam123@random.com'
         const PASSWORD = process.env.LOGIN_PASSWORD_1
         

@@ -5,9 +5,12 @@ import { describe, it } from "node:test";
 import { getTokenByloggingIn, URL } from '../../../main/services/AuthService';
 import { LoginRequest } from "../../../main/models/LoginRequest";
 
+const EMAIL = process.env.LOGIN_EMAIL_1
+const PASSWORD = process.env.LOGIN_PASSWORD_1
+
 const loginResquest: LoginRequest = {
-  email: "adam@random.com",
-  password: "pass123"
+  email: process.env.LOGIN_EMAIL_1,
+  password: process.env.LOGIN_PASSWORD_1
 }
 
 const mock = new MockAdapter(axios);
@@ -26,7 +29,7 @@ describe('AuthService', function () {
       it('should throw exception when 404 error returned from axios', async () => {
         const loginResquest2: LoginRequest = {
           email: "sadkjfhdsaijkfh",
-          password: "pass123"
+          password: PASSWORD
         }
         mock.onPost(URL).reply(404);
         try {
@@ -39,7 +42,7 @@ describe('AuthService', function () {
 
     it('should throw exception when 400 error returned from axios', async () => {
       const loginResquest3: LoginRequest = {
-        email: "adam@random.com",
+        email: EMAIL,
         password: "asdadasda"
       }
       mock.onPost(URL).reply(400);
