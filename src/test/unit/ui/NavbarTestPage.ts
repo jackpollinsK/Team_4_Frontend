@@ -7,6 +7,16 @@ export class NavbarTestPage extends ChromeDriver {
         super(driver);
     }
 
+    async getLoginButtonText(): Promise<string> {
+        const linkText = 'Login'; 
+        return await this.getTextByLinkText(linkText);
+    }
+
+    async getLogoutButtonText(): Promise<string> {
+        const linkText = 'Logout'; 
+        return await this.getTextByLinkText(linkText);
+    }
+
     async clickHomeButton(): Promise<void> {
         const element = 'Home';
         await this.clickByLinkText(element);

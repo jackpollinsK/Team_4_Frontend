@@ -31,6 +31,11 @@ export class ChromeDriver {
         return await this.driver.findElement(By.xpath(path)).getText();
     }
 
+    async getTextByLinkText(linkText: string) {
+        console.log(`Getting text from element with LinkLext: ${linkText}`);
+        return await this.driver.findElement(By.linkText(linkText)).getText();
+    }
+
     async clickById(id: string) {
         console.log(`Clicking element with ID: ${id}`);
         await this.driver.findElement(By.id(id)).click();

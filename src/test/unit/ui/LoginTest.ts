@@ -27,37 +27,43 @@ describe('Login Test', function () {
 
     after(async function () {
         try {
-            await loginPage.closeBrowser();
+            await driver.quit();
         } catch (error) {
             console.error('Error quitting the driver:', error);
         }
     });
 
     it('Should successfully login and logout with valid email and password', async function () {
-        await loginPage.open("https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm");
+        const email = 'adam@random.com'
+        const password = 'pass123'
+        
+        await loginPage.open();
 
-        await loginPage.enterEmail('adam@random.com');
-        await loginPage.enterPassword('pass123');
+        await loginPage.enterEmail(email);
+        await loginPage.enterPassword(password);
         await loginPage.clickLogin();
 
         //Checking that user returned to home page after loging in
-        const actualText1 = await homePage.getTitleText();
-        expect(actualText1).to.equal('The story so far');
+        const actualText1 = await navBarPage.getLogoutButtonText();
+        expect(actualText1).to.equal('Logout');
 
         await navBarPage.clickLogoutButton();
         await logoutPage.clickLogout();
 
         //Checking that user returned to home page after logged out
-        const actualText2 = await homePage.getTitleText();
-        expect(actualText2).to.equal('The story so far');
+        const actualText2 = await navBarPage.getLoginButtonText();
+        expect(actualText2).to.equal('Login');
         
     });
 
     it('Should fail login with no email and password', async function () {
-        await loginPage.open("https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm");
+        const email = ''
+        const password = ''
+        
+        await loginPage.open();
 
-        await loginPage.enterEmail('');
-        await loginPage.enterPassword('');
+        await loginPage.enterEmail(email);
+        await loginPage.enterPassword(password);
         await loginPage.clickLogin();
         
         const actualText = await loginPage.getErrorMessageText();
@@ -66,10 +72,13 @@ describe('Login Test', function () {
     });
 
     it('Should fail login with invalid email and password', async function () {
-        await loginPage.open("https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm");
+        const email = 'adam123@random.com'
+        const password = 'pass123'
+        
+        await loginPage.open();
 
-        await loginPage.enterEmail('adam123@random.com');
-        await loginPage.enterPassword('pass123');
+        await loginPage.enterEmail(email);
+        await loginPage.enterPassword(password);
         await loginPage.clickLogin();
         
         const actualText = await loginPage.getErrorMessageText();
@@ -78,10 +87,13 @@ describe('Login Test', function () {
     });
 
     it('Should fail login with valid email and invalid pasword', async function () {
-        await loginPage.open("https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm");
+        const email = 'adam@random.com'
+        const password = '123'
+        
+        await loginPage.open();
 
-        await loginPage.enterEmail('adam@random.com');
-        await loginPage.enterPassword('123');
+        await loginPage.enterEmail(email);
+        await loginPage.enterPassword(password);
         await loginPage.clickLogin();
         
         const actualText = await loginPage.getErrorMessageText();
