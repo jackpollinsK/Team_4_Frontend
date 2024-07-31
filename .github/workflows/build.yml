@@ -43,6 +43,7 @@ jobs:
     - name: Run UI Tests
       run: npm run test-ui
       env:
+        API_URL: ${{ secrets.API_URL }}
         LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
         LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
 
