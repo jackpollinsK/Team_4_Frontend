@@ -9,7 +9,7 @@ export class LoginTestPage extends ChromeDriver {
          
  
     async open(): Promise<void> {
-        const url : string = "https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm"
+        const url : string = process.env.BASE_URL || "https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm"
         await this.go_to_url(url);
     }
 

@@ -16,11 +16,11 @@ describe('AuthService', function () {
 
     describe('getToken', function () {
       it('should get Jwt token', async () => {
-        mock.onPost(URL).reply(200);
+        mock.onPost(URL).reply(200, 123);
 
         const result = await getTokenByloggingIn(loginResquest);
 
-        expect(result).toString.length > 100;
+        expect(result).to.equal(123);
       })
 
       it('should throw exception when 404 error returned from axios', async () => {
@@ -32,7 +32,7 @@ describe('AuthService', function () {
         try {
           await getTokenByloggingIn(loginResquest2);
         } catch (e) {
-          expect(e.message).to.equal('user does not exist.');
+          expect(e.message).to.equal('Invalid Email - Try Again.');
           return;
         }
     })
@@ -46,7 +46,7 @@ describe('AuthService', function () {
       try {
         await getTokenByloggingIn(loginResquest3);
       } catch (e) {
-        expect(e.message).to.equal('user is not valid: Invalid Credentials.');
+        expect(e.message).to.equal('Invalid Credentials.');
         return;
       }
   })
