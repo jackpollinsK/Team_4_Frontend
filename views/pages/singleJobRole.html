@@ -1,5 +1,6 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
+<div class="container container.center">
 <div class="m-5 text-center">
     <div class="bg-body-secondary card">
     <h1>{{jobRole.roleName}}</h1>
@@ -11,5 +12,6 @@
     <div>{{job.responsibilities}}</div>
     <a href="{{job.jobSpec}}">Job spec</a>
     </div>
+</div>
 </div>
 {% endblock %}
