@@ -13,7 +13,7 @@ export class ChromeDriver {
 
         this.driver = driver || new Builder()
             .forBrowser('chrome')
-            .setChromeOptions(new chrome.Options())
+            .setChromeOptions(options)
             .build();
     }
 
