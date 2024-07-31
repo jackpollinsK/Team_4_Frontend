@@ -42,6 +42,9 @@ jobs:
 
     - name: Run UI Tests
       run: npm run test-ui
+      env:
+        LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
+        LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
 
     - name: Run CI
       run: npm ci
