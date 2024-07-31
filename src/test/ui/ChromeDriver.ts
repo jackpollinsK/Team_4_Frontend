@@ -6,7 +6,6 @@ export class ChromeDriver {
 
     constructor(driver?: WebDriver) {
         const options = new chrome.Options();
-            options.addArguments('headless'); // Ensure Chrome is running in headless mode
             options.addArguments('disable-gpu');
             options.addArguments('no-sandbox');
             options.addArguments('disable-dev-shm-usage');
