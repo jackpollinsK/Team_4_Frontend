@@ -28,7 +28,7 @@ describe('AuthController', function () {
   });
 
   describe('postLoginForm', function () {
-    it('should post login form and redirect to logout form view', async () => {
+    it('should post login form and redirect to home form view', async () => {
 
       const loginRequestObj: LoginRequest = {
         email: "adam@random.com",
@@ -44,7 +44,7 @@ describe('AuthController', function () {
 
       const res = {
         render: sinon.spy(),
-        redirect: sinon.spy(),
+        redirect: sinon.spy()
       };
 
       await AuthController.postLoginForm(req as express.Request, res as unknown as express.Response);
@@ -136,6 +136,18 @@ describe('AuthController', function () {
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/')).to.be.true;
     });
+
+    describe('getNotLoggedIn', function () {
+      it('should render notLoggedIn form view', async () => {
+        const req = {};
+        const res = { render: sinon.spy() };
+  
+        await AuthController.getNotLoggedIn(req as express.Request, res as unknown as express.Response);
+  
+        expect(res.render.calledOnce).to.be.true;
+      });
+    });
+
   });
 
 });
