@@ -44,14 +44,14 @@ describe('Login Test', function () {
         await loginPage.enterPassword(PASSWORD);
         await loginPage.clickLogin();
 
-        //Checking that user returned to home page after loging in
+        //Checking that user has logout button when logged in
         const actualText1 = await navBarPage.getLogoutButtonText();
         expect(actualText1).to.equal('Logout');
 
         await navBarPage.clickLogoutButton();
         await logoutPage.clickLogout();
 
-        //Checking that user returned to home page after logged out
+        //Checking that user has login button when logged out
         const actualText2 = await navBarPage.getLoginButtonText();
         expect(actualText2).to.equal('Login');
         
