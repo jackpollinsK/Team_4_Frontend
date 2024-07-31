@@ -13,11 +13,46 @@
 }
 
 .footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     text-align: center;
+}
+
+.btnKainos {
+    border-color: #283583;
+    border-width: 0.15em;
+    border-style: solid;
+    color:#283583;
+    text-decoration: none;
+    padding: 0.3em;
+    font-size: medium;
+}
+
+.btnKainos:hover {
+    border-color: #283583;
+    border-style: solid;
+    background-color: #283583;
+    color:white;
+    text-decoration: none;
+    padding: 0.3em;
+    font-size: medium;
+}
+
+.nav-Link {
+    padding: 0.3em;
+    text-decoration: none;
+    color: black;
+}
+
+.nav-LinkOnPage {
+    color: white;
+    padding: 0.3em;
+    background-color: #283583;
+}
+
+.nav-Link:hover{
+    text-decoration: underline;
 }
 
 .errorMessage {
