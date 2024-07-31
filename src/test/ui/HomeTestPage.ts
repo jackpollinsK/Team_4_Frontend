@@ -9,8 +9,8 @@ export class HomeTestPage extends ChromeDriver {
     }
 
     async open(): Promise<void> {
-        const BASE_URL = process.env.BASE_URL;
-        await this.go_to_url(BASE_URL);
+        const API_URL = process.env.API_URL;
+        await this.go_to_url(API_URL);
     }
 
 }

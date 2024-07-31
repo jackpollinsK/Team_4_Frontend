@@ -9,8 +9,8 @@ export class LoginTestPage extends ChromeDriver {
          
  
     async open(): Promise<void> {
-        const BASE_URL = process.env.BASE_URL;
-        const LOGIN_URL = `${BASE_URL}/loginForm`;
+        const API_URL = process.env.API_URL;
+        const LOGIN_URL = `${API_URL}/loginForm`;
         await this.go_to_url(LOGIN_URL);
     }
 
