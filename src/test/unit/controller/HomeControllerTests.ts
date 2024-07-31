@@ -10,7 +10,7 @@ describe('HomeController',function() {
 
     describe('getHomeForm', function () {
         it('should render home form view', async () => {
-          const req = {};
+          const req = { session: {token: ''} };
           const res = { render: sinon.spy() };
     
           await HomeController.getHomePage(req as express.Request, res as unknown as express.Response);
