@@ -9,8 +9,11 @@ export class LoginTestPage extends ChromeDriver {
          
  
     async open(): Promise<void> {
-        const url : string = process.env.BASE_URL || "https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm"
-        await this.go_to_url(url);
+        const BASE_URL = process.env.BASE_URL;
+        const LOGIN_URL = `${BASE_URL}/loginForm`;
+        console.log(BASE_URL)
+        console.log(LOGIN_URL)
+        await this.go_to_url(LOGIN_URL);
     }
 
     async enterEmail(email: string): Promise<void> {

@@ -9,8 +9,9 @@ export class LogoutTestPage extends ChromeDriver {
 
     
     async open(): Promise<void> {
-        const url = 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/logoutForm'
-        await this.go_to_url(url);
+        const BASE_URL = process.env.BASE_URL;
+        const LOGOUT_URL = `${BASE_URL}/logoutForm`;
+        await this.go_to_url(LOGOUT_URL);
     }
 
     async clickLogout(): Promise<void> {

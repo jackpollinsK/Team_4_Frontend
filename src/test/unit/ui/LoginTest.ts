@@ -34,13 +34,13 @@ describe('Login Test', function () {
     });
 
     it('Should successfully login and logout with valid email and password', async function () {
-        const email = 'adam@random.com'
-        const password = 'pass123'
+        const EMAIL = process.env.LOGIN_EMAIL_1
+        const PASSWORD = process.env.LOGIN_PASSWORD_1
         
         await loginPage.open();
 
-        await loginPage.enterEmail(email);
-        await loginPage.enterPassword(password);
+        await loginPage.enterEmail(EMAIL);
+        await loginPage.enterPassword(PASSWORD);
         await loginPage.clickLogin();
 
         //Checking that user returned to home page after loging in
@@ -57,13 +57,13 @@ describe('Login Test', function () {
     });
 
     it('Should fail login with no email and password', async function () {
-        const email = ''
-        const password = ''
+        const EMAIL = ''
+        const PASSWORD = ''
         
         await loginPage.open();
 
-        await loginPage.enterEmail(email);
-        await loginPage.enterPassword(password);
+        await loginPage.enterEmail(EMAIL);
+        await loginPage.enterPassword(PASSWORD);
         await loginPage.clickLogin();
         
         const actualText = await loginPage.getErrorMessageText();
@@ -72,13 +72,13 @@ describe('Login Test', function () {
     });
 
     it('Should fail login with invalid email and password', async function () {
-        const email = 'adam123@random.com'
-        const password = 'pass123'
+        const EMAIL = 'adam123@random.com'
+        const PASSWORD = process.env.LOGIN_PASSWORD_1
         
         await loginPage.open();
 
-        await loginPage.enterEmail(email);
-        await loginPage.enterPassword(password);
+        await loginPage.enterEmail(EMAIL);
+        await loginPage.enterPassword(PASSWORD);
         await loginPage.clickLogin();
         
         const actualText = await loginPage.getErrorMessageText();
@@ -87,13 +87,13 @@ describe('Login Test', function () {
     });
 
     it('Should fail login with valid email and invalid pasword', async function () {
-        const email = 'adam@random.com'
-        const password = '123'
+        const EMAIL = process.env.LOGIN_EMAIL_1
+        const PASSWORD = '123'
         
         await loginPage.open();
 
-        await loginPage.enterEmail(email);
-        await loginPage.enterPassword(password);
+        await loginPage.enterEmail(EMAIL);
+        await loginPage.enterPassword(PASSWORD);
         await loginPage.clickLogin();
         
         const actualText = await loginPage.getErrorMessageText();
