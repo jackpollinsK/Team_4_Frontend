@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h2 class="card-title">Login</h2>
                 {% if errormessage %}
-                <h3>{{ errormessage }}</h3>
+                <h5 class="errorMessage" id="errorMessage">{{ errormessage }}</h5>
                 {% endif %}
                 <form class="form mt-3" action="/loginForm" method="post">
                     <h3><label for="email">

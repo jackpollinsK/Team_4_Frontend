@@ -1,16 +1,25 @@
+{% set navigation_bar = [
+    {href: '/', id: 'Kainos Jobs Homepage', caption: 'Home'},
+    {href: '/job-roles', id: 'Job Roles', caption: 'Jobs'},
+    {href: '/loginForm', id: 'Login Page', caption: 'Login'},
+    {href: '/logoutForm', id: 'Logout Page', caption: 'Logout'}
+] %}
+
+
 <nav class="navbar navbar-expand-lg shadow-sm">
     <img src="./images/Kainos 800x250 Logo (Transparent BG).png" width="200" height="63" alt="Kainos Compay Logo">
     <div>
         <div class="navbar-nav mt-4">
-            <a class="nav-item nav-link active" href="/">Home</span></a>
-            <a class="nav-item nav-link" href="/job-roles">Jobs</span></a>
-            <a class="nav-item nav-link" href="/">About Us</span></a>
-            <div class="right"></div>
-            {% if not token.length %}
-                <a class="nav-item nav-link" href="/loginForm">Login</span></a>
-            {% else %}
-                <a class="nav-item nav-link" href="/logoutForm">Logout</span></a>
-            {% endif %}
+
+            {% for link in navigation_bar %}
+                {% if not token.length and link.id != "Logout Page" %}
+                        <a class="nav-Link {% if pageName == link.id %} nav-LinkOnPage {% endif %}"
+                        href="{{ link.href }}">{{ link.caption }}</a>
+                {% elif token.length and link.id != "Login Page" %}
+                    <a class="nav-Link {% if pageName == link.id %} nav-LinkOnPage {% endif %}"
+                    href="{{ link.href }}">{{ link.caption }}</a>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </nav>
