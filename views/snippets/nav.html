@@ -10,9 +10,15 @@
     <img src="./images/Kainos 800x250 Logo (Transparent BG).png" width="200" height="63" alt="Kainos Compay Logo">
     <div>
         <div class="navbar-nav mt-4">
+
             {% for link in navigation_bar %}
-              <a class="nav-Link {% if pageName == link.id %} nav-LinkOnPage {% endif %}"
-               href="{{ link.href }}">{{ link.caption }}</a>
+                {% if not token.length and link.id != "Logout Page" %}
+                        <a class="nav-Link {% if pageName == link.id %} nav-LinkOnPage {% endif %}"
+                        href="{{ link.href }}">{{ link.caption }}</a>
+                {% elif token.length and link.id != "Login Page" %}
+                    <a class="nav-Link {% if pageName == link.id %} nav-LinkOnPage {% endif %}"
+                    href="{{ link.href }}">{{ link.caption }}</a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

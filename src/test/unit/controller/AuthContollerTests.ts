@@ -18,7 +18,7 @@ describe('AuthController', function () {
 
   describe('getLoginForm', function () {
     it('should render login form view', async () => {
-      const req = {};
+      const req = { session: {token: ''} };
       const res = { render: sinon.spy() };
 
       await AuthController.getLoginForm(req as express.Request, res as unknown as express.Response);
@@ -109,7 +109,7 @@ describe('AuthController', function () {
 
   describe('getLogoutForm', function () {
     it('should render logout form view', async () => {
-      const req = {};
+      const req = { session: {token: ''} };
       const res = { render: sinon.spy() };
 
       await AuthController.getLogoutForm(req as express.Request, res as unknown as express.Response);

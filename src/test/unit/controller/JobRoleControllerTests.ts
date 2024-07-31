@@ -25,15 +25,16 @@ describe('JobRoleController',function() {
 
             sinon.stub(JobRoleService, 'getJobRoles').resolves(jobRoleList);
             
-            const req = { };
+            const req = { session: {token: ''} };
             const res = { render: sinon.spy() };
 
             await JobRoleController.getAllJobRoles(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/allJobRolesList.html', {jobRoles : jobRoleList, pageName: "Job Roles"})).to.be.true;
+            expect(res.render.calledWith('pages/allJobRolesList.html', {jobRoles : jobRoleList, pageName: "Job Roles", token: req.session.token})).to.be.true;
         });
     })
+
     it('should render view with error message when error thrown', async () => {
         const errorMessage: string = 'Error message';
         sinon.stub(JobRoleService, 'getJobRoles').rejects(new Error(errorMessage));
