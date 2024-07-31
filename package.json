@@ -9,7 +9,7 @@
     "dev": "nodemon src/app.ts",
     "linter": "npx eslint .",
     "test": "mocha --require ts-node/register src/test/unit/**/*.ts",
-    "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts"
+    "test-ui": "mocha --require ts-node/register --timeout 10000 src/test/ui/**/*.ts"
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",

@@ -1,5 +1,5 @@
 import chrome from 'selenium-webdriver/chrome';
-import { Builder, By, WebDriver, until, WebElement } from 'selenium-webdriver';
+import { Builder, By, WebDriver } from 'selenium-webdriver';
 
 export class ChromeDriver {
     driver: WebDriver;

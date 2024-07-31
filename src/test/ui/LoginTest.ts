@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { LoginTestPage } from "./LoginTestPage";
 import { LogoutTestPage } from "./LogoutTestPage";
-import { HomeTestPage } from "./HomeTestPage";
+import { HomeTestPage } from "../ui/HomeTestPage";
 import { NavbarTestPage } from "./NavbarTestPage";
 import { WebDriver } from 'selenium-webdriver';
 import { ChromeDriver } from './ChromeDriver';
@@ -12,6 +12,7 @@ describe('Login Test', function () {
     let driver: WebDriver;
     let loginPage: LoginTestPage;
     let logoutPage: LogoutTestPage;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let homePage: HomeTestPage;
     let navBarPage: NavbarTestPage;
 
