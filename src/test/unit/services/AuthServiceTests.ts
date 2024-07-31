@@ -32,7 +32,7 @@ describe('AuthService', function () {
         try {
           await getTokenByloggingIn(loginResquest2);
         } catch (e) {
-          expect(e.message).to.equal('user does not exist.');
+          expect(e.message).to.equal('Invalid Email - Try Again.');
           return;
         }
     })
@@ -46,7 +46,7 @@ describe('AuthService', function () {
       try {
         await getTokenByloggingIn(loginResquest3);
       } catch (e) {
-        expect(e.message).to.equal('user is not valid: Invalid Credentials.');
+        expect(e.message).to.equal('Invalid Credentials.');
         return;
       }
   })

@@ -3,7 +3,7 @@ import { getTokenByloggingIn} from "../services/AuthService";
 import express from "express";
 
 export const getLoginForm = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/loginPage.html', {pageName: 'Login page'});
+    res.render('pages/loginPage.html', {pageName: 'Login Page', token: req.session.token});
 }
 
 export const postLoginForm  = async (req: express.Request, res: express.Response): Promise<void> => {
@@ -23,7 +23,7 @@ export const getNotLoggedIn = async (req: express.Request, res: express.Response
 }
 
 export const getLogoutForm = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/logoutPage.html', {pageName: 'Logout page'});
+    res.render('pages/logoutPage.html', {pageName: 'Logout Page', token: req.session.token});
 }
 
 export const postLogoutForm = async(req: express.Request, res: express.Response): Promise<void> => {

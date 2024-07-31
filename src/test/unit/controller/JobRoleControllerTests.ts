@@ -37,11 +37,10 @@ describe('JobRoleController', function () {
             };
 
             sinon.stub(JobRoleService, 'getJobRoles').resolves(jobRoleList);
-
             await JobRoleController.getAllJobRoles(req as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/allJobRolesList.html', { jobRoles: jobRoleList, pageName: "Job Roles" })).to.be.true;
+            expect(res.render.calledWith('pages/allJobRolesList.html', {jobRoles : jobRoleList, pageName: "Job Roles", token: req.session.token})).to.be.true;
         });
     })
     it('should render view with error message when error thrown, and user is logged in', async () => {
@@ -57,7 +56,6 @@ describe('JobRoleController', function () {
             redirect: sinon.spy(),
             locals: { errormessage: '' }
         };
-
         sinon.stub(JobRoleService, 'getJobRoles').rejects(new Error(errorMessage));
 
         await JobRoleController.getAllJobRoles(req as express.Request, res as unknown as express.Response);
