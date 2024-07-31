@@ -18,11 +18,11 @@ describe('Login Test', function () {
 
     before(async function () {
 
-        driver = new ChromeDriver().driver;
-        loginPage = new LoginTestPage(driver);
-        logoutPage = new LogoutTestPage(driver);
-        homePage = new HomeTestPage(driver);
-        navBarPage = new NavbarTestPage(driver);
+        driver = await new ChromeDriver().driver;
+        loginPage = await new LoginTestPage(driver);
+        logoutPage = await new LogoutTestPage(driver);
+        homePage = await new HomeTestPage(driver);
+        navBarPage = await new NavbarTestPage(driver);
 
     });
 
