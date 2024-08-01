@@ -1,4 +1,4 @@
-export type JobRoleResponse ={
+export type JobRoleResponse = {
     id: number
     roleName: string;
     location: string;
