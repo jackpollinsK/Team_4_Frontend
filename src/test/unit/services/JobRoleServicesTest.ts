@@ -3,7 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { JobRoleResponse } from "../../../main/models/JobRoleResponse";
 import { describe } from "node:test";
-import { getJobRoleById, getJobRoles, URL } from '../../../main/services/JobRoleService';
+import { getJobRoleById, getJobRoles, URL  } from '../../../main/services/JobRoleService';
 import { JobRoleSingleResponse } from "../../../main/models/JobRoleSingleResponse";
 
 
@@ -54,7 +54,7 @@ describe('JobRoleService', function () {
 
 
 it('should throw exception when 500 error returned from axios', async () => {
-    mock.onGet(URL).reply(500);
+    mock.onGet("/api/JobRoles").reply(500);
     try {
       await getJobRoles("12345");
     } catch (e) {

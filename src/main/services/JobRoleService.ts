@@ -12,7 +12,7 @@ export const getJobRoles = async (token: string): Promise<JobRoleResponse[]> => 
 
         return response.data;        
     } catch (e) {
-        throw new Error('Failed to get JobRoles')
+        throw new Error('Failed to get JobRoles');
     }
 }
 
