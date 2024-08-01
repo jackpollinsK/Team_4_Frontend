@@ -19,13 +19,17 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 20.14.0
+        node-version: 20.14.0   
 
     - name: Install dependencies
       run: npm install
 
-    - name: Run unit tests
-      run: npm test
-
     - name: Run CI
       run: npm ci
+
+    - name: Run Tests
+      env:
+        WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+        LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
+        LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
+      run: npm test
