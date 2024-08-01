@@ -6,12 +6,17 @@
 3. To check that your application is running enter url http://localhost:3000
 
 ## How to run the accessibillity tests (pa11y-ci) locally
-1. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
-2. Run `pa11y-ci`in the terminal
+1. Make sure you install pa11yci with `npm install -g pa11y-ci` to install
+2. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
+3. Run `pa11y-ci`in the terminal
 
 ## How to run unit tests locally
 1. Make sure that your have ran `npm install` to install dependencies
 2. Run `npm test` in the terminal
+
+## How to run UI tests locally 
+1. Make sure that your have ran `npm install` to install dependencies
+2. Run `npm run test-ci` in terminal to run ui test
 
 ## How to make a new page
 1. Create a html file in the views/pages directory
