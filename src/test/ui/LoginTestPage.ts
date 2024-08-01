@@ -1,4 +1,4 @@
-import { By, until, WebDriver } from 'selenium-webdriver';
+import { WebDriver } from 'selenium-webdriver';
 import { ChromeDriver } from './ChromeDriver';
 
 export class LoginTestPage extends ChromeDriver {
