@@ -3,9 +3,9 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import { getAllJobRoles } from "./main/controllers/JobRoleController";
+import { getAllJobRoles, getJobRole } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
-import { getLoginForm, getLogoutForm, getNotLoggedIn, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
+import { getLoginForm, getLogoutForm, getNotAuthorisedIn, getNotLoggedIn, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 import { getHomePage } from "./main/controllers/HomeController";
 import { allowRoles } from "./main/middleware/AuthMiddleware";
 import { UserRole } from "./main/models/JwtToken";
@@ -49,6 +49,6 @@ app.post('/loginForm', postLoginForm);
 app.get('/logoutForm', getLogoutForm);
 app.post('/logoutForm', postLogoutForm);
 app.get('/notLoggedIn', getNotLoggedIn);
-app.get('/notAuthorised', getNotLoggedIn);
+app.get('/notAuthorised', getNotAuthorisedIn);
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
-
+app.get('/job-roles-:id',allowRoles([UserRole.Admin, UserRole.User]), getJobRole);

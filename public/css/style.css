@@ -9,7 +9,7 @@
 }
 
 .card:hover {
-    background-color: #EDF3FF;
+    background-color: var(--bs-secondary-color);
 }
 
 .footer {
@@ -56,5 +56,11 @@
 }
 
 .errorMessage {
-    color:red
+    color: red;
+}
+
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
