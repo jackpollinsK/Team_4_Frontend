@@ -11,6 +11,7 @@ export class LoginTestPage extends ChromeDriver {
     async open(): Promise<void> {
         const API_URL = process.env.API_URL;
         const LOGIN_URL = `${API_URL}/loginForm`;
+        console.log(LOGIN_URL)
         await this.go_to_url(LOGIN_URL);
     }
 
