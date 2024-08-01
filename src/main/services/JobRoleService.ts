@@ -3,12 +3,12 @@ import axios, { AxiosResponse } from "axios";
 import { JobRoleResponse } from "../models/JobRoleResponse";
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
+import { getHeader } from "../services/AuthUtil";
 
 export const URL: string = "/api/JobRoles";
-export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
+export const getJobRoles = async (token: string): Promise<JobRoleResponse[]> => {
     try {
-        //Change url to AWS
-        const response: AxiosResponse = await axios.get(URL)
+        const response: AxiosResponse = await axios.get(URL, getHeader(token))
 
         return response.data;        
     } catch (e) {
@@ -16,9 +16,9 @@ export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
     }
 }
 
-export const getJobRoleById = async (id: string): Promise<JobRoleSingleResponse> => {
+export const getJobRoleById = async (id: string, token: string): Promise<JobRoleSingleResponse> => {
     try {
-        const response: AxiosResponse = await axios.get(URL + "/" + id);
+        const response: AxiosResponse = await axios.get(URL + "/" + id, getHeader(token));
         return response.data;        
     } catch (e) {
         if(e.response.status == 404){
