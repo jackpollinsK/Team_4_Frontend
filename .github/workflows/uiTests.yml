@@ -40,13 +40,6 @@ jobs:
     - name: Run CI
       run: npm ci
 
-    - name: Run Tests
-      env:
-        WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
-        LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
-        LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
-      run: npm test
-
     - name: Run UI Tests
       env:
         WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
