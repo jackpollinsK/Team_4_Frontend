@@ -35,11 +35,12 @@ describe('Login Test', function () {
     });
 
     it('Should successfully login and logout with valid email and password', async function () {
+        console.log("Test Starting")
         const EMAIL = process.env.LOGIN_EMAIL_1
         const PASSWORD = process.env.LOGIN_PASSWORD_1
-        
+        console.log("Page loading...")
         await loginPage.open();
-
+        console.log("Page Loaded!")
         await loginPage.enterEmail(EMAIL);
         await loginPage.enterPassword(PASSWORD);
         await loginPage.clickLogin();
