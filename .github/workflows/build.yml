@@ -42,14 +42,14 @@ jobs:
 
     - name: Run Tests
       env:
-        API_URL: ${{ secrets.API_URL }}
+        WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
         LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
         LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
       run: npm test
 
     - name: Run UI Tests
       env:
-        API_URL: ${{ secrets.API_URL }}
+        WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
         LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
         LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
       run: npm run test-ui
