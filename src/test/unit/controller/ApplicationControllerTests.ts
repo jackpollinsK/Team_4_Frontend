@@ -98,7 +98,7 @@ describe('ApplicationController', function () {
       expect(res.redirect.calledWith('/job-roles')).to.be.true;
     });
 
-    it.only('should return error when no file is uploaded', async () => {
+    it('should return error when no file is uploaded', async () => {
       //You must upload file
 
       sinon.stub(AwsUtil, "uploadFileToS3").resolves();
@@ -121,15 +121,15 @@ describe('ApplicationController', function () {
 
     });
 
-    it('should render login form view', async () => {
+    it('should return error when file is incorrect format', async () => {
       //Case for Invalid format
-      sinon.stub(AwsUtil, "uploadFileToS3").resolves();
-      sinon.stub(ApplicationService, "postJobRoleAplication").resolves();
+      sinon.stub(AwsUtil, "uploadFileToS3")
+      sinon.stub(ApplicationService, "postJobRoleAplication")
 
       const req = {
         session: { token: validJwtToken },
         params: { id: 1 },
-        file: { mimeType: 'Incorrect', buffer: new Buffer("dawdawdawdaw") }
+        file: { mimetype: 'Incorrect', buffer: new Buffer("dawdawdawdaw") }
       };
 
       const res = {
@@ -142,16 +142,77 @@ describe('ApplicationController', function () {
       expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: "You must upload a PDF" })).to.be.true;
     });
 
-    it('should render login form view', async () => {
+    it('should throw error form view', async () => {
       //Case for User already exists
+
+      const errormessage = "You have already applied to this job";
+
+      sinon.stub(AwsUtil, "uploadFileToS3")
+      sinon.stub(ApplicationService, "postJobRoleAplication").throws(new Error(errormessage));
+
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
+      };
+
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' }
+      };
+
+      await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: errormessage })).to.be.true;
     });
 
     it('should render login form view', async () => {
       //Case for Aws error
+      const errormessage = "Sorry Something went wrong on our side try again later";
+
+      sinon.stub(AwsUtil, "uploadFileToS3").throws(new Error(errormessage));
+      sinon.stub(ApplicationService, "postJobRoleAplication");
+
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
+      };
+
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' }
+      };
+
+      await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: errormessage })).to.be.true;
     });
 
     it('should render login form view', async () => {
       //Case for Server Error
+      const errormessage = "Internal Server Error.";
+
+      sinon.stub(AwsUtil, "uploadFileToS3")
+      sinon.stub(ApplicationService, "postJobRoleAplication").throws(new Error(errormessage));
+
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
+      };
+
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' }
+      };
+
+      await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: errormessage })).to.be.true;
     });
 
   });

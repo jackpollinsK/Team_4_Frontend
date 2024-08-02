@@ -28,8 +28,7 @@ export const uploadFileToS3 = async (buffer: Buffer, key: string): Promise<void>
     // Upload file to S3
     const command = new PutObjectCommand(params);
     const response = await s3Client.send(command);
-    console.log("File uploaded successfully", response);
-  } catch (error) {
-    console.error("Error uploading file", error);
+  } catch (e) {
+    throw new Error("Sorry Something went wrong on our side try again later");
   }
 };
