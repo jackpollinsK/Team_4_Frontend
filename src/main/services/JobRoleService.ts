@@ -2,7 +2,7 @@
 import axios, { AxiosResponse } from "axios";
 import { JobRoleResponse } from "../models/JobRoleResponse";
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
-axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
+axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080';
 import { getHeader } from "../services/AuthUtil";
 
 export const URL: string = "/api/JobRoles";
