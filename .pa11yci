@@ -2,10 +2,17 @@
     "defaults": { 
         "chromeLaunchConfig":
          { "args": ["--no-sandbox"] }
-    }, 
+    },
       "urls": [
           "https://nczcbkjcc7.eu-west-1.awsapprunner.com/",
           "https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm",
-          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/logoutForm"
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/logoutForm",
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/notLoggedIn",
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/notAuthorised",
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/job-roles",
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/job-roles-1"
+
       ]
   }
+  
+  

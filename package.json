@@ -8,7 +8,7 @@
     "dev": "nodemon src/app.ts",
     "linter": "npx eslint .",
     "test": "nyc mocha --require ts-node/register src/test/unit/**/*.ts",
-    "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts"
+    "test-ui": "mocha --require ts-node/register --timeout 10000 src/test/ui/**/*.ts"
   },
   "nyc": {
     "include": [
@@ -64,8 +64,8 @@
     "@types/selenium-webdriver": "^4.1.22",
     "@types/sinon": "^17.0.3",
     "axios-mock-adapter": "^1.22.0",
-    "chai": "^4.3.7",
-    "chromedriver": "^125.0.2",
+    "chai": "^4.4.1",
+    "chromedriver": "^127.0.0",
     "eslint": "^8.57.0",
     "mocha": "^10.7.0",
     "nodemon": "^3.1.0",

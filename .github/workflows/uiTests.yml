@@ -1,0 +1,44 @@
+name: Run UI Tests
+
+on:
+  schedule:
+    - cron: '0 0 * * *' 
+
+jobs: 
+  uiTests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 20.14.0
+    
+    - name: Install dependencies
+      run: npm install
+  
+    - name: Install Google Chrome
+      run: |
+        # Add the Google Chrome repository
+        sudo apt-get update
+        sudo apt-get install -y wget gnupg
+        wget https://dl.google.com/linux/linux_signing_key.pub
+        sudo apt-key add linux_signing_key.pub
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+        
+        # Install Google Chrome
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+    - name: Run CI
+      run: npm ci
+
+    - name: Run UI Tests
+      env:
+        WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+        LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
+        LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
+      run: npm run test-ui
