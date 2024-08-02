@@ -156,7 +156,7 @@ describe('AuthController', function () {
   });
 
   describe('getNotAuthorised', function () {
-    it.only('should render notAuthorised form view', async () => {
+    it('should render notAuthorised form view', async () => {
       const req = {
         session: { token: validJwtToken }
       };
