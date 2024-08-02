@@ -11,6 +11,7 @@
         <th scope="col">Capability</th>
         <th scope="col">Band</th>
         <th scope="col">Closing Date</th>
+        <th scope="col">Apply</th>
     </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
             <td>{{ jobRole.capability }}</td>
             <td>{{ jobRole.band }}</td>
             <td>{{ jobRole.closingDate | date }}</td>
+            <td>{% include "snippets/apply.html" %}</td>
         </tr>
     {% endfor %}
     </tbody>
