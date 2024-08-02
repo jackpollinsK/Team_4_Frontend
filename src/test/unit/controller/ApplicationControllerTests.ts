@@ -45,7 +45,7 @@ describe('ApplicationController', function () {
   });
 
   const secretKey = 'SUPER_SECRET';
-  const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com"}, secretKey, { expiresIn: '8h' });
+  const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
   describe('getApplicationForm', function () {
     it('should render application form when user is logged in', async () => {
@@ -113,9 +113,9 @@ describe('ApplicationController', function () {
       const res = {
         render: sinon.spy(),
         redirect: sinon.stub().returnsThis(),
-        locals: {errormessage: ''}
+        locals: { errormessage: '' }
       };
-      
+
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
@@ -161,7 +161,7 @@ describe('ApplicationController', function () {
 
       const res = {
         render: sinon.spy(),
-        locals: {errormessage: ''}
+        locals: { errormessage: '' }
       };
 
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);

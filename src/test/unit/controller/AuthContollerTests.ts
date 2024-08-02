@@ -18,7 +18,7 @@ describe('AuthController', function () {
 
   describe('getLoginForm', function () {
     it('should render login form view', async () => {
-      const req = { session: {token: ''} };
+      const req = { session: { token: '' } };
       const res = { render: sinon.spy() };
 
       await AuthController.getLoginForm(req as express.Request, res as unknown as express.Response);
@@ -39,7 +39,7 @@ describe('AuthController', function () {
 
       const req = {
         body: loginRequestObj,
-        session: {token: ''}
+        session: { token: '' }
       };
 
       const res = {
@@ -109,7 +109,7 @@ describe('AuthController', function () {
 
   describe('getLogoutForm', function () {
     it('should render logout form view', async () => {
-      const req = { session: {token: ''} };
+      const req = { session: { token: '' } };
       const res = { render: sinon.spy() };
 
       await AuthController.getLogoutForm(req as express.Request, res as unknown as express.Response);
@@ -141,9 +141,9 @@ describe('AuthController', function () {
       it('should render notLoggedIn form view', async () => {
         const req = {};
         const res = { render: sinon.spy() };
-  
+
         await AuthController.getNotLoggedIn(req as express.Request, res as unknown as express.Response);
-  
+
         expect(res.render.calledOnce).to.be.true;
       });
     });
