@@ -2,7 +2,7 @@ import Express from "express";
 import { postJobRoleAplication } from "../services/ApplicantService"
 import { JobApplyRoleRequest } from "../models/JobApplyRoleRequest"
 import { jwtDecode } from "jwt-decode";
-import { unlink } from "fs";
+import { unlink, readFile } from "fs";
 import { uploadFileToS3 } from "../Utils/AwsUtil";
 
 
@@ -26,7 +26,7 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
 
     //Set details for AWS Bucket
     const cvKey = uEmail.split('@')[0] + "/Job" + id + ".pdf";
-    const cvFile = new Blob([req.file.buffer])
+    const cvFile = req.file.buffer;
     await uploadFileToS3(cvFile, cvKey);
 
     //Send data to the backend
@@ -45,11 +45,6 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
     }
     res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: e.message });
 }
-
-//Delete temp file after successful upload
-await unlink(req.file.path, (err) => {
-    if (err) throw 'An Error Occured in the upload';
-  });
 
 }
 

@@ -14,7 +14,8 @@ import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/
 
 const app = express();
 
-const upload = multer({ dest: './public/tmp/cv' })
+const storage = multer.memoryStorage();
+const upload = multer( { storage: storage } )
 
 nunjucks.configure('views/', {
     autoescape: false,

@@ -1,11 +1,12 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { readFile } from "fs";
 
 const accessKeyId = process.env.BUCKET_ACCESS_KEY_ID;
 const secretAccessKey = process.env.BUCKET_SECRET_ACCESS_KEY;
 const region = process.env.BUCKET_REGION;
 const bucket = process.env.BUCKET_NAME;
 
-export const uploadFileToS3 = async (fileContent: Blob, key: string): Promise<void> => {
+export const uploadFileToS3 = async (buffer: Buffer, key: string): Promise<void> => {
   // Create S3 client
   const s3Client = new S3Client({
     region:region,
@@ -15,9 +16,11 @@ export const uploadFileToS3 = async (fileContent: Blob, key: string): Promise<vo
     }
 });
 
+  console.log(buffer.toString());
+
   // Set upload parameters
   const params = {
-    Body: fileContent,
+    Body: buffer,
     Bucket: bucket,
     Key: key,
   };
