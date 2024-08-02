@@ -1,10 +1,6 @@
 import Express from "express";
-import { postJobRoleAplication, processJobRoleAplication } from "../services/ApplicationService"
-import { JobApplyRoleRequest } from "../models/JobApplyRoleRequest"
-import { jwtDecode } from "jwt-decode";
-import { uploadFileToS3 } from "../Utils/AwsUtil";
+import { postJobRoleAplication, processJobRoleAplication } from "../services/ApplicationService";
 import { getJobRoleById } from "../services/JobRoleService";
-import { JobRoleResponse } from "../models/JobRoleResponse";
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 
 
