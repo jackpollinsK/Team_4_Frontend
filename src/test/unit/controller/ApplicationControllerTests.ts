@@ -3,11 +3,13 @@ import sinon from 'sinon';
 import express from "express";
 import * as ApplicationContoller from "../../../main/controllers/ApplicationController";
 import * as ApplicationService from "../../../main/services/ApplicationService";
-import { getApplyJobRolesForm } from '../../../main/controllers/ApplicationController';
+import * as AwsUtil from "../../../main/Utils/AwsUtil"
 import jwt from 'jsonwebtoken';
 import { allowRoles } from "../../../main/middleware/AuthMiddleware";
 import { UserRole } from "../../../main/models/JwtToken";
 import session from 'express-session';
+import { buffer } from 'stream/consumers';
+import { error } from 'console';
 
 declare module 'express-session' {
   interface SessionData {
@@ -72,24 +74,72 @@ describe('ApplicationController', function () {
 
 
   describe('postApplicationForm', function () {
-    it('should render login form view', async () => {
+    it('should upload application and redirect to job roles', async () => {
       //Case for Successful Upload
+
+      sinon.stub(AwsUtil, "uploadFileToS3").resolves();
+      sinon.stub(ApplicationService, "postJobRoleAplication").resolves();
+
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { mimeType: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
+      };
+
+      const res = {
+        render: sinon.spy(),
+        redirect: sinon.stub().returnsThis()
+      };
+
+
+      await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.redirect.calledOnce).to.be.true;
+      expect(res.redirect.calledWith('/job-roles')).to.be.true;
     });
 
-    it('should render login form view', async () => {
+    it.only('should return error when no file is uploaded', async () => {
       //You must upload file
-    });
 
-    it('should render login form view', async () => {
-      //auth reqected
+      sinon.stub(AwsUtil, "uploadFileToS3").resolves();
+      sinon.stub(ApplicationService, "postJobRoleAplication").resolves();
+
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { }
+      };
+
+      const res = {
+        render: sinon.spy(),
+      };
+
+      await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: "You must upload file" })).to.be.true;
+
     });
 
     it('should render login form view', async () => {
       //Case for Invalid format
-    });
+      sinon.stub(AwsUtil, "uploadFileToS3").resolves();
+      sinon.stub(ApplicationService, "postJobRoleAplication").resolves();
 
-    it('should render login form view', async () => {
-      //Case for No file
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { mimeType: 'Incorrect', buffer: new Buffer("dawdawdawdaw") }
+      };
+
+      const res = {
+        render: sinon.spy(),
+      };
+
+      await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: "You must upload a PDF" })).to.be.true;
     });
 
     it('should render login form view', async () => {

@@ -36,14 +36,10 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
         roleID: id,
         cvLink: cvKey
     };
-    console.log(application);
 
     await postJobRoleAplication(application);
     res.redirect('/job-roles');
 } catch (e) {
-    if (e.message === 'Invalid token specified: must be a string') {
-        e.message = 'You must Sign in before applying for a job!';
-    }
     res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: e.message });
 }
 
