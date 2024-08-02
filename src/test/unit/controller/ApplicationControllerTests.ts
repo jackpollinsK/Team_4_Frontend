@@ -10,6 +10,7 @@ import { UserRole } from "../../../main/models/JwtToken";
 import session from 'express-session';
 import { buffer } from 'stream/consumers';
 import { error } from 'console';
+import { jwtDecode } from 'jwt-decode';
 
 declare module 'express-session' {
   interface SessionData {
@@ -33,7 +34,7 @@ describe('ApplicationController', function () {
   });
 
   const secretKey = 'SUPER_SECRET';
-  const validJwtToken = jwt.sign({ Role: UserRole.User }, secretKey, { expiresIn: '8h' });
+  const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com"}, secretKey, { expiresIn: '8h' });
 
   describe('getApplicationForm', function () {
     it('should render application form when user is logged in', async () => {
@@ -87,21 +88,21 @@ describe('ApplicationController', function () {
     it('should upload application and redirect to job roles', async () => {
       //Case for Successful Upload
 
-      sinon.stub(AwsUtil, "uploadFileToS3").resolves();
-      sinon.stub(ApplicationService, "postJobRoleAplication").resolves();
+      sinon.stub(AwsUtil, "uploadFileToS3");
+      sinon.stub(ApplicationService, "postJobRoleAplication");
 
       const req = {
         session: { token: validJwtToken },
         params: { id: 1 },
-        file: { mimeType: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
+        file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
       };
 
       const res = {
         render: sinon.spy(),
-        redirect: sinon.stub().returnsThis()
+        redirect: sinon.stub().returnsThis(),
+        locals: {errormessage: ''}
       };
-
-
+      
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
@@ -137,7 +138,7 @@ describe('ApplicationController', function () {
       sinon.stub(AwsUtil, "uploadFileToS3")
       sinon.stub(ApplicationService, "postJobRoleAplication")
 
-      const errormessage = "You must upload file"
+      const expectedErrorMessage = "You must upload a PDF"
 
       const req = {
         session: { token: validJwtToken },
@@ -153,10 +154,10 @@ describe('ApplicationController', function () {
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.locals.errormessage).equal(errormessage);
+      expect(res.locals.errormessage).equal(expectedErrorMessage);
     });
 
-    it('should throw error form view', async () => {
+    it('should throw error when service returns 400', async () => {
       //Case for User already exists
 
       const errormessage = "You have already applied to this job";
@@ -172,6 +173,7 @@ describe('ApplicationController', function () {
 
       const res = {
         render: sinon.spy(),
+        status: sinon.stub().returnsThis(),
         locals: { errormessage: '' }
       };
 
@@ -181,7 +183,7 @@ describe('ApplicationController', function () {
       expect(res.locals.errormessage).equal(errormessage);
     });
 
-    it('should render login form view', async () => {
+    it('should throw an error when AWS Fails upload', async () => {
       //Case for Aws error
       const errormessage = "Sorry Something went wrong on our side try again later";
 
@@ -205,7 +207,7 @@ describe('ApplicationController', function () {
       expect(res.locals.errormessage).equal(errormessage);
     });
 
-    it('should return a ', async () => {
+    it('should return a error when 500 is returned from service', async () => {
       //Case for Server Error
       const errormessage = "Internal Server Error.";
 
@@ -220,6 +222,7 @@ describe('ApplicationController', function () {
 
       const res = {
         render: sinon.spy(),
+        status: sinon.stub().returnsThis(),
         locals: { errormessage: '' }
       };
 
