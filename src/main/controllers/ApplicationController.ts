@@ -17,6 +17,7 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
 
         //Check if File is correct format
     if (req.file == null) {
+        res.locals.errormessage = "You must upload file";
         throw new Error('You must upload file');
     }
     else if (req.file.mimetype != 'application/pdf') {
