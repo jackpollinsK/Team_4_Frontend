@@ -1,5 +1,4 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { readFile } from "fs";
 
 const accessKeyId = process.env.BUCKET_ACCESS_KEY_ID;
 const secretAccessKey = process.env.BUCKET_SECRET_ACCESS_KEY;

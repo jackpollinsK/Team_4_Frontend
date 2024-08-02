@@ -1,8 +1,7 @@
 import Express from "express";
-import { postJobRoleAplication } from "../services/ApplicantService"
+import { postJobRoleAplication } from "../services/ApplicationService"
 import { JobApplyRoleRequest } from "../models/JobApplyRoleRequest"
 import { jwtDecode } from "jwt-decode";
-import { unlink, readFile } from "fs";
 import { uploadFileToS3 } from "../Utils/AwsUtil";
 
 
@@ -25,8 +24,10 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
     }
 
     //Set details for AWS Bucket
-    const cvKey = uEmail.split('@')[0] + "/Job" + id + ".pdf";
+    const date = new Date().toISOString();
+    const cvKey = uEmail.split('@')[0] + "/" + id + "-" + date +  ".pdf";
     const cvFile = req.file.buffer;
+
     await uploadFileToS3(cvFile, cvKey);
 
     //Send data to the backend
@@ -41,7 +42,7 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
     res.redirect('/job-roles');
 } catch (e) {
     if (e.message === 'Invalid token specified: must be a string') {
-        e.message = 'You must Sign in before applying for a job!'
+        e.message = 'You must Sign in before applying for a job!';
     }
     res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: e.message });
 }

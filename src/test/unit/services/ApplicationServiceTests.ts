@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { describe, it } from "node:test";
-import { postJobRoleAplication } from "../../../main/services/ApplicantService";
+import { postJobRoleAplication } from "../../../main/services/ApplicationService";
 import { JobApplyRoleRequest } from "../../../main/models/JobApplyRoleRequest";
 
 const mock = new MockAdapter(axios);
@@ -16,14 +16,14 @@ const testData: JobApplyRoleRequest = {
 describe('ApplicantService', function () {
     describe('postJobApplication', function () {
         it('should post application', async () => {
-            mock.onGet("").reply(201, testData);
+            mock.onPost("/api/apply-for-role").reply(201, testData);
         })
 
     })
 
 
     it('should throw exception when 500 error returned from axios', async () => {
-        mock.onGet("/api/apply-for-role").reply(500);
+        mock.onPost("/api/apply-for-role").reply(500);
         try {
           await postJobRoleAplication(testData);
         } catch (e) {
@@ -32,11 +32,11 @@ describe('ApplicantService', function () {
     })
 
     it('should throw exception when 400 error returned from axios', async () => {
-        mock.onGet("/api/apply-for-role").reply(400);
+      mock.onPost("/api/apply-for-role").reply(400);
         try {
             await postJobRoleAplication(testData);
           } catch (e) {
-            expect(e.message).to.equal('There was a problem with your CV');
+            expect(e.message).to.equal('You have already applied to this job');
           }
     })
 

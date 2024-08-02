@@ -10,7 +10,7 @@ import { getLoginForm, getLogoutForm, getNotAuthorisedIn, getNotLoggedIn, postLo
 import { getHomePage } from "./main/controllers/HomeController";
 import { allowRoles } from "./main/middleware/AuthMiddleware";
 import { UserRole } from "./main/models/JwtToken";
-import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/ApplicantController";
+import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/ApplicationController";
 
 const app = express();
 
@@ -61,6 +61,6 @@ app.get('/notAuthorised', getNotAuthorisedIn);
 
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
 
-app.get('/job-apply-:id', getApplyJobRolesForm);
-app.post('/job-apply-:id', upload.single('file'), postApplyJobRolesForm);
+app.get('/job-apply-:id', allowRoles([UserRole.Admin, UserRole.User]), getApplyJobRolesForm);
+app.post('/job-apply-:id', upload.single('file'), allowRoles([UserRole.Admin, UserRole.User]), postApplyJobRolesForm);
 app.get('/job-roles-:id',allowRoles([UserRole.Admin, UserRole.User]), getJobRole);
