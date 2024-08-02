@@ -19,11 +19,11 @@ export const postLoginForm  = async (req: express.Request, res: express.Response
 }
 
 export const getNotLoggedIn = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/notLoggedIn.html', {pageName: 'Not logged in'});
+    res.render('pages/notLoggedIn.html', {pageName: 'Not Logged In'});
 }
 
 export const getNotAuthorisedIn = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/notAuthorsied.html', {pageName: 'Not Authorised'});
+    res.render('pages/notAuthorised.html', {pageName: 'Not Authorised'});
 }
 
 export const getLogoutForm = async (req: express.Request, res: express.Response): Promise<void> => {

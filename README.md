@@ -16,7 +16,14 @@
 
 ## How to run UI tests locally 
 1. Make sure that your have ran `npm install` to install dependencies
-2. Run `npm run test-ci` in terminal to run ui test
+2. Open two terminals
+3. In terminal one, run `npm start`, to start localhost 3000 server
+4. In terminal two, run `npm run test-ui`, to run local UI tests
+
+## How to run UI tests on AWS 
+1. Make sure that your have ran `npm install` to install dependencies
+2. Make sure you have the correct: export WEBSITE_URL in your .zshrc file
+3. In terminal, run `npm run test-ui`, to run AWS UI tests
 
 ## How to make a new page
 1. Create a html file in the views/pages directory
