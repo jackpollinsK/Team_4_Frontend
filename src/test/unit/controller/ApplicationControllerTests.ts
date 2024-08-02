@@ -101,8 +101,8 @@ describe('ApplicationController', function () {
     it('should return error when no file is uploaded', async () => {
       //You must upload file
 
-      sinon.stub(AwsUtil, "uploadFileToS3").resolves();
-      sinon.stub(ApplicationService, "postJobRoleAplication").resolves();
+      sinon.stub(AwsUtil, "uploadFileToS3");
+      sinon.stub(ApplicationService, "postJobRoleAplication");
 
       const req = {
         session: { token: validJwtToken },
@@ -126,6 +126,8 @@ describe('ApplicationController', function () {
       sinon.stub(AwsUtil, "uploadFileToS3")
       sinon.stub(ApplicationService, "postJobRoleAplication")
 
+      const errormessage = "You must upload file"
+
       const req = {
         session: { token: validJwtToken },
         params: { id: 1 },
@@ -134,12 +136,13 @@ describe('ApplicationController', function () {
 
       const res = {
         render: sinon.spy(),
+        locals: {errormessage: ''}
       };
 
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: "You must upload a PDF" })).to.be.true;
+      expect(res.locals.errormessage).equal(errormessage);
     });
 
     it('should throw error form view', async () => {
@@ -164,7 +167,7 @@ describe('ApplicationController', function () {
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: errormessage })).to.be.true;
+      expect(res.locals.errormessage).equal(errormessage);
     });
 
     it('should render login form view', async () => {
@@ -188,10 +191,10 @@ describe('ApplicationController', function () {
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: errormessage })).to.be.true;
+      expect(res.locals.errormessage).equal(errormessage);
     });
 
-    it('should render login form view', async () => {
+    it('should return a ', async () => {
       //Case for Server Error
       const errormessage = "Internal Server Error.";
 
@@ -212,7 +215,7 @@ describe('ApplicationController', function () {
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: errormessage })).to.be.true;
+      expect(res.locals.errormessage).equal(errormessage);
     });
 
   });
