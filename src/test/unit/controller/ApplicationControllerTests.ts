@@ -17,6 +17,16 @@ declare module 'express-session' {
   }
 }
 
+interface testReq1 {
+  session: {
+    token: string;
+  };
+  params: {
+    id: number;
+  };
+  file: File | null;
+}
+
 describe('ApplicationController', function () {
   afterEach(() => {
     sinon.restore();
@@ -104,21 +114,22 @@ describe('ApplicationController', function () {
       sinon.stub(AwsUtil, "uploadFileToS3");
       sinon.stub(ApplicationService, "postJobRoleAplication");
 
-      const req = {
+      const req: testReq1 = {
         session: { token: validJwtToken },
         params: { id: 1 },
-        file: { }
+        file: null
       };
 
       const res = {
         render: sinon.spy(),
+        locals: { errormessage: '' }
       };
 
+      const expectedErrorMessage: string = 'You must upload file';
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: "You must upload file" })).to.be.true;
-
+      expect(res.locals.errormessage).to.equal(expectedErrorMessage);
     });
 
     it('should return error when file is incorrect format', async () => {
