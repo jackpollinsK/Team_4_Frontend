@@ -27,7 +27,7 @@ export const uploadFileToS3 = async (buffer: Buffer, key: string): Promise<void>
   try {
     // Upload file to S3
     const command = new PutObjectCommand(params);
-    const response = await s3Client.send(command);
+    await s3Client.send(command);
   } catch (e) {
     throw new Error("Sorry Something went wrong on our side try again later");
   }

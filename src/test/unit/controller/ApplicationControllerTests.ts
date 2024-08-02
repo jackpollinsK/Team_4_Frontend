@@ -7,10 +7,6 @@ import * as AwsUtil from "../../../main/Utils/AwsUtil"
 import jwt from 'jsonwebtoken';
 import { allowRoles } from "../../../main/middleware/AuthMiddleware";
 import { UserRole } from "../../../main/models/JwtToken";
-import session from 'express-session';
-import { buffer } from 'stream/consumers';
-import { error } from 'console';
-import { jwtDecode } from 'jwt-decode';
 
 declare module 'express-session' {
   interface SessionData {
