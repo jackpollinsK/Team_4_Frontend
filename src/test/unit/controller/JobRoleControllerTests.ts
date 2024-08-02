@@ -10,7 +10,6 @@ import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
 
-
 const expectedJobRole: JobRoleResponse = {
     id: 1,
     roleName: "Manager",
@@ -128,9 +127,6 @@ describe('JobRoleController', function () {
             sinon.stub(JobRoleService, 'getJobRoleById').resolves(expectedJobRoleSingle);
 
             await JobRoleController.getJobRole(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
-
-            console.log('Request:', req);
-            console.log('Expected"', expectedJobRoleSingle);
 
             expect(res.render.calledOnce).to.be.true;
             expect(res.render.calledWith('pages/singleJobRole.html', {

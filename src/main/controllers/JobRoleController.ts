@@ -5,7 +5,6 @@ import { jwtDecode } from "jwt-decode";
 
 export const getAllJobRoles = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
-        console.log(jwtDecode(req.session.token));
         res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;

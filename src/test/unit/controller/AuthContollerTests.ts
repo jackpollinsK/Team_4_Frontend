@@ -5,11 +5,17 @@ import sinon from 'sinon';
 import express from "express";
 import { LoginRequest } from "../../../main/models/LoginRequest";
 import "express-session";
-declare module "express-session" {
+import jwt from 'jsonwebtoken';
+import { UserRole } from "../../../main/models/JwtToken";
+
+declare module 'express-session' {
   interface SessionData {
     token: string;
   }
 }
+
+const secretKey = 'SUPER_SECRET';
+const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
 describe('AuthController', function () {
   afterEach(() => {
@@ -136,18 +142,30 @@ describe('AuthController', function () {
       expect(res.redirect.calledOnce).to.be.true;
       expect(res.redirect.calledWith('/')).to.be.true;
     });
+  });
 
-    describe('getNotLoggedIn', function () {
-      it('should render notLoggedIn form view', async () => {
-        const req = {};
-        const res = { render: sinon.spy() };
+  describe('getNotLoggedIn', function () {
+    it('should render notLoggedIn form view', async () => {
+      const req = {};
+      const res = { render: sinon.spy() };
 
-        await AuthController.getNotLoggedIn(req as express.Request, res as unknown as express.Response);
+      await AuthController.getNotLoggedIn(req as express.Request, res as unknown as express.Response);
 
-        expect(res.render.calledOnce).to.be.true;
-      });
+      expect(res.render.calledOnce).to.be.true;
     });
+  });
 
+  describe('getNotAuthorised', function () {
+    it.only('should render notAuthorised form view', async () => {
+      const req = {
+        session: { token: validJwtToken }
+      };
+      const res = { render: sinon.spy() };
+
+      await AuthController.getNotAuthorised(req as unknown as express.Request, res as unknown as express.Response);
+
+      expect(res.render.calledOnce).to.be.true;
+    });
   });
 
 });
