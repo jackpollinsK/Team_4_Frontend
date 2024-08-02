@@ -1,7 +1,7 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
 <div class="m-5 shadow bg-body-secondary text-center">
-<h2>Apply for JOB NAME</h2>
+<h2>Apply for {{job.roleName}} </h2>
 {% if errormessage %}
 <h5 class="errorMessage" id="errorMessage">{{ errormessage }}</h5>
 {% endif %}
@@ -11,7 +11,7 @@
     <div>Select a file: 
         <input id="fileData" type="file" name="file" multiple="multiple" />
       </div>
-    <input class="btn bg-primary text-white" type="submit" value="Upload" />
+    <input class="btnKainos" type="submit" value="Upload" />
 </form>
 </div>
 {% endblock %}

@@ -7,6 +7,8 @@ import * as AwsUtil from "../../../main/Utils/AwsUtil"
 import jwt from 'jsonwebtoken';
 import { allowRoles } from "../../../main/middleware/AuthMiddleware";
 import { UserRole } from "../../../main/models/JwtToken";
+import * as JobRoleService from '../../../main/services/JobRoleService';
+import { JobRoleSingleResponse } from '../../../main/models/JobRoleSingleResponse';
 
 declare module 'express-session' {
   interface SessionData {
@@ -24,6 +26,19 @@ interface testReq1 {
   file: File | null;
 }
 
+const expectedJobRoleSingle: JobRoleSingleResponse = {
+  id: 1,
+  roleName: "Engineer",
+  location: "Belfast",
+  capability: "Coding",
+  band: "A",
+  closingDate: new Date(2019, 1, 16),
+  status: "Open",
+  description: "A short description",
+  responsibilities: "Something Important",
+  jobSpec: "A Link to a page",
+}
+
 describe('ApplicationController', function () {
   afterEach(() => {
     sinon.restore();
@@ -35,6 +50,8 @@ describe('ApplicationController', function () {
   describe('getApplicationForm', function () {
     it('should render application form when user is logged in', async () => {
       //Case for Successful Upload
+
+      sinon.stub(JobRoleService, 'getJobRoleById').resolves(expectedJobRoleSingle)
 
       const req = {
         session: { token: validJwtToken },
@@ -48,7 +65,7 @@ describe('ApplicationController', function () {
       await ApplicationContoller.getApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render.calledWith('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', token: req.session.token })).to.be.true;
+      expect(res.render.calledWith('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', token: req.session.token, job: expectedJobRoleSingle })).to.be.true;
     });
   });
 

@@ -22,7 +22,7 @@
             <td>{{ jobRole.capability }}</td>
             <td>{{ jobRole.band }}</td>
             <td>{{ jobRole.closingDate | date }}</td>
-            <td>{% include "snippets/apply.html" %}</td>
+            <td><a href="/job-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
         </tr>
     {% endfor %}
     </tbody>
