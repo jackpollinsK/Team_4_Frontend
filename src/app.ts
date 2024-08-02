@@ -61,6 +61,6 @@ app.get('/notAuthorised', getNotAuthorisedIn);
 
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
 
-app.get('/job-apply-:id', allowRoles([UserRole.Admin, UserRole.User]), getApplyJobRolesForm);
-app.post('/job-apply-:id', upload.single('file'), allowRoles([UserRole.Admin, UserRole.User]), postApplyJobRolesForm);
+app.get('/job-apply-:id', allowRoles([UserRole.User]), getApplyJobRolesForm);
+app.post('/job-apply-:id', upload.single('file'), allowRoles([UserRole.User]), postApplyJobRolesForm);
 app.get('/job-roles-:id',allowRoles([UserRole.Admin, UserRole.User]), getJobRole);

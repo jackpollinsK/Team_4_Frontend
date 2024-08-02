@@ -11,7 +11,9 @@
         <th scope="col">Capability</th>
         <th scope="col">Band</th>
         <th scope="col">Closing Date</th>
-        <th scope="col">Apply</th>
+        {% if userLevel.Role == 2 %}
+            <th scope="col">Apply</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -22,7 +24,9 @@
             <td>{{ jobRole.capability }}</td>
             <td>{{ jobRole.band }}</td>
             <td>{{ jobRole.closingDate | date }}</td>
-            <td><a href="/job-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+            {% if userLevel.Role == 2 %}
+                <td><a href="/job-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
