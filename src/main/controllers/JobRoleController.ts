@@ -1,4 +1,4 @@
-import express, { request } from "express";
+import express from "express";
 import { getJobRoleById, getJobRoles } from "../services/JobRoleService"
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 import { jwtDecode } from "jwt-decode";
