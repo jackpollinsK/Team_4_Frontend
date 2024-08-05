@@ -4,6 +4,7 @@ import { LogoutTestPage } from "./LogoutTestPage";
 import { HomeTestPage } from "../ui/HomeTestPage";
 import { NavbarTestPage } from "./NavbarTestPage";
 import { JobRolesTestPage } from "./JobRolesTestPage";
+import { JobRoleTestPage } from "./JobRoleTestPage";
 import { WebDriver } from 'selenium-webdriver';
 import { ChromeDriver } from './ChromeDriver';
 
@@ -17,6 +18,7 @@ describe('View job roles Test', function () {
     let homePage: HomeTestPage;
     let navBarPage: NavbarTestPage;
     let jobRolesPage: JobRolesTestPage;
+    let jobRolePage: JobRoleTestPage;
 
     let Roles = ['Software Engineer', 'Product Manager'];
     let Location = ['Belfast', 'Birmingham', 'Derry'];
@@ -31,6 +33,7 @@ describe('View job roles Test', function () {
         homePage = await new HomeTestPage(driver);
         navBarPage = await new NavbarTestPage(driver);
         jobRolesPage = await new JobRolesTestPage(driver);
+        jobRolePage = await new JobRoleTestPage(driver);
 
     });
 
@@ -99,35 +102,66 @@ describe('View job roles Test', function () {
         console.log('Num of columns: ' + colms);
 
         //Verifying Role column
-        for(let index = 1; index < rows; index++){
+        for(let index = 1; index <= rows; index++){
             const tabledata = await jobRolesPage.getData(index,1)
             console.log('Role: ' + tabledata)
             expect(Roles).to.include(tabledata); 
         }
 
         //Verifying Location column        
-        for(let index = 1; index < rows; index++){
+        for(let index = 1; index <= rows; index++){
             const tabledata = await jobRolesPage.getData(index,2)
             console.log('Location: ' + tabledata)
             expect(Location).to.include(tabledata); 
         }
 
         //Verifying Capability column
-        for(let index = 1; index < rows; index++){
+        for(let index = 1; index <= rows; index++){
             const tabledata = await jobRolesPage.getData(index,3)
             console.log('Capability: ' + tabledata)
             expect(Capability).to.include(tabledata); 
         }
 
         //Verifying Band column        
-        for(let index = 1; index < rows; index++){
+        for(let index = 1; index <= rows; index++){
             const tabledata = await jobRolesPage.getData(index,4)
             console.log('Band: ' + tabledata)
             expect(Band).to.include(tabledata); 
-        }      
-        
-        
+        }       
+ 
     });
 
+    it.only('Verify job role links work', async function () {
+
+        await jobRolesPage.open();
+
+        await jobRolesPage.clickLogin();
+
+        const EMAIL = process.env.LOGIN_EMAIL_1;
+        const PASSWORD = process.env.LOGIN_PASSWORD_1;
+
+        await loginPage.enterEmail(EMAIL);
+        await loginPage.enterPassword(PASSWORD);
+        await loginPage.clickLogin();
+
+        await navBarPage.clickJobsButton();
+
+        const rows = await jobRolesPage.getNumRows();
+
+        //Verifying Role column
+        for(let index = 1; index <= rows; index++){
+            const tableRoleName = await jobRolesPage.getData(index,1)
+            console.log('Expected role name : ' + tableRoleName)
+            
+            await jobRolesPage.clickTableCell(index,1)
+            
+            const actualRoleName = await jobRolePage.getRoleName()
+            console.log('Actual role name: ' + actualRoleName)
+            expect(actualRoleName).to.equal(tableRoleName);  
+
+            await jobRolesPage.open()
+        }
+        
+    });
 
 });

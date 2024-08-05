@@ -50,6 +50,12 @@ export class JobRolesTestPage extends ChromeDriver {
         return await this.getColumnCount(id);
     } 
 
+   //Click ce
+   async clickTableCell(row: number, col: number): Promise<void> {
+    const id = '/html/body/div/div/table'; // Switch to ID
+    await this.clickCell(id, row, col); //Switch to ID when ID implemented
+}    
+
    //Login button needs ID
     async clickLogin(): Promise<void> {
         const element = 'Login';
