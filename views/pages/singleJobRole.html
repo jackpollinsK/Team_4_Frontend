@@ -3,20 +3,21 @@
 <div class="container container.center">
     <div class="m-5 text-center">
         <div class="bg-body-secondary card">
-            <h1>{{job.roleName}}</h1>
-            <h3>{{job.capability}} : {{job.band}}</h3>
-            <h4>{{job.location}}</h4>
+            <h1 id="roleName">{{job.roleName}}</h1>
+            <h3 id="capability">{{job.capability}} : {{job.band}}</h3>
+            <h4 id="location">{{job.location}}</h4>
             <h5>Closing Date</h5>
-            <div>{{job.closingDate | date}}</div>
+            <div id="closing date">{{job.closingDate | date}}</div>
             <h5>Description</h5>
-            <div>{{job.description}}</div>
+            <div id="description">{{job.description}}</div>
             <h5>Responsibilities</h5>
-            <div>{{job.responsibilities}}</div>
-            <a href="{{job.jobSpec}}">Job spec</a>
+            <div id="resposibilities">{{job.responsibilities}}</div>
         </div>
-        <div class="bg-body-secondary card">
+        <br>
+        <div class="card-body">
             {% if userLevel.Role == 1 %}
-            <button>Delete Job Role</button>
+            <a href="/job-delete-{{jobRole.id}}" class="btnKainos mt-2 text-center"
+                style="margin-left: 46%; margin-top: 5%; margin-bottom: 5%;">Delete Job Role</a>
             {% endif %}
         </div>
     </div>

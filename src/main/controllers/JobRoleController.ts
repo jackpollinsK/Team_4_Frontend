@@ -16,7 +16,7 @@ export const getAllJobRoles = async (req: express.Request, res: express.Response
 export const getJobRole = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
         const job : JobRoleSingleResponse = await getJobRoleById(req.params.id,req.session.token)
-        res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job, token: req.session.token});
+        res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job, token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
         res.locals.pageName = "An Error Ocured";
