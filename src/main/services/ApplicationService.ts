@@ -1,7 +1,6 @@
 
 import axios, { AxiosResponse } from "axios";
 import { JobApplyRoleRequest } from "../models/JobApplyRoleRequest";
-import express from "express";
 import { jwtDecode } from "jwt-decode";
 import { uploadFileToS3 } from "../Utils/AwsUtil";
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
@@ -24,7 +23,7 @@ export const postJobRoleAplication = async (application: JobApplyRoleRequest): P
 
 }
 
-export const processJobRoleAplication = async (req: express.Request) => {
+export const processJobRoleAplication = async (req: any) => {
         //Get user and the Job ID
         const uEmail = jwtDecode(req.session.token).sub;
         const id = Number(req.params.id);
