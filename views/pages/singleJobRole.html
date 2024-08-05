@@ -1,19 +1,24 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
 <div class="container container.center">
-<div class="m-5 text-center">
-    <div class="bg-body-secondary card">
-    <h1>{{job.roleName}}</h1>
-    <h3>{{job.capability}} : {{job.band}}</h3>
-    <h4>{{job.location}}</h4>
-    <h5>Closing Date</h5>
-    <div>{{job.closingDate | date}}</div>
-    <h5>Description</h5>
-    <div>{{job.description}}</div>
-    <h5>Responsibilities</h5>
-    <div>{{job.responsibilities}}</div>
-    <a href="{{job.jobSpec}}">Job spec</a>
+    <div class="m-5 text-center">
+        <div class="bg-body-secondary card">
+            <h1>{{job.roleName}}</h1>
+            <h3>{{job.capability}} : {{job.band}}</h3>
+            <h4>{{job.location}}</h4>
+            <h5>Closing Date</h5>
+            <div>{{job.closingDate | date}}</div>
+            <h5>Description</h5>
+            <div>{{job.description}}</div>
+            <h5>Responsibilities</h5>
+            <div>{{job.responsibilities}}</div>
+            <a href="{{job.jobSpec}}">Job spec</a>
+        </div>
+        <div class="bg-body-secondary card">
+            {% if userLevel.Role == 1 %}
+            <button>Delete Job Role</button>
+            {% endif %}
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}
