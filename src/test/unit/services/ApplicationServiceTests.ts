@@ -34,7 +34,11 @@ const testData: JobApplyRoleRequest = {
 }
 
 describe('ApplicationService', function () {
-  describe('postJobRoleAplication', function () {
+  describe('processJobRoleAplication', function () {
+
+  afterEach(() => {
+    sinon.restore();
+  });
 
     it('should post application', async () => {
       mock.onPost("/api/apply-for-role").reply(201, testData);
@@ -57,13 +61,6 @@ describe('ApplicationService', function () {
         expect(e.message).to.equal('You have already applied to this job');
       }
     })
-  })
-
-  describe('processJobRoleAplication', function () {
-    afterEach(() => {
-      sinon.restore();
-    });
-      
     const secretKey = 'SUPER_SECRET';
     const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
@@ -129,52 +126,30 @@ describe('ApplicationService', function () {
       sinon.restore();
     });
 
-    // it('should throw an error when AWS Fails upload', async () => {
-    //   //Case for Aws error
-    //   const errormessage = "Sorry Something went wrong on our side try again later";
+    it('should throw an error when AWS Fails upload', async () => {
+      //Case for Aws error
+      const expectedErrorMessage = "Sorry Something went wrong on our side try again later";
 
-    //   sinon.stub(AwsUtil, "uploadFileToS3").throws(new Error(errormessage));
-    //  // sinon.stub(ApplicationService, "postJobRoleAplication");
+      sinon.stub(AwsUtil, "uploadFileToS3").throws(new Error("Sorry Something went wrong on our side try again later"));
+     // sinon.stub(ApplicationService, "postJobRoleAplication");
 
-    //   const req = {
-    //     session: { token: validJwtToken },
-    //     params: { id: 1 },
-    //     file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
-    //   };
+      const req = {
+        session: { token: validJwtToken },
+        params: { id: 1 },
+        file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
+      };
 
-    //   const res = {
-    //     render: sinon.spy(),
-    //     locals: { errormessage: '' }
-    //   };
-
-    //   expect(res.render.calledOnce).to.be.true;
-    //   expect(res.locals.errormessage).equal(errormessage);
-    // });
-
-    // it('should return a error when 500 is returned from service', async () => {
-    //   //Case for Server Error
-    //   const expectedErrorMessage = "Internal Server Error.";
-
-    //   sinon.stub(AwsUtil, "uploadFileToS3")
-
-    //   const req = {
-    //     session: { token: validJwtToken },
-    //     params: { id: 1 },
-    //     file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
-    //   };
-
-    //   const res = {
-    //     render: sinon.spy(),
-    //     status: sinon.stub().returnsThis(),
-    //     locals: { errormessage: '' }
-    //   };
-
-    //   try {
-    //     await processJobRoleAplication(req);
-    //   } catch(e){
-    //     expect(e.message).to.equal(expectedErrorMessage);
-    //   }
-    // });
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' }
+      };
+      try {
+        await processJobRoleAplication(req);
+      } catch(e){
+        expect(e.message).to.equal(expectedErrorMessage);
+      }
+      sinon.restore();
+    });
 
   })
 
