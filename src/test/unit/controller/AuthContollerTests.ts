@@ -17,11 +17,8 @@ declare module 'express-session' {
 const secretKey = 'SUPER_SECRET';
 const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
-describe('AuthController', function () {
-  afterEach(() => {
-    sinon.restore();
-  });
 
+describe('AuthController', function () {
   describe('getLoginForm', function () {
     it('should render login form view', async () => {
       const req = { session: { token: '' } };

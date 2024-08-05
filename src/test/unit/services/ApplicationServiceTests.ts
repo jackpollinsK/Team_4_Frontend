@@ -27,7 +27,6 @@ interface testReq1 {
   file: File | null;
 }
 
-
 const testData: JobApplyRoleRequest = {
   email: 'adam@random.com',
   roleID: 1,
@@ -35,10 +34,6 @@ const testData: JobApplyRoleRequest = {
 }
 
 describe('ApplicationService', function () {
-  afterEach(() => {
-    sinon.restore();
-  });
-
   describe('postJobRoleAplication', function () {
 
     it('should post application', async () => {
@@ -65,6 +60,10 @@ describe('ApplicationService', function () {
   })
 
   describe('processJobRoleAplication', function () {
+    afterEach(() => {
+      sinon.restore();
+    });
+      
     const secretKey = 'SUPER_SECRET';
     const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
