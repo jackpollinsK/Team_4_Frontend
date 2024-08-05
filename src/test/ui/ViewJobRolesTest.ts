@@ -78,7 +78,7 @@ describe('View job roles Test', function () {
         
     });
 
-    it.only('Verify valid field names', async function () {
+    it('Verify valid field names', async function () {
 
         await jobRolesPage.open();
 
