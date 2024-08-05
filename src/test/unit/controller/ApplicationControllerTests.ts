@@ -16,16 +16,6 @@ declare module 'express-session' {
   }
 }
 
-interface testReq1 {
-  session: {
-    token: string;
-  };
-  params: {
-    id: number;
-  };
-  file: File | null;
-}
-
 const expectedJobRoleSingle: JobRoleSingleResponse = {
   id: 1,
   roleName: "Engineer",
