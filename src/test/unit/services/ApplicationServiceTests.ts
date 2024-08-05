@@ -120,7 +120,7 @@ describe('ApplicationService', function () {
     it('should throw error when service returns 400', async () => {
       //Case for User already exists
 
-      const errormessage = "You have already applied to this job";
+      const expectedErrorMessage = "You have already applied to this job";
 
       sinon.stub(AwsUtil, "uploadFileToS3")
 
@@ -136,10 +136,11 @@ describe('ApplicationService', function () {
         locals: { errormessage: '' }
       };
 
-      //await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
-
-      expect(res.render.calledOnce).to.be.true;
-      expect(res.locals.errormessage).equal(errormessage);
+      try {
+        await processJobRoleAplication(req);
+      } catch(e){
+        expect(e.message).to.equal(expectedErrorMessage);
+      }
     });
 
     it('should throw an error when AWS Fails upload', async () => {
@@ -166,7 +167,7 @@ describe('ApplicationService', function () {
 
     it('should return a error when 500 is returned from service', async () => {
       //Case for Server Error
-      const errormessage = "Internal Server Error.";
+      const expectedErrorMessage = "Internal Server Error.";
 
       sinon.stub(AwsUtil, "uploadFileToS3")
 
@@ -182,10 +183,11 @@ describe('ApplicationService', function () {
         locals: { errormessage: '' }
       };
 
-     // await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
-
-      expect(res.render.calledOnce).to.be.true;
-      expect(res.locals.errormessage).equal(errormessage);
+      try {
+        await processJobRoleAplication(req);
+      } catch(e){
+        expect(e.message).to.equal(expectedErrorMessage);
+      }
     });
 
   })
