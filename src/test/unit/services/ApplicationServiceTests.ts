@@ -8,6 +8,7 @@ import * as AwsUtil from "../../../main/Utils/AwsUtil"
 import sinon from "sinon";
 import jwt from 'jsonwebtoken';
 import { UserRole } from "../../../main/models/JwtToken";
+import express from "express";
 
 const mock = new MockAdapter(axios);
 
@@ -78,7 +79,7 @@ describe('ApplicationService', function () {
       const expectedErrorMessage: string = 'You must upload file';
 
       try {
-        await processJobRoleAplication(req);
+        await processJobRoleAplication(req as unknown as express.Request);
       } catch(e){
         expect(e.message).to.equal(expectedErrorMessage);
       }
@@ -98,7 +99,7 @@ describe('ApplicationService', function () {
       };
 
       try {
-        await processJobRoleAplication(req);
+        await processJobRoleAplication(req as unknown as express.Request);
       } catch(e){
         expect(e.message).to.equal(expectedErrorMessage);
       }
@@ -119,7 +120,7 @@ describe('ApplicationService', function () {
       };
 
       try {
-        await processJobRoleAplication(req);
+        await processJobRoleAplication(req as unknown as express.Request);
       } catch(e){
         expect(e.message).to.equal(expectedErrorMessage);
       }
@@ -138,13 +139,8 @@ describe('ApplicationService', function () {
         params: { id: 1 },
         file: { mimetype: 'application/pdf', buffer: new Buffer("dawdawdawdaw") }
       };
-
-      const res = {
-        render: sinon.spy(),
-        locals: { errormessage: '' }
-      };
       try {
-        await processJobRoleAplication(req);
+        await processJobRoleAplication(req as unknown as express.Request);
       } catch(e){
         expect(e.message).to.equal(expectedErrorMessage);
       }
