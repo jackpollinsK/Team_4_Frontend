@@ -34,29 +34,30 @@ describe('Middleware', function () {
             expect(res.redirect.calledOnce).to.be.true;
             expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
         });
-    });
-    it('should render notAuthorised view and return 403 status, when a user is logged in with User permission, but they try to access admin permission content', async () => {
 
-        const secretKey = 'SUPER_SECRET';
-        const validJwtToken = jwt.sign({ Role: UserRole.User }, secretKey, { expiresIn: '8h' });
+        it('should render notAuthorised view and return 403 status, when a user is logged in with User permission, but they try to access admin permission content', async () => {
 
-        const req = {
-            session: { token: validJwtToken}
-        };
+            const secretKey = 'SUPER_SECRET';
+            const validJwtToken = jwt.sign({ Role: UserRole.User }, secretKey, { expiresIn: '8h' });
 
-        const res = {
-            status: sinon.stub().returnsThis(),
-            redirect: sinon.stub().returnsThis()
-        };
+            const req = {
+                session: { token: validJwtToken }
+            };
 
-        const next = sinon.stub();
+            const res = {
+                status: sinon.stub().returnsThis(),
+                redirect: sinon.stub().returnsThis()
+            };
 
-        const middleware = allowRoles([UserRole.Admin]);
+            const next = sinon.stub();
 
-        await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
+            const middleware = allowRoles([UserRole.Admin]);
 
-        expect((res.status as sinon.SinonStub).calledWith(403)).to.be.true;
-        expect(res.redirect.calledOnce).to.be.true;
-        expect(res.redirect.calledWith('/notAuthorised')).to.be.true;
+            await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
+
+            expect((res.status as sinon.SinonStub).calledWith(403)).to.be.true;
+            expect(res.redirect.calledOnce).to.be.true;
+            expect(res.redirect.calledWith('/notAuthorised')).to.be.true;
+        });
     });
 });
