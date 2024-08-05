@@ -20,6 +20,9 @@
                 <option value="{{ band[0] }}">{{ band[0] }}</option>
             {% endfor %}
         </select>
+        <h3><label for="capability">
+            Capability:
+        </label></h3>
         <select class="form-control" id="capability" name="capability">
             {% for capability in capabilities %}
                 <option value="{{ capability[0] }}">{{ capability[0] }}</option>

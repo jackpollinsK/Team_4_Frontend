@@ -2,7 +2,8 @@
     {href: '/', id: 'Kainos Jobs Homepage', caption: 'Home'},
     {href: '/job-roles', id: 'Job Roles', caption: 'Jobs'},
     {href: '/loginForm', id: 'Login Page', caption: 'Login'},
-    {href: '/logoutForm', id: 'Logout Page', caption: 'Logout'}
+    {href: '/logoutForm', id: 'Logout Page', caption: 'Logout'},
+    {href: '/jobRoleForm', id: 'Job Role Form', caption: 'Create New Job Post'}
 ] %}
 
 
@@ -10,7 +11,6 @@
     <img src="./images/Kainos 800x250 Logo (Transparent BG).png" width="200" height="63" alt="Kainos Compay Logo">
     <div>
         <div class="navbar-nav mt-4">
-
             {% for link in navigation_bar %}
                 {% if not token.length and link.id != "Logout Page" %}
                         <a class="nav-Link {% if pageName == link.id %} nav-LinkOnPage {% endif %}"

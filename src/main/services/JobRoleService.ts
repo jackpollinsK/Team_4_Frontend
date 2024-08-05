@@ -4,7 +4,7 @@ import { JobRoleResponse } from "../models/JobRoleResponse";
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080';
 import { getHeader } from "../services/AuthUtil";
-import { JobRoleRequest } from "../models/RoleRequest";
+import { JobRoleRequest } from "../models/JobRoleRequest";
 
 
 export const URL: string = "/api/JobRoles";

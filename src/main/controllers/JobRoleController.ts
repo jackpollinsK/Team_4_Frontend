@@ -24,7 +24,7 @@ export const getJobRole = async (req: express.Request, res: express.Response): P
 }
 
 export const getRoleForm = async( req: express.Request, res: express.Response): Promise<void> => {
-    res.render('jobRoleForm.hmtl')
+    res.render('pages/jobRoleForm.html')
 }
 
 export const postRoleForm = async( req: express.Request, res: express.Response): Promise<void> => {
