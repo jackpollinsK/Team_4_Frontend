@@ -81,7 +81,13 @@ export class ChromeDriver {
         const table = await this.getTableWithXpath(id); //Switch to get with id;
         const columns = await table.findElements(By.css('thead th'));
         return columns.length;
-    }    
+    }   
+    
+    async clickCell(id: string, row: number, col: number): Promise<void> {
+        const table = await this.getTableWithXpath(id); //Switch to get with id
+        const cell = await table.findElement(By.css(`tbody tr:nth-child(${row}) td:nth-child(${col})`));
+        return cell.click();
+    }
 
     async clickById(id: string) {
         console.log(`Clicking element with ID: ${id}`);
