@@ -3,7 +3,6 @@ import nunjucks from "nunjucks";
 import multer from "multer";
 import bodyParser from "body-parser";
 import session from "express-session";
-import dotenv from "dotenv";
 
 import { getAllJobRoles, getJobRole } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
@@ -13,8 +12,6 @@ import { allowRoles } from "./main/middleware/AuthMiddleware";
 import { UserRole } from "./main/models/JwtToken";
 import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/ApplicationController";
 import { getPromptForm, postPromptForm } from "./main/controllers/OpenAIController";
-
-dotenv.config();
 
 const app = express();
 
