@@ -17,27 +17,27 @@ const mock = new MockAdapter(axios);
 
 describe('AuthService', function () {
 
-    describe('getToken', function () {
-      it('should get Jwt token', async () => {
-        mock.onPost(URL).reply(200, 123);
+  describe('getToken', function () {
+    it('should get Jwt token', async () => {
+      mock.onPost(URL).reply(200, 123);
 
-        const result = await getTokenByloggingIn(loginResquest);
+      const result = await getTokenByloggingIn(loginResquest);
 
-        expect(result).to.equal(123);
-      })
+      expect(result).to.equal(123);
+    })
 
-      it('should throw exception when 404 error returned from axios', async () => {
-        const loginResquest2: LoginRequest = {
-          email: "sadkjfhdsaijkfh",
-          password: PASSWORD
-        }
-        mock.onPost(URL).reply(404);
-        try {
-          await getTokenByloggingIn(loginResquest2);
-        } catch (e) {
-          expect(e.message).to.equal('Invalid Email - Try Again.');
-          return;
-        }
+    it('should throw exception when 404 error returned from axios', async () => {
+      const loginResquest2: LoginRequest = {
+        email: "sadkjfhdsaijkfh",
+        password: PASSWORD
+      }
+      mock.onPost(URL).reply(404);
+      try {
+        await getTokenByloggingIn(loginResquest2);
+      } catch (e) {
+        expect(e.message).to.equal('Invalid Email - Try Again.');
+        return;
+      }
     })
 
     it('should throw exception when 400 error returned from axios', async () => {
@@ -52,23 +52,21 @@ describe('AuthService', function () {
         expect(e.message).to.equal('Invalid Credentials.');
         return;
       }
-  })
+    })
 
-  it('should throw exception when 500 error returned from axios', async () => {
-    const loginResquest4: LoginRequest = {
-      email: "string",
-      password: "string"
-    }
-    mock.onPost(URL).reply(500);
-    try {
-      await getTokenByloggingIn(loginResquest4);
-    } catch (e) {
-      expect(e.message).to.equal('Internal Server Error.');
-      return;
-    }
-})
-
-    
+    it('should throw exception when 500 error returned from axios', async () => {
+      const loginResquest4: LoginRequest = {
+        email: "string",
+        password: "string"
+      }
+      mock.onPost(URL).reply(500);
+      try {
+        await getTokenByloggingIn(loginResquest4);
+      } catch (e) {
+        expect(e.message).to.equal('Internal Server Error.');
+        return;
+      }
+    })
 
   })
 })
