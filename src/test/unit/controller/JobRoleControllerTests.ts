@@ -184,23 +184,20 @@ describe('JobRoleController', function () {
 
     describe('deleteJobRole', function () {
         it('should delete selected job role, then return to view all job roles, when Admin user is logged in', async () => {
-            const req = {
-                param: { id: '1' },
-                session: { token: validAdminJwtToken }
-            };
+            const req = { params: { id: 1 }, session: { token: validAdminJwtToken } };
 
             const res = {
                 render: sinon.spy(),
-                redirect: sinon.spy(),
                 locals: { errormessage: '' }
             };
 
+            sinon.stub(JobRoleService, 'getJobRoles');
             sinon.stub(JobRoleService, 'deleteJobRoleById');
 
             await JobRoleController.deleteJobRole(req as unknown as express.Request, res as unknown as express.Response);
 
-            expect(res.render.calledOnce).to.be.true;
-            expect(res.redirect.calledWith('/allJobRolesList.html')).to.be.true;
+            expect(res.render.called).to.be.true;
+            expect(res.render.calledWith('pages/allJobRolesList.html')).to.be.true;
         });
 
     });

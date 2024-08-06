@@ -120,9 +120,9 @@ describe('deleteJobRoleById', function () {
   });
 
   it('should throw exception when 404 error returned from axios when logged in with admin ', async () => {
-    mock.onDelete(URL + "/1").reply(404);
+    mock.onDelete(URL + "/10000").reply(404);
     try {
-      await deleteJobRoleById("1", validJwtToken);
+      await deleteJobRoleById("10000", validJwtToken);
     } catch (e) {
       expect(e.message).to.equal('Job Role Not Found');
     }
