@@ -9,7 +9,7 @@ export class LoginTestPage extends ChromeDriver {
          
  
     async open(): Promise<void> {
-        const WEBSITE_URL = process.env.WEBSITE_URL;
+        const WEBSITE_URL = process.env.WEBSITE_URL || "http://localhost:3000";
         const LOGIN_URL = `${WEBSITE_URL}/loginForm`;
         await this.go_to_url(LOGIN_URL);
     }
