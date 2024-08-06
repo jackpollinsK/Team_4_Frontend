@@ -17,8 +17,8 @@ export class JobRoleTestPage extends ChromeDriver {
 
     //Element needs ID
     async getRoleName(): Promise<string> {
-        const id = '/html/body/div/div/div/h1'; 
-        return await this.getTextByXpath(id); //Switch to ID when implemented
+        const id = 'role-name'; 
+        return await this.getTextById(id); //Switch to ID when implemented
     }
 
 

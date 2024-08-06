@@ -66,25 +66,25 @@ export class ChromeDriver {
     }
     
     async getCellText(id: string, row: number, col: number): Promise<string> {
-        const table = await this.getTableWithXpath(id); //Switch to get with id
+        const table = await this.getTableById(id); //Switch to get with id
         const cell = await table.findElement(By.css(`tbody tr:nth-child(${row}) td:nth-child(${col})`));
         return cell.getText();
     }
 
     async getRowCount(id: string): Promise<number> {
-        const table = await this.getTableWithXpath(id); //Switch to get with id
+        const table = await this.getTableById(id); //Switch to get with id
         const rows = await table.findElements(By.css('tbody tr'));
         return rows.length;
     }
 
     async getColumnCount(id: string): Promise<number> {
-        const table = await this.getTableWithXpath(id); //Switch to get with id;
+        const table = await this.getTableById(id); //Switch to get with id;
         const columns = await table.findElements(By.css('thead th'));
         return columns.length;
     }   
     
     async clickCell(id: string, row: number, col: number): Promise<void> {
-        const table = await this.getTableWithXpath(id); //Switch to get with id
+        const table = await this.getTableById(id); //Switch to get with id
         const cell = await table.findElement(By.css(`tbody tr:nth-child(${row}) td:nth-child(${col})`));
         return cell.click();
     }
