@@ -9,7 +9,7 @@ export const getPromptForm = async (req: express.Request, res: express.Response)
 
 export const postPromptForm = async (req: express.Request, res: express.Response): Promise<void> => {
 
-    const queryParams = await getQueryParams(req.body);
+    const queryParams = await getQueryParams(req.body.prompt);
 
     const jobRolesResponse = await postAIResponse(queryParams, req.session.token);
 

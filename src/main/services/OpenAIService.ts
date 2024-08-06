@@ -23,8 +23,11 @@ export const aiFiltering = async (filter: OpenAIRequest, jobRoles: JobRoleRespon
     var result: JobRoleResponse[] = [];
 
     jobRoles.forEach(job => {
-        if (job.band == filter.band && job.capability == filter.capability && job.location == filter.location){
-            result.push(job);
+        if (filter.band.toLocaleLowerCase().includes(job.band.toLowerCase()) && 
+        filter.capability.toLowerCase().includes(job.capability.toLowerCase()) && 
+        filter.location.toLowerCase().includes(job.location.toLowerCase())){
+            
+            result.push(job)
         }
     });
 
