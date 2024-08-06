@@ -33,10 +33,10 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
     }
 }
 
-export const deleteJobRoleById = async (id: string, token: string): Promise<JobRoleSingleResponse> => {
+export const deleteJobRoleById = async (id: string, token: string) => {
     try {
         const response: AxiosResponse = await axios.delete(URL + "/" + id, getHeader(token));
-        return response.data;        
+        return response;        
     } catch (e) {
         if(e.response.status == 404){
             throw new Error("Job Role Not Found");

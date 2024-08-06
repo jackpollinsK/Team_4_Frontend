@@ -110,41 +110,32 @@ describe('getJobRoleById', function () {
 
 describe('deleteJobRoleById', function () {
 
-  // it('should show not authorised, when logged in with User account', async () => {
+  it('should delete job role, when logged in with Admin account', async () => {
 
-  //   mock.onDelete(URL + "/1").reply(200);
+    mock.onDelete(URL + "/1").reply(200);
 
-  //   const response = await deleteJobRoleById("1", validJwtToken);
+    const response = await deleteJobRoleById("1", validJwtToken);
 
-  //   expect(response.status).to.equal(200);
-  // });
+    expect(response.status).to.equal(200);
+  });
 
-  // it('should delete job role, when logged in with Admin account', async () => {
+  it('should throw exception when 404 error returned from axios when logged in with admin ', async () => {
+    mock.onDelete(URL + "/1").reply(404);
+    try {
+      await deleteJobRoleById("1", validJwtToken);
+    } catch (e) {
+      expect(e.message).to.equal('Job Role Not Found');
+    }
+  });
 
-  //   mock.onDelete(URL + "/1").reply(200);
-
-  //   const response = await deleteJobRoleById("1", validJwtToken);
-
-  //   expect(response.status).to.equal(200);
-  // });
-
-  // it('should throw exception when 404 error returned from axios when logged in with admin ', async () => {
-  //   mock.onDelete(URL + "/1").reply(404);
-  //   try {
-  //     await deleteJobRoleById("1", validJwtToken);
-  //   } catch (e) {
-  //     expect(e.message).to.equal('Job Role Not Found');
-  //   }
-  // });
-
-  // it('should throw exception when 500 error returned from axios when logged in with admin', async () => {
-  //   mock.onDelete(URL + "/1").reply(500);
-  //   try {
-  //     await deleteJobRoleById("1", validJwtToken);
-  //   } catch (e) {
-  //     expect(e.message).to.equal('Sorry There is a problem on our end!');
-  //   }
-  // });
+  it('should throw exception when 500 error returned from axios when logged in with admin', async () => {
+    mock.onDelete(URL + "/1").reply(500);
+    try {
+      await deleteJobRoleById("1", validJwtToken);
+    } catch (e) {
+      expect(e.message).to.equal('Sorry There is a problem on our end!');
+    }
+  });
 });
 
 
