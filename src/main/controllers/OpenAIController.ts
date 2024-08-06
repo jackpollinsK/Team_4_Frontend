@@ -11,7 +11,7 @@ export const postPromptForm = async (req: express.Request, res: express.Response
 
     const queryParams = await getQueryParams(req.body);
 
-    const jobRolesResponse = await postAIResponse(queryParams, req.session.token);
+    //const jobRolesResponse = await postAIResponse(queryParams, req.session.token);
 
-    res.render("pages/allJobRolesList.html", {jobRoles: jobRolesResponse, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
+    res.render("pages/allJobRolesList.html", {pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
 }
