@@ -11,8 +11,11 @@
         <h3><label for="location">
             Location:
         </label></h3>
-        <input class="form-control" id="location" name="location" value="{{location}}" type="text">
-        <h3><label for="band">
+        <select class="form-control" id="location" name="location">
+            {% for location in locations %}
+                <option value="{{ location[0]] }}">{{ location[0] }}</option>
+            {% endfor %}
+        </select>        <h3><label for="band">
             Band:
         </label></h3>
         <select class="form-control" id="band" name="band">
