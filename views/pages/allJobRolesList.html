@@ -3,7 +3,7 @@
 <div class="container container-center">
 <div class="container m-5">
 <h1>Job Roles</h1>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" id = "jobRolesTable">
     <thead>
     <tr>
         <th scope="col">Role Name</th>
@@ -11,6 +11,9 @@
         <th scope="col">Capability</th>
         <th scope="col">Band</th>
         <th scope="col">Closing Date</th>
+        {% if userLevel.Role == 2 %}
+            <th scope="col">Apply</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -21,6 +24,9 @@
             <td>{{ jobRole.capability }}</td>
             <td>{{ jobRole.band }}</td>
             <td>{{ jobRole.closingDate | date }}</td>
+            {% if userLevel.Role == 2 %}
+                <td><a href="/job-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

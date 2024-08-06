@@ -1,0 +1,17 @@
+{% extends "siteTemplate.html" %}
+{% block content %}
+<div class="m-5 shadow bg-body-secondary text-center">
+<h2>Apply for {{job.roleName}} </h2>
+{% if errormessage %}
+<h5 class="errorMessage" id="errorMessage">{{ errormessage }}</h5>
+{% endif %}
+<form class="text-center" action="/job-apply-{{id}}" enctype="multipart/form-data" method="post">
+    <h3> Upload your CV </h3>
+    <br></br>
+    <div>Select a file: 
+        <input id="fileData" type="file" name="file" multiple="multiple" />
+      </div>
+    <input class="btnKainos" type="submit" value="Upload" />
+</form>
+</div>
+{% endblock %}

@@ -5,4 +5,5 @@ export enum UserRole {
 
 export type JwtToken = {
     Role: UserRole
+    Email: string
 }

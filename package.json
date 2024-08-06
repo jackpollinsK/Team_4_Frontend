@@ -11,25 +11,41 @@
     "test-ui": "mocha --require ts-node/register --timeout 10000 src/test/ui/**/*.ts"
   },
   "nyc": {
-    "include": ["src/**/*.ts"],
-    "exclude": ["src/test/**/*.ts"],
-    "reporter": ["html", "text-summary"],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/test/**/*.ts"
+    ],
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
     "all": true,
-    "require": ["ts-node/register"]
+    "require": [
+      "ts-node/register"
+    ]
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.621.0",
+    "@aws-sdk/lib-storage": "^3.621.0",
+    "@types/multer": "^1.4.11",
+    "aws-sdk": "^2.1665.0",
     "axios": "^1.6.8",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
     "core-js": "^3.37.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "mocha": "^10.7.0",
+    "multer": "^1.4.5-lts.1",
     "nunjucks": "^3.2.4",
     "pa11y-ci": "2.4.2",
     "sinon": "^18.0.0"

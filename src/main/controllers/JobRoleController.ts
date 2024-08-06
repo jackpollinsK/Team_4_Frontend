@@ -1,10 +1,11 @@
 import express from "express";
 import { getJobRoleById, getJobRoles } from "../services/JobRoleService"
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
+import { jwtDecode } from "jwt-decode";
 
 export const getAllJobRoles = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
-        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token});
+        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
         res.locals.pageName = "Job Roles";
