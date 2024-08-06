@@ -11,7 +11,8 @@ export const getQueryParams = async (question: string): Promise<OpenAIRequest> =
     //creates prompt and sends
     const aiResponse = openai.completions.create({
         model: "gpt-4o-mini",
-        prompt: question
+        prompt: "Tell me a bit about yourself?",
+        max_tokens: 2048
     });
     console.log(aiResponse);
     } catch (e){

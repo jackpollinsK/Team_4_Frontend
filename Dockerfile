@@ -5,8 +5,10 @@ WORKDIR /home/node/app
 COPY package*.json ./
 
 ARG API_URL
+ARG OPENAI_API_KEY
 
 ENV API_URL ${API_URL}
+ENV OPENAI_API_KEY ${OPENAI_API_KEY}
 
 RUN npm install
 
