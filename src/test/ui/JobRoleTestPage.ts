@@ -1,4 +1,4 @@
-import { WebDriver, WebElement } from 'selenium-webdriver';
+import { WebDriver } from 'selenium-webdriver';
 import { ChromeDriver } from './ChromeDriver';
 
 

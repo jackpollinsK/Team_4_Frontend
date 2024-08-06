@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { LoginTestPage } from "./LoginTestPage";
-import { LogoutTestPage } from "./LogoutTestPage";
 import { HomeTestPage } from "../ui/HomeTestPage";
 import { NavbarTestPage } from "./NavbarTestPage";
 import { JobRolesTestPage } from "./JobRolesTestPage";
@@ -19,10 +18,10 @@ describe('View job roles Test', function () {
     let jobRolesPage: JobRolesTestPage;
     let jobRolePage: JobRoleTestPage;
 
-    let Roles = ['Software Engineer', 'Product Manager'];
-    let Location = ['Belfast', 'Birmingham', 'Derry'];
-    let Capability = ['Engineering', 'Data and Artificial Intelligence'];
-    let Band = ['Apprentice', 'Trainee', 'Associate']    
+    const Roles = ['Software Engineer', 'Product Manager'];
+    const Location = ['Belfast', 'Birmingham', 'Derry'];
+    const Capability = ['Engineering', 'Data and Artificial Intelligence'];
+    const Band = ['Apprentice', 'Trainee', 'Associate']    
 
     before(async function () {
 
