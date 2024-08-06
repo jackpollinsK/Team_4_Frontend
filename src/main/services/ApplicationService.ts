@@ -8,7 +8,7 @@ import Express from "express";
 
 export const postJobRoleAplication = async (application: JobApplyRoleRequest): Promise<JobApplyRoleRequest> => {
     try {
-        const response: AxiosResponse = await axios.post("/api/apply-for-role", application);
+        const response: AxiosResponse = await axios.post("/api/applyForJobRole", application);
         return response.data;
     } catch (e) {
         if (e.response.status == 400) {

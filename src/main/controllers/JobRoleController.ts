@@ -26,8 +26,8 @@ export const getJobRole = async (req: express.Request, res: express.Response): P
 
 export const deleteJobRole = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
-        const job : JobRoleSingleResponse = await deleteJobRoleById(req.params.id,req.session.token)
-        res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job, token: req.session.token, userLevel: jwtDecode(req.session.token)});
+        await deleteJobRoleById(req.params.id,req.session.token)
+        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
         res.locals.pageName = "An Error Ocured";

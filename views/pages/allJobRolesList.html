@@ -19,13 +19,13 @@
             <tbody>
                 {% for jobRole in jobRoles %}
                 <tr>
-                    <td><a href="/job-roles-{{jobRole.id}}">{{ jobRole.roleName }}</td>
+                    <td><a href="/jobRoles-{{jobRole.id}}">{{ jobRole.roleName }}</td>
                     <td>{{ jobRole.location }}</td>
                     <td>{{ jobRole.capability }}</td>
                     <td>{{ jobRole.band }}</td>
                     <td>{{ jobRole.closingDate | date }}</td>
                     {% if userLevel.Role == 2 %}
-                    <td><a href="/job-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+                    <td><a href="/jobRoles-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
