@@ -18,8 +18,6 @@ export const getJobRoles = async (token: string): Promise<JobRoleResponse[]> => 
 
 export const getJobRoleById = async (id: string, token: string): Promise<JobRoleSingleResponse> => {
     try {
-        const fullURL = URL + "/" + id;
-        console.log("Here1: " + fullURL);
         const response: AxiosResponse = await axios.get(URL + "/" + id, getHeader(token));
         return response.data;        
     } catch (e) {
@@ -37,8 +35,6 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
 
 export const deleteJobRoleById = async (id: string, token: string): Promise<JobRoleSingleResponse> => {
     try {
-        const fullURL = URL + "/" + id;
-        console.log("Here2: " + fullURL);
         const response: AxiosResponse = await axios.delete(URL + "/" + id, getHeader(token));
         return response.data;        
     } catch (e) {

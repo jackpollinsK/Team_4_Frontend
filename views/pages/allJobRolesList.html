@@ -28,7 +28,7 @@
                     <td>{{ jobRole.band }}</td>
                     <td>{{ jobRole.closingDate | date }}</td>
                     {% if userLevel.Role == 1 %}
-                    <td><a href="/jobRolesDelete-{{jobRole.id}}" class="btnKainos">Delete</a></td>
+                    <td><a href="/jobRolesDelete-{{jobRole.id}}" onclick="return confirm('Are you sure you want to delete this Job Role?');" class="btnKainos">Delete</a></td>
                     {% endif %}
                     {% if userLevel.Role == 2 %}
                     <td><a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>

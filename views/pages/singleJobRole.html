@@ -16,5 +16,12 @@
             <a id="job-spec-link" href="{{ job.jobSpec }}">Job spec</a>
         </div>
     </div>
+    <div class="m-5 text-center">
+        <div class="bg-body-secondary card">
+            {% if userLevel.Role == 1 %}
+            <a href="/jobRolesDelete-{{job.id}}" onclick="return confirm('Are you sure you want to delete this Job Role?');" class="btnKainos">Delete Job Role</a>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock %}
