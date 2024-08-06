@@ -22,7 +22,7 @@ export const postApplyJobRolesForm = async (req: Express.Request, res: Express.R
 
     } catch (e) {
         res.locals.errormessage = e.message;
-        res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: e.message });
+        res.render('pages/applyForJobRole.html', { id: req.params.id, pageName: 'Apply for a Job', errormessage: e.message, token: req.session.token });
     }
 
 }
