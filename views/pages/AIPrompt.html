@@ -1,0 +1,32 @@
+{% extends "siteTemplate.html" %}
+{% block content %}
+<div class="container container-center">
+    <div class="col-sm-6">
+        <div class="card border-0 m-5 shadow bg-body-secondary">
+            <div class="card-body">
+                <h2 class="card-title text-center">AI Job Search</h2>
+                {% if errormessage %}
+                <h5 class="errorMessage text-center" id="errorMessage">{{ errormessage }}</h5>
+                {% endif %}
+                <div >
+                    <p>Enter a little about yourself and we will try our best to get the most relevent jobs for you. Try
+                        to include the following</p>
+                    <ul>
+                        <li>Where you live?</li>
+                        <li>Your capability</li>
+                        <li>Your Band (eg. Junior, Senior)</li>
+                    </ul>
+                </div>
+                <form class="form mt-3 text-center" action="/AISearch" method="post">
+                    <span>
+                        <input class="form-control" id="prompt" name="prompt" value="{{prompt}}"
+                            placeholder="I want to work as (Your Job) and I live near (Your town/ city)" type="text">
+                    </span>
+                    <button class="btnKainos mt-2 text-center" id="submit">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

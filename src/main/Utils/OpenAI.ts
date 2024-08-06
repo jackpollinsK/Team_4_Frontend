@@ -5,7 +5,7 @@ const openai = new OpenAi({
     apiKey: process.env.OPEN_AI_KEY
 });
 
-export const getQueryParams = async (question: string): Promise<void> => {
+export const getQueryParams = async (question: string): Promise<OpenAIRequest> => {
     
     //creates prompt
     openai.chat.completions.create({
@@ -21,4 +21,5 @@ export const getQueryParams = async (question: string): Promise<void> => {
         band: "",
     };
 
+    return result;
 }
