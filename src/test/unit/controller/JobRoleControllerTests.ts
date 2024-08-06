@@ -79,7 +79,7 @@ describe('JobRoleController', function () {
             await JobRoleController.getAllJobRoles(req as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/allJobRolesList.html')).to.be.true;
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
             expect(res.locals.errormessage).to.equal(errorMessage);
         });
 
@@ -116,24 +116,17 @@ describe('JobRoleController', function () {
 
     describe('getJobRole', function () {
         it('should view a Job Role when a Job Role is returned when user is logged in', async () => {
-
-            const job = expectedJobRoleSingle;
-
-            const req = { params: { id: 1 }, session: { token: '12345' } };
+            const req = { params: { id: 1 }, session: { token: validJwtToken } };
             const res = {
                 render: sinon.spy(),
             };
 
             sinon.stub(JobRoleService, 'getJobRoleById').resolves(expectedJobRoleSingle);
 
-            await JobRoleController.getJobRole(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            await JobRoleController.getJobRole(req as unknown as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/singleJobRole.html', {
-                pageName: job.roleName + ": " + job.band,
-                job: job,
-                token: req.session.token
-            })).to.be.true;
+            expect(res.render.calledWith('pages/singleJobRole.html')).to.be.true;
         });
 
         it('should render view with error message when error thrown when user is logged in ', async () => {

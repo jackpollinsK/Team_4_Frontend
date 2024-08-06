@@ -3,9 +3,13 @@ import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { JobRoleResponse } from "../../../main/models/JobRoleResponse";
 import { describe } from "node:test";
-import { getJobRoleById, getJobRoles, URL } from '../../../main/services/JobRoleService';
+import { deleteJobRoleById, getJobRoleById, getJobRoles, URL } from '../../../main/services/JobRoleService';
 import { JobRoleSingleResponse } from "../../../main/models/JobRoleSingleResponse";
+import { UserRole } from "../../../main/models/JwtToken";
+import jwt from 'jsonwebtoken';
 
+const secretKey = 'SUPER_SECRET';
+const validJwtToken = jwt.sign({ Role: UserRole.Admin, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
 const expected: JobRoleResponse = {
   id: 1,
@@ -39,7 +43,7 @@ describe('JobRoleService', function () {
 
       mock.onGet(URL).reply(200, data);
 
-      const results = await getJobRoles("12345");
+      const results = await getJobRoles(validJwtToken);
 
       expect(results[0].id).to.deep.equal(expected.id);
       expect(results[0].roleName).to.deep.equal(expected.roleName);
@@ -55,7 +59,7 @@ describe('JobRoleService', function () {
   it('should throw exception when 500 error returned from axios', async () => {
     mock.onGet("/api/JobRoles").reply(500);
     try {
-      await getJobRoles("12345");
+      await getJobRoles(validJwtToken);
     } catch (e) {
       expect(e.message).to.equal('Failed to get JobRoles');
       return;
@@ -68,7 +72,7 @@ describe('getJobRoleById', function () {
 
     mock.onGet(URL + "/1").reply(200, expectedSingle);
 
-    const results = await getJobRoleById("1", "12345");
+    const results = await getJobRoleById("1", validJwtToken);
 
     expect(results.id).to.deep.equal(expectedSingle.id);
     expect(results.roleName).to.deep.equal(expectedSingle.roleName);
@@ -87,9 +91,9 @@ describe('getJobRoleById', function () {
 
     mock.onGet(URL + "/1").reply(404, expectedSingle);
     try {
-      await getJobRoleById("1", "12345");
+      await getJobRoleById("1", validJwtToken);
     } catch (e) {
-      expect(e.message).to.equal('Job Not Found');
+      expect(e.message).to.equal('Job Role Not Found');
     }
   });
 
@@ -97,11 +101,50 @@ describe('getJobRoleById', function () {
 
     mock.onGet(URL + "/1").reply(500, expectedSingle);
     try {
-      await getJobRoleById("1", "12345");
+      await getJobRoleById("1", validJwtToken);
     } catch (e) {
       expect(e.message).to.equal('Sorry There is a problem on our end!');
     }
   });
+});
+
+describe('deleteJobRoleById', function () {
+
+  // it('should show not authorised, when logged in with User account', async () => {
+
+  //   mock.onDelete(URL + "/1").reply(200);
+
+  //   const response = await deleteJobRoleById("1", validJwtToken);
+
+  //   expect(response.status).to.equal(200);
+  // });
+
+  // it('should delete job role, when logged in with Admin account', async () => {
+
+  //   mock.onDelete(URL + "/1").reply(200);
+
+  //   const response = await deleteJobRoleById("1", validJwtToken);
+
+  //   expect(response.status).to.equal(200);
+  // });
+
+  // it('should throw exception when 404 error returned from axios when logged in with admin ', async () => {
+  //   mock.onDelete(URL + "/1").reply(404);
+  //   try {
+  //     await deleteJobRoleById("1", validJwtToken);
+  //   } catch (e) {
+  //     expect(e.message).to.equal('Job Role Not Found');
+  //   }
+  // });
+
+  // it('should throw exception when 500 error returned from axios when logged in with admin', async () => {
+  //   mock.onDelete(URL + "/1").reply(500);
+  //   try {
+  //     await deleteJobRoleById("1", validJwtToken);
+  //   } catch (e) {
+  //     expect(e.message).to.equal('Sorry There is a problem on our end!');
+  //   }
+  // });
 });
 
 
