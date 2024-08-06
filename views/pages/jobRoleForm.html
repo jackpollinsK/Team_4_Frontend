@@ -4,51 +4,54 @@
 <div class="m-5 text-center">
     <div class="bg-body-secondary card">
     <form class="form mt-3" action="/jobRoleForm" method="post">
-        <h3><label for="roleName">
-            Role Name:
-        </label></h3>
+        <h3><label for="roleName">Role Name:</label></h3>
         <input class="form-control" id="roleName" name="roleName" value="{{roleName}}" type="text">
-        <h3><label for="location">
-            Location:
-        </label></h3>
+        
+        <h3><label for="location">Location:</label></h3>
         <select class="form-control" id="location" name="location">
             {% for location in locations %}
-                <option value="{{ location[0]] }}">{{ location[0] }}</option>
+                <option value="{{ location.id }}" {% if location.id == selectedLocation %}selected{% endif %}>{{ location.name }}</option>
             {% endfor %}
-        </select>        <h3><label for="band">
-            Band:
-        </label></h3>
+        </select>
+        
+        <h3><label for="band">Band:</label></h3>
         <select class="form-control" id="band" name="band">
             {% for band in bands %}
-                <option value="{{ band[0] }}">{{ band[0] }}</option>
+                <option value="{{ band.id }}" {% if band.id == selectedBand %}selected{% endif %}>{{ band.name }}</option>
             {% endfor %}
         </select>
-        <h3><label for="capability">
-            Capability:
-        </label></h3>
+        
+        <h3><label for="capability">Capability:</label></h3>
         <select class="form-control" id="capability" name="capability">
             {% for capability in capabilities %}
-                <option value="{{ capability[0] }}">{{ capability[0] }}</option>
+                <option value="{{ capability.id }}" {% if capability.id == selectedCapability %}selected{% endif %}>{{ capability.name }}</option>
             {% endfor %}
         </select>
-        <h3><label for="closingDate">
-            Closing Date:
-        </label></h3>
+        
+        <h3><label for="closingDate">Closing Date:</label></h3>
         <input class="form-control" id="closingDate" name="closingDate" value="{{closingDate}}" type="date">
-        <h3><label for="description">
-            Description:
-        </label></h3>
+        
+        <h3><label for="description">Description:</label></h3>
         <input class="form-control" id="description" name="description" value="{{description}}" type="text">
-        <h3><label for="responsibilities">
-            Responsibilities:
-        </label></h3>
+        
+        <h3><label for="responsibilities">Responsibilities:</label></h3>
         <input class="form-control" id="responsibilities" name="responsibilities" value="{{responsibilities}}" type="text">
-        <h3><label for="jobSpec">
-            Job Spec Link:
-        </label></h3>
+        
+        <h3><label for="jobSpec">Job Spec Link:</label></h3>
         <input class="form-control" id="jobSpec" name="jobSpec" value="{{jobSpec}}" type="text">
-    </br></br>
-    <button  class="btnKainos mt-2 text-center" id="submit">Submit</button>
+        
+        {% if errorMessages %}
+            <div class="alert alert-danger mt-2">
+                <ul>
+                    {% for message in errorMessages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        </br></br>
+        <button class="btnKainos mt-2 text-center" id="submit">Submit</button>
     </form>
     </div>
 </div>

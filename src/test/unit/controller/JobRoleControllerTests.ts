@@ -10,6 +10,7 @@ import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
 
+
 const expectedJobRole: JobRoleResponse = {
     id: 1,
     roleName: "Manager",
@@ -187,4 +188,98 @@ describe('JobRoleController', function () {
             expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
         });
     });
+    describe('getRoleForm', function () {
+        afterEach(() => {
+            sinon.restore();
+        });
+    
+        it('should render the job role form with dropdown options', async () => {
+            const locations = [{ id: 1, name: 'test location', address: 'test address', phone: 123456789 }];
+            const capabilities = [{ id: 1, name: 'test capability' }];
+            const bands = [{ id: 1, name: 'test band' }];
+    
+            const req = {
+                session: { token: validJwtToken }
+            };
+    
+            const res = {
+                render: sinon.spy(),
+            };
+    
+            sinon.stub(JobRoleService, 'getLocations').resolves(locations);
+            sinon.stub(JobRoleService, 'getCapabilities').resolves(capabilities);
+            sinon.stub(JobRoleService, 'getBands').resolves(bands);
+    
+            await JobRoleController.getRoleForm(req as express.Request, res as unknown as express.Response);
+    
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith('pages/jobRoleForm.html', {
+                capabilities,
+                locations,
+                bands,
+                roleName: "",
+                description: "",
+                responsibilities: "",
+                jobSpec: "",
+                closingDate: "",
+                selectedLocation: "",
+                selectedBand: "",
+                selectedCapability: "",
+            })).to.be.true;
+        });
+    
+        it('should render error page if there is an error getting dropdown options', async () => {
+            const errorMessage = 'Error retrieving dropdown options';
+    
+            const req = {
+                session: { token: validJwtToken }
+            };
+    
+            const res = {
+                render: sinon.spy(),
+                locals: { errormessage: '' }
+            };
+    
+            sinon.stub(JobRoleService, 'getLocations').rejects(new Error(errorMessage));
+            sinon.stub(JobRoleService, 'getCapabilities').resolves([]);
+            sinon.stub(JobRoleService, 'getBands').resolves([]);
+    
+            await JobRoleController.getRoleForm(req as express.Request, res as unknown as express.Response);
+    
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+            expect(res.locals.errormessage).to.equal(errorMessage);
+        });
+    
+        it('should return error page if an error occurs during creation of job role', async () => {
+            const errorMessage = 'Error creating job role';
+
+            const req = {
+                body: {
+                    roleName: 'Developer',
+                    closingDate: '2024-12-31',
+                    description: 'A developer role',
+                    responsibilities: 'Develop software',
+                    jobSpec: 'Software engineering',
+                    location: '1',
+                    capability: '1',
+                    band: '1'
+                },
+                session: { token: validJwtToken }
+            } as express.Request;
+    
+            const res = {
+                render: sinon.spy(),
+                locals: { errormessage: '' }
+            };
+    
+            sinon.stub(JobRoleService, 'createRole').rejects(new Error(errorMessage));
+    
+            await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+    
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+            expect(res.locals.errormessage).to.equal(errorMessage);
+        });
+    });    
 });
