@@ -1,35 +1,38 @@
-
-import axios, { AxiosResponse } from "axios";
 import { JobRoleResponse } from "../models/JobRoleResponse";
-axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080';
-import { getHeader } from "../services/AuthUtil";
 import { OpenAIRequest } from "../models/OpenAIRequest";
 import { getJobRoles } from "./JobRoleService";
 
-export const URL: string = "/api/AIJobSearch";
 
 export const postAIResponse = async (filter: OpenAIRequest, token: string): Promise<JobRoleResponse[]> => {
     try {
         const apiResponse = await getJobRoles(token);
-
         return await aiFiltering(filter, apiResponse);
     } catch (e) {
-        throw new Error('Failed to get JobRoles');
+        if(e.response.status == 500){
+            throw new Error("Sorry There is a problem on our end!");
+        }
+        else{
+            throw new Error('There is an error with your request. Try again later');
+        }
     }
 }
 
 export const aiFiltering = async (filter: OpenAIRequest, jobRoles: JobRoleResponse[]): Promise<JobRoleResponse[]> => {
 
-    var result: JobRoleResponse[] = [];
+    const result: JobRoleResponse[] = [];
 
     jobRoles.forEach(job => {
         if (filter.band.toLocaleLowerCase().includes(job.band.toLowerCase()) && 
         filter.capability.toLowerCase().includes(job.capability.toLowerCase()) && 
         filter.location.toLowerCase().includes(job.location.toLowerCase())){
-            
+
             result.push(job)
         }
     });
+
+    if (result.length == 0){
+        throw new Error("We couldn't find any jobs that would suit you")
+    }
 
     return result;
 }

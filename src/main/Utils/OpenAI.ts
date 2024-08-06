@@ -52,6 +52,6 @@ export const getQueryParams = async (question: string): Promise<OpenAIRequest> =
 
     } catch (e) {
         console.log(e);
-        throw new Error(e.message)
+        throw new Error('There is an error with your request. Try again later or look at our full list of roles')
     }
 }

@@ -2,7 +2,6 @@ import Express from "express";
 import { postJobRoleAplication, processJobRoleAplication } from "../services/ApplicationService";
 import { getJobRoleById } from "../services/JobRoleService";
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
-import { Token } from "aws-sdk";
 
 
 export const getApplyJobRolesForm = async (req: Express.Request, res: Express.Response): Promise<void> => {

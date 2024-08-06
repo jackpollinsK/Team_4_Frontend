@@ -3,6 +3,7 @@ import nunjucks from "nunjucks";
 import multer from "multer";
 import bodyParser from "body-parser";
 import session from "express-session";
+import dotenv from "dotenv";
 
 import { getAllJobRoles, getJobRole } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
@@ -13,10 +14,14 @@ import { UserRole } from "./main/models/JwtToken";
 import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/ApplicationController";
 import { getPromptForm, postPromptForm } from "./main/controllers/OpenAIController";
 
+dotenv.config();
+
 const app = express();
 
 const storage = multer.memoryStorage();
 const upload = multer( { storage: storage } )
+
+console.log(process.env.OPENAI_API_KEY);
 
 nunjucks.configure('views/', {
     autoescape: false,
@@ -67,5 +72,5 @@ app.post('/job-apply-:id', upload.single('file'), allowRoles([UserRole.User]), p
 app.get('/job-roles-:id',allowRoles([UserRole.Admin, UserRole.User]), getJobRole);
 
 app.get('/AI-Job-Search', allowRoles([UserRole.User]), getPromptForm);
-app.post('/AISearch', allowRoles([UserRole.Admin, UserRole.User]), postPromptForm);
+app.post('/job-roles-personalised', allowRoles([UserRole.Admin, UserRole.User]), postPromptForm);
 app.get('/Job-Roles-AI-Sorted', allowRoles([UserRole.Admin, UserRole.User]), )
