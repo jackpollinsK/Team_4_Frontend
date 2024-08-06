@@ -63,7 +63,7 @@ app.get('/jobRoles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles
 
 app.get('/jobRoles-:id', allowRoles([UserRole.Admin, UserRole.User]), getJobRole);
 
-app.get('/jobRoles-apply-:id', allowRoles([UserRole.User]), getApplyJobRolesForm);
-app.post('/jobRoles-apply-:id', upload.single('file'), allowRoles([UserRole.User]), postApplyJobRolesForm);
+app.get('/jobRolesApply-:id', allowRoles([UserRole.User]), getApplyJobRolesForm);
+app.post('/jobRolesApply-:id', upload.single('file'), allowRoles([UserRole.User]), postApplyJobRolesForm);
 
-app.delete('/jobRoles-delete-:id', allowRoles([UserRole.Admin]), deleteJobRole);
+app.get('/jobRolesDelete-:id', allowRoles([UserRole.Admin]), deleteJobRole);

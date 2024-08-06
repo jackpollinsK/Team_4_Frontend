@@ -3,22 +3,22 @@
 <div class="container container.center">
     <div class="m-5 text-center">
         <div class="bg-body-secondary card">
-            <h1 id="roleName">{{job.roleName}}</h1>
-            <h3 id="capability">{{job.capability}} : {{job.band}}</h3>
-            <h4 id="location">{{job.location}}</h4>
+            <h1>{{job.roleName}}</h1>
+            <h3>{{job.capability}} : {{job.band}}</h3>
+            <h4>{{job.location}}</h4>
             <h5>Closing Date</h5>
-            <div id="closing date">{{job.closingDate | date}}</div>
+            <div>{{job.closingDate | date}}</div>
             <h5>Description</h5>
-            <div id="description">{{job.description}}</div>
+            <div>{{job.description}}</div>
             <h5>Responsibilities</h5>
-            <div id="resposibilities">{{job.responsibilities}}</div>
+            <div>{{job.responsibilities}}</div>
         </div>
         <br>
     </div>
     <div class="m-5 text-center">
         <div class="bg-body-secondary card">
             {% if userLevel.Role == 1 %}
-            <a href="/jobRoles-delete-{{job.id}}" class="btnKainos mt-2 text-center">Delete Job Role</a>
+            <a href="/jobRolesDelete-{{job.id}}" class="btnKainos mt-2 text-center">Delete Job Role</a>
             {% endif %}
         </div>
     </div>
