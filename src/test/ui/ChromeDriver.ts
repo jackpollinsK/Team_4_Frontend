@@ -1,12 +1,14 @@
 import chrome from 'selenium-webdriver/chrome';
 import { Builder, By, WebDriver, WebElement } from 'selenium-webdriver';
+import { LoginTestPage } from './LoginTestPage';
 
 export class ChromeDriver {
     driver: WebDriver;
+    loginTestPage: LoginTestPage;
 
     constructor(driver?: WebDriver) {
         const options = new chrome.Options();
-            //options.addArguments('headless'); // Ensure Chrome is running in headless mode
+            options.addArguments('headless'); // Ensure Chrome is running in headless mode
             options.addArguments('disable-gpu');
             options.addArguments('no-sandbox');
             options.addArguments('disable-dev-shm-usage');
@@ -56,35 +58,27 @@ export class ChromeDriver {
         console.log(`Getting element with CSS: ${CSS}`);
         return await this.driver.findElements(By.css(CSS));
     }
-
-    async getTableById(id: string) { 
-        return await this.driver.findElement(By.id(id));
-    }
-
-    async getTableWithXpath(xpath: string): Promise<WebElement> {
-        return await this.driver.findElement(By.xpath(xpath));
-    }
     
     async getCellText(id: string, row: number, col: number): Promise<string> {
-        const table = await this.getTableById(id); //Switch to get with id
+        const table = await this.getElementById(id); //Switch to get with id
         const cell = await table.findElement(By.css(`tbody tr:nth-child(${row}) td:nth-child(${col})`));
         return cell.getText();
     }
 
     async getRowCount(id: string): Promise<number> {
-        const table = await this.getTableById(id); //Switch to get with id
+        const table = await this.getElementById(id); //Switch to get with id
         const rows = await table.findElements(By.css('tbody tr'));
         return rows.length;
     }
 
     async getColumnCount(id: string): Promise<number> {
-        const table = await this.getTableById(id); //Switch to get with id;
+        const table = await this.getElementById(id); //Switch to get with id;
         const columns = await table.findElements(By.css('thead th'));
         return columns.length;
     }   
     
     async clickCell(id: string, row: number, col: number): Promise<void> {
-        const table = await this.getTableById(id); //Switch to get with id
+        const table = await this.getElementById(id); //Switch to get with id
         const cell = await table.findElement(By.css(`tbody tr:nth-child(${row}) td:nth-child(${col})`));
         return cell.click();
     }

@@ -13,7 +13,6 @@ describe('View job roles Test', function () {
 
     let driver: WebDriver;
     let loginPage: LoginTestPage;
-    let logoutPage: LogoutTestPage;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let homePage: HomeTestPage;
     let navBarPage: NavbarTestPage;
@@ -29,7 +28,6 @@ describe('View job roles Test', function () {
 
         driver = await new ChromeDriver().driver;
         loginPage = await new LoginTestPage(driver);
-        logoutPage = await new LogoutTestPage(driver);
         homePage = await new HomeTestPage(driver);
         navBarPage = await new NavbarTestPage(driver);
         jobRolesPage = await new JobRolesTestPage(driver);
@@ -85,17 +83,6 @@ describe('View job roles Test', function () {
 
         await jobRolesPage.open();
 
-        await jobRolesPage.clickLogin();
-
-        const EMAIL = process.env.LOGIN_EMAIL_1;
-        const PASSWORD = process.env.LOGIN_PASSWORD_1;
-
-        await loginPage.enterEmail(EMAIL);
-        await loginPage.enterPassword(PASSWORD);
-        await loginPage.clickLogin();
-
-        await navBarPage.clickJobsButton();
-
         const rows = await jobRolesPage.getNumRows();
         const colms = await jobRolesPage.getNumCols();
         console.log('Num of rows: ' + rows);
@@ -131,20 +118,9 @@ describe('View job roles Test', function () {
  
     });
 
-    it.only('Verify job role links work', async function () {
+    it('Verify job role links work', async function () {
 
         await jobRolesPage.open();
-
-        await jobRolesPage.clickLogin();
-
-        const EMAIL = process.env.LOGIN_EMAIL_1;
-        const PASSWORD = process.env.LOGIN_PASSWORD_1;
-
-        await loginPage.enterEmail(EMAIL);
-        await loginPage.enterPassword(PASSWORD);
-        await loginPage.clickLogin();
-
-        await navBarPage.clickJobsButton();
 
         const rows = await jobRolesPage.getNumRows();
 
