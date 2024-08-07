@@ -27,6 +27,12 @@ jobs:
     - name: Build & push the Docker image
       env:
         API_URL: ${{ secrets.API_URL }}
+        
+        BUCKET_ACCESS_KEY_ID: ${{ secrets.BUCKET_ACCESS_KEY_ID }}
+        BUCKET_SECRET_ACCESS_KEY: ${{ secrets.BUCKET_SECRET_ACCESS_KEY }}
+        BUCKET_REGION: ${{ secrets.BUCKET_REGION }}
+        BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: employee_demo
         IMAGE_TAG: team4-web
