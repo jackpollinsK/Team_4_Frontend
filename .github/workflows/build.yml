@@ -29,6 +29,7 @@ jobs:
 
     - name: Run Tests
       env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
         LOGIN_EMAIL_1: ${{ secrets.LOGIN_EMAIL_1 }}
         LOGIN_PASSWORD_1: ${{ secrets.LOGIN_PASSWORD_1 }}
