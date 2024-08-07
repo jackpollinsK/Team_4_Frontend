@@ -9,9 +9,9 @@
           "https://nczcbkjcc7.eu-west-1.awsapprunner.com/logoutForm",
           "https://nczcbkjcc7.eu-west-1.awsapprunner.com/notLoggedIn",
           "https://nczcbkjcc7.eu-west-1.awsapprunner.com/notAuthorised",
-          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/job-roles",
-          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/job-roles-1"
-
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRoles",
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRoles-1",
+          "https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRolesDelete-1"
       ]
   }
   
