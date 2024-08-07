@@ -27,6 +27,7 @@ jobs:
     - name: Build & push the Docker image
       env:
         API_URL: ${{ secrets.API_URL }}
+        OPENAI_API_URL: ${{ secrets.OPENAI_API_KEY }}
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: employee_demo
         IMAGE_TAG: team4-web
