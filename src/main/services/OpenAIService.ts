@@ -8,11 +8,11 @@ export const postAIResponse = async (filter: OpenAIRequest, token: string): Prom
         const apiResponse = await getJobRoles(token);
         return await aiFiltering(filter, apiResponse);
     } catch (e) {
-        if(e.response.status == 500){
+        if(e.message == "Failed to get JobRoles"){
             throw new Error("Sorry There is a problem on our end!");
         }
         else{
-            throw new Error('There is an error with your request. Try again later');
+            throw new Error(e.message);
         }
     }
 }

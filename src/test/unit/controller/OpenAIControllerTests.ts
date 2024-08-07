@@ -13,7 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 import { OpenAIRequest } from '../../../main/models/OpenAIRequest';
 
 
-describe('JobRoleController', function () {
+describe('OpenAIController', function () {
     afterEach(() => {
         sinon.restore();
     });
