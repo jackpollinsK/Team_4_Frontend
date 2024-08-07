@@ -34,7 +34,7 @@ export const getRoleForm = async (req: express.Request, res: express.Response): 
         const capabilities: Capability[] = await getCapabilities(req.session.token);
         const bands: Band[] = await getBands(req.session.token);
 
-        res.render('pages/jobRoleForm.html', {
+        res.render('pages/jobRoleForm.html', {pageName : "Create New Role",
             capabilities: capabilities,
             locations: locations,
             bands: bands,
@@ -46,10 +46,11 @@ export const getRoleForm = async (req: express.Request, res: express.Response): 
             selectedLocation: "",
             selectedBand: "",
             selectedCapability: "",
+            token: req.session.token
         });
     } catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "Create Role";
+        res.locals.pageName = "An Error Ocured";
         res.render('pages/errorPage.html', res);
     }
 }
@@ -81,10 +82,12 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
                     selectedLocation: req.body.location,
                     selectedBand: req.body.band,
                     selectedCapability: req.body.capability,
-                    errorMessages: errors
+                    errorMessages: errors,
+                    token: req.session.token
                 });
             } catch (dropDownError) {
                 res.locals.errormessage = dropDownError.message;
+                res.locals.pageName = "An Error Ocured";
                 res.render('pages/errorPage.html');
             }
             return;
@@ -98,7 +101,7 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
             closingDate: new Date(req.body.closingDate),
             description: req.body.description,
             responsibilities: req.body.responsibilities,
-            jobSpec: req.body.jobSpec
+            jobSpec: req.body.jobSpec,
         };
 
         await createRole(jobRoleRequest, req.session.token);
@@ -106,6 +109,7 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
     } catch (e) {
         console.error(e);
         res.locals.errormessage = e.message
+        res.locals.pageName = "An Error Ocured";
         res.render('pages/errorPage.html');
     }
 }

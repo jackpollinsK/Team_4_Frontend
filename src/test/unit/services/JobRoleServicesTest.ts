@@ -3,7 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { JobRoleResponse } from "../../../main/models/JobRoleResponse";
 import { describe } from "node:test";
-import { getJobRoleById, getJobRoles, URL } from '../../../main/services/JobRoleService';
+import { getJobRoleById, getJobRoles, URL, BANDS_URL, CAPABILITIES_URL, LOCATIONS_URL, getBands, getLocations, getCapabilities } from '../../../main/services/JobRoleService';
 import { JobRoleSingleResponse } from "../../../main/models/JobRoleSingleResponse";
 
 
@@ -29,6 +29,10 @@ const expectedSingle: JobRoleSingleResponse = {
   responsibilities: "Something Important",
   jobSpec: "A Link to a page"
 }
+
+const expectedBands = [{id: 1, name: 'Test Band'}];
+const expectedCapabilities = [{id: 1, name: 'Test Capability'}];
+const expectedLocations = [{id: 1, name: 'Test Location'}];
 
 const mock = new MockAdapter(axios);
 
@@ -103,3 +107,24 @@ describe('getJobRoleById', function () {
     }
   });
 });
+
+describe('Get Dropdown data', function (){
+  it('Should return bands succesfully', async () => {
+    mock.onGet(URL + BANDS_URL).reply(200, expectedBands);
+      const result = await getBands("12345");
+
+      expect(result).to.deep.equal(expectedBands);
+  })
+  it('Should return location succesfully', async () => {
+    mock.onGet(URL + LOCATIONS_URL).reply(200, expectedLocations);
+      const result = await getLocations("12345");
+
+      expect(result).to.deep.equal(expectedLocations);
+  })
+  it('Should return capabilities succesfully', async () => {
+    mock.onGet(URL + CAPABILITIES_URL).reply(200, expectedCapabilities);
+      const result = await getCapabilities("12345");
+
+      expect(result).to.deep.equal(expectedCapabilities);
+  })
+})

@@ -59,7 +59,6 @@ export async function getBands(token: string): Promise<Band[]> {
         const response: AxiosResponse<Band[]> = await axios.get(BANDS_URL, getHeader(token));
         return response.data;
     } catch (e) {
-        console.error('Error fetching bands:', e);
         throw new Error('Failed to fetch bands');
     }
 }
@@ -68,7 +67,6 @@ export async function getCapabilities(token: string): Promise<Capability[]> {
         const response: AxiosResponse<Capability[]> = await axios.get(CAPABILITIES_URL, getHeader(token));
         return response.data;
     } catch (e) {
-        console.error('Error fetching capabilities:', e);
         throw new Error('Failed to fetch capabilities');
     }
 }
@@ -77,7 +75,6 @@ export async function getLocations(token: string): Promise<Location[]> {
         const response: AxiosResponse<Location[]> = await axios.get(LOCATIONS_URL, getHeader(token));
         return response.data;
     } catch (e) {
-        console.error('Error fetching locations:', e);
         throw new Error('Failed to fetch locations');
     }
 }

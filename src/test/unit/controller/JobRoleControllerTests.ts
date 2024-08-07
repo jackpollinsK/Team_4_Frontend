@@ -225,6 +225,7 @@ describe('JobRoleController', function () {
                 selectedLocation: "",
                 selectedBand: "",
                 selectedCapability: "",
+                session: { token: validJwtToken }
             })).to.be.true;
         });
     
