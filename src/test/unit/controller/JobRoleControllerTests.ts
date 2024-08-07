@@ -188,6 +188,7 @@ describe('JobRoleController', function () {
 
             const res = {
                 render: sinon.spy(),
+                redirect: sinon.stub(),
                 locals: { errormessage: '' }
             };
 
@@ -196,26 +197,27 @@ describe('JobRoleController', function () {
 
             await JobRoleController.deleteJobRole(req as unknown as express.Request, res as unknown as express.Response);
 
-            expect(res.render.called).to.be.true;
-            expect(res.render.calledWith('pages/allJobRolesList.html')).to.be.true;
+            expect(res.redirect.calledWith('/jobRoles')).to.be.true;
         });
 
-        it('should throw error', async () => {
+        it('should throw error, when trying to delete', async () => {
             const req = { params: { id: 1 }, session: { token: '' } };
 
             const res = {
                 render: sinon.spy(),
+                redirect: sinon.stub(),
                 locals: { errormessage: '' }
             };
 
-            const expectedErrorMessage = "Invalid token specified: missing part #2";
+            const errorMessage = "Sorry There is a problem on our end!";
             sinon.stub(JobRoleService, 'getJobRoles');
-            sinon.stub(JobRoleService, 'deleteJobRoleById');
+            sinon.stub(JobRoleService, 'deleteJobRoleById').rejects(new Error(errorMessage));;
 
             await JobRoleController.deleteJobRole(req as unknown as express.Request, res as unknown as express.Response);
+            console.log(res.locals.errormessage);
 
             expect(res.render.called).to.be.true;
-            expect(res.locals.errormessage).to.equal(expectedErrorMessage);
+            expect(res.locals.errormessage).to.equal(errorMessage);
             expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
         });
 
