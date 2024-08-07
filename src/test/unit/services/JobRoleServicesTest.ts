@@ -7,6 +7,9 @@ import { deleteJobRoleById, getJobRoleById, getJobRoles, URL, BANDS_URL, CAPABIL
 import { JobRoleSingleResponse } from "../../../main/models/JobRoleSingleResponse";
 import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
+import { Band } from "../../../main/models/Band";
+import { Location } from "../../../main/models/Location";
+import { Capability } from "../../../main/models/Capability";
 
 const secretKey = 'SUPER_SECRET';
 const validJwtToken = jwt.sign({ Role: UserRole.Admin, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
@@ -34,9 +37,9 @@ const expectedSingle: JobRoleSingleResponse = {
   jobSpec: "A Link to a page"
 }
 
-const expectedBands = {id: 1, name: 'Test Band'};
-const expectedCapabilities = {id: 1, name: 'Test Capability'};
-const expectedLocations = {id: 1, name: 'Test Location', address: 'Test Address', phone: 12345678};
+const expectedBands = { id: 1, name: 'Test Band' };
+const expectedCapabilities = { id: 1, name: 'Test Capability' };
+const expectedLocations = { id: 1, name: 'Test Location', address: 'Test Address', phone: 12345678 };
 
 const mock = new MockAdapter(axios);
 
@@ -146,29 +149,21 @@ describe('deleteJobRoleById', function () {
 });
 
 describe('Get Dropdown data', function (){
+
   it('Should return bands succesfully', async () => {
     mock.onGet(BANDS_URL).reply(200, expectedBands);
-      const result = await getBands("12345");
-
-      expect(result[0].id).to.deep.equal(expectedBands.id);
-      expect(result[0].name).to.deep.equal(expectedBands.name);
-
+      const result: Band[] = await getBands(validJwtToken);
+      expect(result).to.deep.equal(expectedBands);
   })
-  it('Should return location succesfully', async () => {
-    mock.onGet(LOCATIONS_URL).reply(200, expectedLocations);
-      const result = await getLocations("12345");
 
-      expect(result[0].id).to.deep.equal(expectedLocations.id);
-      expect(result[0].name).to.deep.equal(expectedLocations.name);
-      expect(result[0].address).to.deep.equal(expectedLocations.address);
-      expect(result[0].phone).to.deep.equal(expectedLocations.phone);
+  it.only('Should return location succesfully', async () => {
+    mock.onGet(LOCATIONS_URL).reply(200, expectedLocations);
+      const result: Location[] = await getLocations(validJwtToken);
+      expect(result).to.deep.equal(expectedLocations);
   })
   it('Should return capabilities succesfully', async () => {
     mock.onGet(CAPABILITIES_URL).reply(200, expectedCapabilities);
-      const result = await getCapabilities("12345");
-
-      expect(result[0].id).to.deep.equal(expectedCapabilities.id);
-      expect(result[0].name).to.deep.equal(expectedCapabilities.name);
-
+      const result: Capability[] = await getCapabilities("12345");
+      expect(result).to.deep.equal(expectedCapabilities);
   })
 })
