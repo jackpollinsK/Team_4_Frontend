@@ -193,7 +193,7 @@ describe('JobRoleController', function () {
             const bands = [{ id: 1, name: 'test band' }];
     
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validAdminJwtToken }
             };
     
             const res = {
@@ -219,7 +219,7 @@ describe('JobRoleController', function () {
                 selectedLocation: "",
                 selectedBand: "",
                 selectedCapability: "",
-                session: { token: validJwtToken }
+                session: { token: validAdminJwtToken }
             })).to.be.true;
         });
     
@@ -227,7 +227,7 @@ describe('JobRoleController', function () {
             const errorMessage = 'Error retrieving dropdown options';
     
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validAdminJwtToken }
             };
     
             const res = {

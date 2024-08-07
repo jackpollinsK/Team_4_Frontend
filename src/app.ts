@@ -4,7 +4,7 @@ import multer from "multer";
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import { deleteJobRole, getAllJobRoles, getJobRole, getRoleForm, postRoleForm } from "./main/controllers/JobRoleController";
+import {deleteJobRole, getAllJobRoles, getJobRole, getRoleForm, postRoleForm } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
 import { getLoginForm, getLogoutForm, getNotAuthorised, getNotLoggedIn, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 import { getHomePage } from "./main/controllers/HomeController";
@@ -67,3 +67,5 @@ app.get('/job-roles-:id',allowRoles([UserRole.Admin, UserRole.User]), getJobRole
 
 app.get('/jobRoleForm',allowRoles([UserRole.Admin]),getRoleForm);
 app.post('/jobRoleForm',allowRoles([UserRole.Admin]),postRoleForm);
+
+app.get('/jobRolesDelete-:id', allowRoles([UserRole.Admin]), deleteJobRole);
