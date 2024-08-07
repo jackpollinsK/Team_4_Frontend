@@ -9,7 +9,7 @@ export class HomeTestPage extends ChromeDriver {
     }
 
     async open(): Promise<void> {
-        const WEBSITE_URL = process.env.WEBSITE_URL || 'http://localhost:3000/';
+        const WEBSITE_URL = process.env.WEBSITE_URL || "http://localhost:3000";
         await this.go_to_url(WEBSITE_URL);
     }
 
