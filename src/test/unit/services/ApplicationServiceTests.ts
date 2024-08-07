@@ -42,11 +42,11 @@ describe('ApplicationService', function () {
   });
 
     it('should post application', async () => {
-      mock.onPost("/api/apply-for-role").reply(201, testData);
+      mock.onPost("/api/applyForJobRole").reply(201, testData);
     })
 
     it('should throw exception when 500 error returned from axios', async () => {
-      mock.onPost("/api/apply-for-role").reply(500);
+      mock.onPost("/api/applyForJobRole").reply(500);
       try {
         await postJobRoleAplication(testData);
       } catch (e) {
@@ -55,7 +55,7 @@ describe('ApplicationService', function () {
     })
 
     it('should throw exception when 400 error returned from axios', async () => {
-      mock.onPost("/api/apply-for-role").reply(400);
+      mock.onPost("/api/applyForJobRole").reply(400);
       try {
         await postJobRoleAplication(testData);
       } catch (e) {

@@ -109,7 +109,7 @@ describe('ApplicationController', function () {
       await ApplicationContoller.postApplyJobRolesForm(req as unknown as express.Request, res as unknown as express.Response);
 
       expect(res.redirect.calledOnce).to.be.true;
-      expect(res.redirect.calledWith('/job-roles')).to.be.true;
+      expect(res.redirect.calledWith('/jobRoles')).to.be.true;
     });
   });
 

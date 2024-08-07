@@ -1,19 +1,19 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
 <div class="container container-center">
-<div class="col-sm-3 text-center">
-    <div class="card border-0 m-5 shadow bg-body-secondary text-center">
-        <div class="card-body">
-            <h1>Logout</h1>
+    <div class="col-sm-3 text-center">
+        <div class="card border-0 m-5 shadow bg-body-secondary text-center">
+            <div class="card-body">
+                <h1>Logout</h1>
 
-{% if errormessage %}
-    <h3>{{ errormessage }}</h3>
-{% endif %}
-            <form class="form" action="/logoutForm" method="post">
-                <button class="btnKainos mt-2 text-center"  id="submit">Logout</button>
-            </form>
+                {% if errormessage %}
+                <h3>{{ errormessage }}</h3>
+                {% endif %}
+                <form class="form" action="/logoutForm" method="post">
+                    <button class="btnKainos mt-2 text-center" id="submit">Logout</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

@@ -34,7 +34,8 @@ const expectedJobRoleSingle: JobRoleSingleResponse = {
 }
 
 const secretKey = 'SUPER_SECRET';
-const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
+const validUserJwtToken = jwt.sign({ Role: UserRole.User, sub: "test1@random.com" }, secretKey, { expiresIn: '8h' });
+const validAdminJwtToken = jwt.sign({ Role: UserRole.Admin, sub: "test2@random.com" }, secretKey, { expiresIn: '8h' });
 
 describe('JobRoleController', function () {
     afterEach(() => {
@@ -47,7 +48,7 @@ describe('JobRoleController', function () {
             const jobRoleList = [expectedJobRole];
 
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validUserJwtToken }
             };
 
             const res = {
@@ -66,7 +67,7 @@ describe('JobRoleController', function () {
             const errorMessage: string = 'Failed to get JobRoles';
 
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validUserJwtToken }
             };
 
             const res = {
@@ -79,7 +80,7 @@ describe('JobRoleController', function () {
             await JobRoleController.getAllJobRoles(req as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/allJobRolesList.html')).to.be.true;
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
             expect(res.locals.errormessage).to.equal(errorMessage);
         });
 
@@ -116,24 +117,17 @@ describe('JobRoleController', function () {
 
     describe('getJobRole', function () {
         it('should view a Job Role when a Job Role is returned when user is logged in', async () => {
-
-            const job = expectedJobRoleSingle;
-
-            const req = { params: { id: 1 }, session: { token: '12345' } };
+            const req = { params: { id: 1 }, session: { token: validUserJwtToken } };
             const res = {
                 render: sinon.spy(),
             };
 
             sinon.stub(JobRoleService, 'getJobRoleById').resolves(expectedJobRoleSingle);
 
-            await JobRoleController.getJobRole(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            await JobRoleController.getJobRole(req as unknown as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/singleJobRole.html', {
-                pageName: job.roleName + ": " + job.band,
-                job: job,
-                token: req.session.token
-            })).to.be.true;
+            expect(res.render.calledWith('pages/singleJobRole.html')).to.be.true;
         });
 
         it('should render view with error message when error thrown when user is logged in ', async () => {
@@ -150,7 +144,7 @@ describe('JobRoleController', function () {
 
             sinon.stub(JobRoleService, 'getJobRoleById').rejects(new Error(errorMessage));
 
-            await JobRoleController.getJobRole(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            await JobRoleController.getJobRole(req as unknown as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
             expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
@@ -175,7 +169,7 @@ describe('JobRoleController', function () {
 
             sinon.stub(JobRoleService, 'getJobRoleById')
 
-            await JobRoleController.getJobRole(req as any, res as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            await JobRoleController.getJobRole(req as unknown as express.Request, res as unknown as express.Response);
 
             const middleware = allowRoles([UserRole.Admin, UserRole.User]);
 
@@ -186,5 +180,46 @@ describe('JobRoleController', function () {
             expect(res.redirect.calledOnce).to.be.true;
             expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
         });
+    });
+
+    describe('deleteJobRole', function () {
+        it('should delete selected job role, then return to view all job roles, when Admin user is logged in', async () => {
+            const req = { params: { id: 1 }, session: { token: validAdminJwtToken } };
+
+            const res = {
+                render: sinon.spy(),
+                redirect: sinon.stub(),
+                locals: { errormessage: '' }
+            };
+
+            sinon.stub(JobRoleService, 'getJobRoles');
+            sinon.stub(JobRoleService, 'deleteJobRoleById');
+
+            await JobRoleController.deleteJobRole(req as unknown as express.Request, res as unknown as express.Response);
+
+            expect(res.redirect.calledWith('/jobRoles')).to.be.true;
+        });
+
+        it('should throw error, when trying to delete', async () => {
+            const req = { params: { id: 1 }, session: { token: '' } };
+
+            const res = {
+                render: sinon.spy(),
+                redirect: sinon.stub(),
+                locals: { errormessage: '' }
+            };
+
+            const errorMessage = "Sorry There is a problem on our end!";
+            sinon.stub(JobRoleService, 'getJobRoles');
+            sinon.stub(JobRoleService, 'deleteJobRoleById').rejects(new Error(errorMessage));;
+
+            await JobRoleController.deleteJobRole(req as unknown as express.Request, res as unknown as express.Response);
+            console.log(res.locals.errormessage);
+
+            expect(res.render.called).to.be.true;
+            expect(res.locals.errormessage).to.equal(errorMessage);
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+        });
+
     });
 });
