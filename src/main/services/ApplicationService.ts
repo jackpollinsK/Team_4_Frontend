@@ -9,7 +9,7 @@ import { getHeader } from "./AuthUtil";
 
 export const postJobRoleAplication = async (application: JobApplyRoleRequest, token: string): Promise<JobApplyRoleRequest> => {
     try {
-        const response: AxiosResponse = await axios.post("/api/apply-for-role", application, getHeader(token));
+        const response: AxiosResponse = await axios.post("/api/applyForJobRole", application, getHeader(token));
         return response.data;
     } catch (e) {
         if (e.response.status == 400) {
