@@ -9,6 +9,7 @@ import { allowRoles } from "../../../main/middleware/AuthMiddleware";
 import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
+import { JobRoleRequest } from "../../../main/models/JobRoleRequest";
 
 
 const expectedJobRole: JobRoleResponse = {
@@ -246,6 +247,52 @@ describe('JobRoleController', function () {
             expect(res.render.calledOnce).to.be.true;
             expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
             expect(res.locals.errormessage).to.equal(errorMessage);
+        });
+
+        it('should create a new job role and redirect on successful submission', async () => {
+            const jobRoleRequest: JobRoleRequest = {
+                roleName: 'New Role',
+                location: 1,
+                capability: 1,
+                band: 1,
+                closingDate: new Date(),
+                description: 'Description',
+                responsibilities: 'Responsibilities',
+                jobSpec: 'Job Spec',
+                openPostions: 5
+            };
+            const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
+            const res = { redirect: sinon.stub() };
+
+            sinon.stub(JobRoleService, 'createRole').resolves();
+
+            await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+
+            expect(res.redirect.calledOnce).to.be.true;
+            expect(res.redirect.calledWith('/')).to.be.true;
+        });
+        it('should render error page if job role creation fails', async () => {
+            const jobRoleRequest: JobRoleRequest = {
+                roleName: 'New Role',
+                location: 1,
+                capability: 1,
+                band: 1,
+                closingDate: new Date(),
+                description: 'Description',
+                responsibilities: 'Responsibilities',
+                jobSpec: 'Job Spec',
+                openPostions: 5
+            };
+            const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
+            const res = { render: sinon.spy(), locals: { errormessage: '' } };
+
+            sinon.stub(JobRoleService, 'createRole').rejects(new Error('Creation failed'));
+
+            await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+            expect(res.locals.errormessage).to.equal('Creation failed');
         });
     });
 

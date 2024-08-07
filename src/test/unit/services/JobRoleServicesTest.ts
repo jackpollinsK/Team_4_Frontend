@@ -3,13 +3,14 @@ import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { JobRoleResponse } from "../../../main/models/JobRoleResponse";
 import { describe } from "node:test";
-import { deleteJobRoleById, getJobRoleById, getJobRoles, URL, BANDS_URL, CAPABILITIES_URL, LOCATIONS_URL, getBands, getLocations, getCapabilities } from '../../../main/services/JobRoleService';
+import { deleteJobRoleById, getJobRoleById, getJobRoles, URL, BANDS_URL, CAPABILITIES_URL, LOCATIONS_URL, getBands, getLocations, getCapabilities, createRole} from '../../../main/services/JobRoleService';
 import { JobRoleSingleResponse } from "../../../main/models/JobRoleSingleResponse";
 import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
 import { Band } from "../../../main/models/Band";
 import { Location } from "../../../main/models/Location";
 import { Capability } from "../../../main/models/Capability";
+import { JobRoleRequest } from "../../../main/models/JobRoleRequest";
 
 const secretKey = 'SUPER_SECRET';
 const validJwtToken = jwt.sign({ Role: UserRole.Admin, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
@@ -156,7 +157,7 @@ describe('Get Dropdown data', function (){
       expect(result).to.deep.equal(expectedBands);
   })
 
-  it.only('Should return location succesfully', async () => {
+  it('Should return location succesfully', async () => {
     mock.onGet(LOCATIONS_URL).reply(200, expectedLocations);
       const result: Location[] = await getLocations(validJwtToken);
       expect(result).to.deep.equal(expectedLocations);
@@ -166,4 +167,73 @@ describe('Get Dropdown data', function (){
       const result: Capability[] = await getCapabilities("12345");
       expect(result).to.deep.equal(expectedCapabilities);
   })
+  it('Should fail to return bands', async () => {
+    mock.onGet(BANDS_URL).reply(500);
+    try {
+      await getBands(validJwtToken);
+    } catch (e) {
+      expect(e.message).to.equal('Failed to get bands');
+    }   
+  })
+  it('Should fail to return locations', async () => {
+    mock.onGet(LOCATIONS_URL).reply(500);
+    try {
+      await getLocations(validJwtToken);
+    } catch (e) {
+      expect(e.message).to.equal('Failed to get locations');
+    }   
+  })
+  it('Should fail to return capabilities', async () => {
+    mock.onGet(CAPABILITIES_URL).reply(500);
+    try {
+      await getCapabilities(validJwtToken);
+    } catch (e) {
+      expect(e.message).to.equal('Failed to get capabilities');
+    }   
+  })
+})
+describe('createRole', function () {
+  it('should create a job role successfully and return the response data', async () => {
+      const jobRoleRequest: JobRoleRequest = {
+          roleName: 'Test Role',
+          location: 1,
+          capability: 2,
+          band: 3,
+          closingDate: new Date('2025-12-18'),
+          description: 'Test Description',
+          responsibilities: 'Test Responsibilities',
+          jobSpec: 'Test Spec',
+          openPostions: 5
+      };
+
+      const expectedResponse = 'Role created successfully';
+
+      mock.onPost(URL).reply(200, expectedResponse);
+
+      const result = await createRole(jobRoleRequest, validJwtToken);
+
+      expect(result).to.deep.equal(expectedResponse);
+  });
+
+  it('should throw an error if the request fails', async () => {
+      const jobRoleRequest: JobRoleRequest = {
+          roleName: 'Test Role',
+          location: 1,
+          capability: 2,
+          band: 3,
+          closingDate: new Date('2025-12-18'),
+          description: 'Test Description',
+          responsibilities: 'Test Responsibilities',
+          jobSpec: 'Test Spec',
+          openPostions: 5
+      };
+
+      mock.onPost(URL).reply(500);
+
+      try {
+          await createRole(jobRoleRequest, validJwtToken);
+      } catch (e) {
+          expect(e.message).to.equal('Failed to create Job Role');
+      }
+  });
 })
