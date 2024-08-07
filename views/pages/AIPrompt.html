@@ -17,7 +17,7 @@
                         <li>Your Band (eg. Junior, Senior)</li>
                     </ul>
                 </div>
-                <form class="form mt-3 text-center" action="/AISearch" method="post">
+                <form class="form mt-3 text-center" action="/job-roles-personalised" method="post">
                     <span>
                         <input class="form-control" id="prompt" name="prompt" value="{{prompt}}"
                             placeholder="I want to work as (Your Job) and I live near (Your town/ city)" type="text">
@@ -28,5 +28,21 @@
             </div>
         </div>
     </div>
+
+    <div class="container" >
+        <div class="row m-5" >
+            <div class="col-sm-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title" style="text-align: center;">Job Roles</h3>
+                        <h5 class="card-text" style="text-align: center; margin-bottom: 2%;">Want to see all Job Roles ?
+                            change.</h5>
+                        <a href="/job-roles" class="btnKainos mt-2 text-center" style="margin-left: 42%; margin-top: 5%; margin-bottom: 5%;" >Click here to see all Job Roles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

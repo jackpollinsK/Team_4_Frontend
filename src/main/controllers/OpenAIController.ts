@@ -16,6 +16,7 @@ export const postPromptForm = async (req: express.Request, res: express.Response
 
     res.render("pages/allJobRolesList.html", {jobRoles: jobRolesResponse, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     } catch (e) {
+        console.log(e.message);
         res.locals.errormessage = e.message;
         res.redirect("/AI-Job-Search");
     }
