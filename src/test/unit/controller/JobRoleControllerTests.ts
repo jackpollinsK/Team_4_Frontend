@@ -200,5 +200,24 @@ describe('JobRoleController', function () {
             expect(res.render.calledWith('pages/allJobRolesList.html')).to.be.true;
         });
 
+        it('should throw error', async () => {
+            const req = { params: { id: 1 }, session: { token: '' } };
+
+            const res = {
+                render: sinon.spy(),
+                locals: { errormessage: '' }
+            };
+
+            const expectedErrorMessage = "Invalid token specified: missing part #2";
+            sinon.stub(JobRoleService, 'getJobRoles');
+            sinon.stub(JobRoleService, 'deleteJobRoleById');
+
+            await JobRoleController.deleteJobRole(req as unknown as express.Request, res as unknown as express.Response);
+
+            expect(res.render.called).to.be.true;
+            expect(res.locals.errormessage).to.equal(expectedErrorMessage);
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+        });
+
     });
 });

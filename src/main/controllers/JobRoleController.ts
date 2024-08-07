@@ -8,7 +8,7 @@ export const getAllJobRoles = async (req: express.Request, res: express.Response
         res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "An Error Ocured";
+        res.locals.pageName = "An Error Occured";
         res.render("pages/errorPage.html", res);
     }
 }
@@ -19,7 +19,7 @@ export const getJobRole = async (req: express.Request, res: express.Response): P
         res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job, token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "An Error Ocured";
+        res.locals.pageName = "An Error Occured";
         res.render("pages/errorPage.html", res);
     }
 }
@@ -27,10 +27,10 @@ export const getJobRole = async (req: express.Request, res: express.Response): P
 export const deleteJobRole = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
         await deleteJobRoleById(req.params.id,req.session.token)
-        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
+        res.redirect('/jobRoles');
     }catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "An Error Ocured";
+        res.locals.pageName = "An Error Occured";
         res.render("pages/errorPage.html", res);
     }
-}
+} 
