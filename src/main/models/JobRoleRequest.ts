@@ -6,5 +6,6 @@ export type JobRoleRequest = {
     closingDate: Date,
     description: string,
     responsibilities: string,
-    jobSpec: string
+    jobSpec: string,
+    openPostions: number
 }

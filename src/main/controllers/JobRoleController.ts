@@ -46,6 +46,7 @@ export const getRoleForm = async (req: express.Request, res: express.Response): 
             selectedLocation: "",
             selectedBand: "",
             selectedCapability: "",
+            openPostions: "",
             token: req.session.token
         });
     } catch (e) {
@@ -82,6 +83,7 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
                     selectedLocation: req.body.location,
                     selectedBand: req.body.band,
                     selectedCapability: req.body.capability,
+                    openPostions: req.body.openPostions,
                     errorMessages: errors,
                     token: req.session.token
                 });
@@ -102,6 +104,7 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
             description: req.body.description,
             responsibilities: req.body.responsibilities,
             jobSpec: req.body.jobSpec,
+            openPostions: req.body.openPostions
         };
 
         await createRole(jobRoleRequest, req.session.token);
