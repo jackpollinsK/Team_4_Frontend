@@ -30,13 +30,16 @@ const expectedSingle: JobRoleSingleResponse = {
   jobSpec: "A Link to a page"
 }
 
-const expectedBands = [{id: 1, name: 'Test Band'}];
-const expectedCapabilities = [{id: 1, name: 'Test Capability'}];
-const expectedLocations = [{id: 1, name: 'Test Location'}];
+const expectedBands = {id: 1, name: 'Test Band'};
+const expectedCapabilities = {id: 1, name: 'Test Capability'};
+const expectedLocations = {id: 1, name: 'Test Location', address: 'Test Address', phone: 12345678};
 
 const mock = new MockAdapter(axios);
 
 describe('JobRoleService', function () {
+  beforeEach(() => {
+    mock.reset()
+  });
   describe('getJobRoles', function () {
     it('should return roles from response', async () => {
       const data = [expected];
@@ -113,18 +116,25 @@ describe('Get Dropdown data', function (){
     mock.onGet(URL + BANDS_URL).reply(200, expectedBands);
       const result = await getBands("12345");
 
-      expect(result).to.deep.equal(expectedBands);
+      expect(result[0].id).to.deep.equal(expectedBands.id);
+      expect(result[0].name).to.deep.equal(expectedBands.name);
+
   })
   it('Should return location succesfully', async () => {
     mock.onGet(URL + LOCATIONS_URL).reply(200, expectedLocations);
       const result = await getLocations("12345");
 
-      expect(result).to.deep.equal(expectedLocations);
+      expect(result[0].id).to.deep.equal(expectedLocations.id);
+      expect(result[0].name).to.deep.equal(expectedLocations.name);
+      expect(result[0].address).to.deep.equal(expectedLocations.address);
+      expect(result[0].phone).to.deep.equal(expectedLocations.phone);
   })
   it('Should return capabilities succesfully', async () => {
     mock.onGet(URL + CAPABILITIES_URL).reply(200, expectedCapabilities);
       const result = await getCapabilities("12345");
 
-      expect(result).to.deep.equal(expectedCapabilities);
+      expect(result[0].id).to.deep.equal(expectedCapabilities.id);
+      expect(result[0].name).to.deep.equal(expectedCapabilities.name);
+
   })
 })
