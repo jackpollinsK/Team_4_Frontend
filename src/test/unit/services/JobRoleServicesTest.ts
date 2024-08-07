@@ -147,7 +147,7 @@ describe('deleteJobRoleById', function () {
 
 describe('Get Dropdown data', function (){
   it('Should return bands succesfully', async () => {
-    mock.onGet(URL + BANDS_URL).reply(200, expectedBands);
+    mock.onGet(BANDS_URL).reply(200, expectedBands);
       const result = await getBands("12345");
 
       expect(result[0].id).to.deep.equal(expectedBands.id);
@@ -155,7 +155,7 @@ describe('Get Dropdown data', function (){
 
   })
   it('Should return location succesfully', async () => {
-    mock.onGet(URL + LOCATIONS_URL).reply(200, expectedLocations);
+    mock.onGet(LOCATIONS_URL).reply(200, expectedLocations);
       const result = await getLocations("12345");
 
       expect(result[0].id).to.deep.equal(expectedLocations.id);
@@ -164,7 +164,7 @@ describe('Get Dropdown data', function (){
       expect(result[0].phone).to.deep.equal(expectedLocations.phone);
   })
   it('Should return capabilities succesfully', async () => {
-    mock.onGet(URL + CAPABILITIES_URL).reply(200, expectedCapabilities);
+    mock.onGet(CAPABILITIES_URL).reply(200, expectedCapabilities);
       const result = await getCapabilities("12345");
 
       expect(result[0].id).to.deep.equal(expectedCapabilities.id);

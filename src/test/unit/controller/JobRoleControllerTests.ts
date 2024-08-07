@@ -186,31 +186,32 @@ describe('JobRoleController', function () {
         afterEach(() => {
             sinon.restore();
         });
-    
+
         it('should render the job role form with dropdown options', async () => {
             const locations = [{ id: 1, name: 'test location', address: 'test address', phone: 123456789 }];
             const capabilities = [{ id: 1, name: 'test capability' }];
             const bands = [{ id: 1, name: 'test band' }];
-    
+
             const req = {
                 session: { token: validAdminJwtToken }
             };
-    
+
             const res = {
                 render: sinon.spy(),
             };
-    
+
             sinon.stub(JobRoleService, 'getLocations').resolves(locations);
             sinon.stub(JobRoleService, 'getCapabilities').resolves(capabilities);
             sinon.stub(JobRoleService, 'getBands').resolves(bands);
-    
+
             await JobRoleController.getRoleForm(req as express.Request, res as unknown as express.Response);
-    
+
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/jobRoleForm.html', {
-                capabilities,
-                locations,
-                bands,
+            res.render('pages/jobRoleForm.html', {
+                pageName: "Create New Role",
+                capabilities: capabilities,
+                locations: locations,
+                bands: bands,
                 roleName: "",
                 description: "",
                 responsibilities: "",
@@ -219,33 +220,34 @@ describe('JobRoleController', function () {
                 selectedLocation: "",
                 selectedBand: "",
                 selectedCapability: "",
-                session: { token: validAdminJwtToken }
-            })).to.be.true;
+                openPostions: "",
+                token: req.session.token
+            });
         });
-    
+
         it('should render error page if there is an error getting dropdown options', async () => {
             const errorMessage = 'Error retrieving dropdown options';
-    
+
             const req = {
                 session: { token: validAdminJwtToken }
             };
-    
+
             const res = {
                 render: sinon.spy(),
                 locals: { errormessage: '' }
             };
-    
+
             sinon.stub(JobRoleService, 'getLocations').rejects(new Error(errorMessage));
             sinon.stub(JobRoleService, 'getCapabilities').resolves([]);
             sinon.stub(JobRoleService, 'getBands').resolves([]);
-    
+
             await JobRoleController.getRoleForm(req as express.Request, res as unknown as express.Response);
-    
+
             expect(res.render.calledOnce).to.be.true;
             expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
             expect(res.locals.errormessage).to.equal(errorMessage);
         });
-    });    
+    });
 
     describe('deleteJobRole', function () {
         it('should delete selected job role, then return to view all job roles, when Admin user is logged in', async () => {
