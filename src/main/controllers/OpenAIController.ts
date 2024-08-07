@@ -4,7 +4,7 @@ import { getQueryParams } from "../Utils/OpenAI";
 import { jwtDecode } from "jwt-decode";
 
 export const getPromptForm = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/AIPrompt.html', {pageName: "AI Job finder", token: req.session.token, errormessage: res.locals.errorMessage});
+    res.render('pages/AIPrompt.html', {pageName: "AI Job finder", token: req.session.token, errormessage: res.locals.errormessage});
 }
 
 export const postPromptForm = async (req: express.Request, res: express.Response): Promise<void> => {

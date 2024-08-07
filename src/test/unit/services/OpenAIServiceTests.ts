@@ -14,6 +14,11 @@ describe('OpenAIService', function () {
     });
 
     describe('aiFiltering', function () {
-        //
+        //Check if job role is returned
+        it()
+
+
+
+        //Check error when no jobs are returned
     });
 });

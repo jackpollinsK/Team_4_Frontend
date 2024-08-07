@@ -46,11 +46,12 @@ describe('JobRoleController', function () {
         
               const res = {
                 render: sinon.spy(),
+                locals: { errormessage: '' }
               };
 
             await getPromptForm(req as unknown as express.Request, res as unknown as express.Response);
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/AIPrompt.html', {pageName: "AI Job finder", token: req.session.token})).to.be.true;
+            expect(res.render.calledWith('pages/AIPrompt.html', {pageName: "AI Job finder", token: req.session.token, errormesage: res.locals.errormessage})).to.be.true;
 
         });
 
@@ -84,7 +85,7 @@ describe('JobRoleController', function () {
 
     describe('postPropmtForm', function () {
         //Check if post form is successful NOT WORKING
-        it.only('Should filter job roles when Open AI gives a successful', async () => {
+        it('Should filter job roles when Open AI gives a successful', async () => {
 
             const expectedList = [exampleJob]
             
@@ -108,9 +109,10 @@ describe('JobRoleController', function () {
         });
 
         //Check if Open AI API returns an error
-        it.only('Should return an error message when OpenAIQuerry returns an error', async () => {
+        it('Should return an error message when OpenAIQuerry returns an error', async () => {
 
             const expectedErrorMessage = 'There is an error with your request. Try again later';
+            sinon.stub(OpenAI, 'getQueryParams')
             sinon.stub(OpenAIService, 'postAIResponse').throws(new Error(expectedErrorMessage));
             
             const req = {
@@ -133,9 +135,10 @@ describe('JobRoleController', function () {
         })
 
         //Check if postAiResponse returns a 500
-        it.only('Should retunr an error message when getAllJobs returns a 500 status', async () => {
+        it('Should retunr an error message when getAllJobs returns a 500 status', async () => {
 
             const expectedErrorMessage = 'Sorry There is a problem on our end!';
+            sinon.stub(OpenAI, 'getQueryParams')
             sinon.stub(OpenAIService, 'postAIResponse').throws(new Error(expectedErrorMessage));
             
             const req = {
