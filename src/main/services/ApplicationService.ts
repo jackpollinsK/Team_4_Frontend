@@ -5,10 +5,11 @@ import { jwtDecode } from "jwt-decode";
 import { uploadFileToS3 } from "../Utils/AwsUtil";
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
 import Express from "express";
+import { getHeader } from "./AuthUtil";
 
-export const postJobRoleAplication = async (application: JobApplyRoleRequest): Promise<JobApplyRoleRequest> => {
+export const postJobRoleAplication = async (application: JobApplyRoleRequest, token: string): Promise<JobApplyRoleRequest> => {
     try {
-        const response: AxiosResponse = await axios.post("/api/apply-for-role", application);
+        const response: AxiosResponse = await axios.post("/api/applyForJobRole", application, getHeader(token));
         return response.data;
     } catch (e) {
         if (e.response.status == 400) {

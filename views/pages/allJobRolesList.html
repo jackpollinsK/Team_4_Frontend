@@ -1,35 +1,41 @@
 {% extends "siteTemplate.html" %}
 {% block content %}
 <div class="container container-center">
-<div class="container m-5">
-<h1>Job Roles</h1>
-<table class="table table-striped table-bordered" id = "jobRolesTable">
-    <thead>
-    <tr>
-        <th scope="col">Role Name</th>
-        <th scope="col">Location</th>
-        <th scope="col">Capability</th>
-        <th scope="col">Band</th>
-        <th scope="col">Closing Date</th>
-        {% if userLevel.Role == 2 %}
-            <th scope="col">Apply</th>
-        {% endif %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for jobRole in jobRoles %}
-        <tr>
-            <td><a href="/job-roles-{{jobRole.id}}">{{ jobRole.roleName }}</td>
-            <td>{{ jobRole.location }}</td>
-            <td>{{ jobRole.capability }}</td>
-            <td>{{ jobRole.band }}</td>
-            <td>{{ jobRole.closingDate | date }}</td>
-            {% if userLevel.Role == 2 %}
-                <td><a href="/job-apply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
-            {% endif %}
-        </tr>
-    {% endfor %}
-    <div class="container" >
+    <div class="container m-5">
+        <h1>Job Roles</h1>
+        <table class="table table-striped table-bordered" id="jobRolesTable">
+            <thead>
+                <tr>
+                    <th scope="col">Role Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Capability</th>
+                    <th scope="col">Band</th>
+                    <th scope="col">Closing Date</th>
+                    {% if userLevel.Role == 1 %}
+                    <th scope="col">Delete Job Role</th>
+                    {% endif %}
+                    {% if userLevel.Role == 2 %}
+                    <th scope="col">Apply</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for jobRole in jobRoles %}
+                <tr>
+                    <td id = "jobRoleName"><a href="/jobRoles-{{jobRole.id}}">{{ jobRole.roleName }}</td>
+                    <td id = "jobRoleLocation">{{ jobRole.location }}</td>
+                    <td id = "jobRoleCapability">{{ jobRole.capability }}</td>
+                    <td id = "jobRoleBand">{{ jobRole.band }}</td>
+                    <td id = "jobRoleClosingDate">{{ jobRole.closingDate | date }}</td>
+                    {% if userLevel.Role == 1 %}
+                    <td id = "deleteButton"><a href="/jobRolesDelete-{{jobRole.id}}" onclick="return confirm('Are you sure you want to delete this Job Role?');" class="btnKainos">Delete</a></td>
+                    {% endif %}
+                    {% if userLevel.Role == 2 %}
+                    <td  id = "applyButton"><a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            <div class="container" >
         <div class="row m-5" >
             <div class="col-sm-12">
                 <div class="card border-0 shadow-sm">
@@ -44,7 +50,7 @@
         </div>
     </div>
     </tbody>
-</table>
-</div>
+        </table>
+    </div>
 </div>
 {% endblock %}

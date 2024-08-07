@@ -22,7 +22,24 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
         return response.data;        
     } catch (e) {
         if(e.response.status == 404){
-            throw new Error("Job Not Found");
+            throw new Error("Job Role Not Found");
+        }
+        else if(e.response.status == 500){
+            throw new Error("Sorry There is a problem on our end!");
+        }
+        else{
+            throw new Error(e.message);
+        }
+    }
+}
+
+export const deleteJobRoleById = async (id: string, token: string) => {
+    try {
+        const response: AxiosResponse = await axios.delete(URL + "/" + id, getHeader(token));
+        return response;        
+    } catch (e) {
+        if(e.response.status == 404){
+            throw new Error("Job Role Not Found");
         }
         else if(e.response.status == 500){
             throw new Error("Sorry There is a problem on our end!");

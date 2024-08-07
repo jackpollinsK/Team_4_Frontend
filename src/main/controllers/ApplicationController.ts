@@ -17,8 +17,8 @@ export const getApplyJobRolesForm = async (req: Express.Request, res: Express.Re
 
 export const postApplyJobRolesForm = async (req: Express.Request, res: Express.Response): Promise<void> => {
     try {
-        await postJobRoleAplication(await processJobRoleAplication(req));
-        res.redirect('/job-roles');
+        await postJobRoleAplication(await processJobRoleAplication(req), req.session.token);
+        res.redirect('/jobRoles');
 
     } catch (e) {
         res.locals.errormessage = e.message;

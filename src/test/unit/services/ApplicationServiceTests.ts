@@ -33,6 +33,14 @@ const testData: JobApplyRoleRequest = {
   roleID: 1,
   cvLink: 'A link to a cv'
 }
+const secretKey = 'SUPER_SECRET';
+const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
+
+const req: testReq1 = {
+  session: { token: validJwtToken },
+  params: { id: 1 },
+  file: null
+};
 
 describe('ApplicationService', function () {
   describe('processJobRoleAplication', function () {
@@ -42,28 +50,26 @@ describe('ApplicationService', function () {
   });
 
     it('should post application', async () => {
-      mock.onPost("/api/apply-for-role").reply(201, testData);
+      mock.onPost("/api/applyForJobRole").reply(201, testData);
     })
 
     it('should throw exception when 500 error returned from axios', async () => {
-      mock.onPost("/api/apply-for-role").reply(500);
+      mock.onPost("/api/applyForJobRole").reply(500);
       try {
-        await postJobRoleAplication(testData);
+        await postJobRoleAplication(testData, req.session.token);
       } catch (e) {
         expect(e.message).to.equal('Internal Server Error.');
       }
     })
 
     it('should throw exception when 400 error returned from axios', async () => {
-      mock.onPost("/api/apply-for-role").reply(400);
+      mock.onPost("/api/applyForJobRole").reply(400);
       try {
-        await postJobRoleAplication(testData);
+        await postJobRoleAplication(testData, req.session.token);
       } catch (e) {
         expect(e.message).to.equal('You have already applied to this job');
       }
     })
-    const secretKey = 'SUPER_SECRET';
-    const validJwtToken = jwt.sign({ Role: UserRole.User, sub: "test@random.com" }, secretKey, { expiresIn: '8h' });
 
     it('should return error when no file is uploaded', async () => {
       //You must upload file
