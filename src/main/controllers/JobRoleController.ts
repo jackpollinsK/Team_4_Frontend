@@ -1,5 +1,5 @@
 import express from "express";
-import { createRole, getJobRoleById, getJobRoles, getBands, getCapabilities, getLocations} from "../services/JobRoleService"
+import { deleteJobRoleById, createRole, getJobRoleById, getJobRoles, getBands, getCapabilities, getLocations} from "../services/JobRoleService"
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 import { jwtDecode } from "jwt-decode";
 import { Band } from "../models/Band";
@@ -12,18 +12,29 @@ export const getAllJobRoles = async (req: express.Request, res: express.Response
         res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "Job Roles";
-        res.render("pages/allJobRolesList.html", res);
+        res.locals.pageName = "An Error Occured";
+        res.render("pages/errorPage.html", res);
     }
 }
 
 export const getJobRole = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
         const job : JobRoleSingleResponse = await getJobRoleById(req.params.id,req.session.token)
-        res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job, token: req.session.token});
+        res.render('pages/singleJobRole.html', {pageName: job.roleName+ ": " + job.band, job: job, token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
-        res.locals.pageName = "An Error Ocured";
+        res.locals.pageName = "An Error Occured";
+        res.render("pages/errorPage.html", res);
+    }
+}
+
+export const deleteJobRole = async (req: express.Request, res: express.Response): Promise<void> => {
+    try{
+        await deleteJobRoleById(req.params.id,req.session.token)
+        res.redirect('/jobRoles');
+    }catch (e) {
+        res.locals.errormessage = e.message;
+        res.locals.pageName = "An Error Occured";
         res.render("pages/errorPage.html", res);
     }
 }
@@ -116,3 +127,4 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
         res.render('pages/errorPage.html');
     }
 }
+ 

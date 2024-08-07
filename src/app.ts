@@ -4,7 +4,7 @@ import multer from "multer";
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import { getAllJobRoles, getJobRole, getRoleForm, postRoleForm } from "./main/controllers/JobRoleController";
+import { deleteJobRole, getAllJobRoles, getJobRole, getRoleForm, postRoleForm } from "./main/controllers/JobRoleController";
 import { dateFilter } from "./main/filters/DateFilter";
 import { getLoginForm, getLogoutForm, getNotAuthorised, getNotLoggedIn, postLoginForm, postLogoutForm } from "./main/controllers/AuthControllers";
 import { getHomePage } from "./main/controllers/HomeController";
@@ -15,14 +15,14 @@ import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/
 const app = express();
 
 const storage = multer.memoryStorage();
-const upload = multer( { storage: storage } )
+const upload = multer({ storage: storage })
 
 nunjucks.configure('views/', {
-    autoescape: false,
-    express: app
+  autoescape: false,
+  express: app
 });
 
-const env = nunjucks.configure('views',{
+const env = nunjucks.configure('views', {
   autoescape: true,
   express: app
 });
@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 }}));
+app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 } }));
 
 declare module "express-session" {
   interface SessionData {
@@ -59,7 +59,7 @@ app.post('/logoutForm', postLogoutForm);
 app.get('/notLoggedIn', getNotLoggedIn);
 app.get('/notAuthorised', getNotAuthorised);
 
-app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
+app.get('/jobRoles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
 
 app.get('/job-apply-:id', allowRoles([UserRole.User]), getApplyJobRolesForm);
 app.post('/job-apply-:id', upload.single('file'), allowRoles([UserRole.User]), postApplyJobRolesForm);
