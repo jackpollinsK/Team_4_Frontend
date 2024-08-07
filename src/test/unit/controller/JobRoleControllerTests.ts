@@ -259,7 +259,7 @@ describe('JobRoleController', function () {
                 description: 'Description',
                 responsibilities: 'Responsibilities',
                 jobSpec: 'Job Spec',
-                openPostions: 5
+                openPositions: 5
             };
             const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
             const res = { redirect: sinon.stub() };
@@ -281,7 +281,7 @@ describe('JobRoleController', function () {
                 description: 'Description',
                 responsibilities: 'Responsibilities',
                 jobSpec: 'Job Spec',
-                openPostions: 5
+                openPositions: 5
             };
             const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
             const res = { render: sinon.spy(), locals: { errormessage: '' } };

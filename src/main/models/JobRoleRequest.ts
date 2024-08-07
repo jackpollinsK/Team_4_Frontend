@@ -7,5 +7,5 @@ export type JobRoleRequest = {
     description: string,
     responsibilities: string,
     jobSpec: string,
-    openPostions: number
+    openPositions: number
 }

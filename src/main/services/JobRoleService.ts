@@ -8,6 +8,7 @@ import { JobRoleRequest } from "../models/JobRoleRequest";
 import { Band } from "../models/Band";
 import { Capability } from "../models/Capability";
 import { Location } from "../models/Location";
+import { validateJobRoleRequest } from "../validators/validateJobRoleRequest";
 
 
 export const URL: string = "/api/JobRoles";
@@ -61,19 +62,19 @@ export const deleteJobRoleById = async (id: string, token: string) => {
 }
 
 export const createRole = async (jobRoleRequest: JobRoleRequest, token: string): Promise<string> => {
+    validateJobRoleRequest(jobRoleRequest);
+
     try {
-        console.log('Sending request with data:', jobRoleRequest);
         const response: AxiosResponse<string> = await axios.post(URL, jobRoleRequest, getHeader(token));
-        console.log('Response received:', response.data);
         return response.data;
     } catch (e) {
-            throw new Error('Failed to create Job Role');
-        }
+        throw new Error('Failed to create Job Role');
     }
+}
 
 export async function getBands(token: string): Promise<Band[]> {
     try {
-        const response: AxiosResponse<Band[]> = await axios.get(BANDS_URL, getHeader(token));
+        const response: AxiosResponse = await axios.get(BANDS_URL, getHeader(token));
         return response.data;
     } catch (e) {
         throw new Error('Failed to get bands');
@@ -81,7 +82,7 @@ export async function getBands(token: string): Promise<Band[]> {
 }
 export async function getCapabilities(token: string): Promise<Capability[]> {
     try {
-        const response: AxiosResponse<Capability[]> = await axios.get(CAPABILITIES_URL, getHeader(token));
+        const response: AxiosResponse = await axios.get(CAPABILITIES_URL, getHeader(token));
         return response.data;
     } catch (e) {
         throw new Error('Failed to get capabilities');
@@ -89,7 +90,7 @@ export async function getCapabilities(token: string): Promise<Capability[]> {
 }
 export async function getLocations(token: string): Promise<Location[]> {
     try {
-        const response: AxiosResponse<Location[]> = await axios.get(LOCATIONS_URL, getHeader(token));
+        const response: AxiosResponse = await axios.get(LOCATIONS_URL, getHeader(token));
         return response.data;
     } catch (e) {
         throw new Error('Failed to get locations');

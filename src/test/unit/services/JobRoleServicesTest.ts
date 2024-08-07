@@ -203,7 +203,7 @@ describe('createRole', function () {
           description: 'Test Description',
           responsibilities: 'Test Responsibilities',
           jobSpec: 'Test Spec',
-          openPostions: 5
+          openPositions: 5
       };
 
       const expectedResponse = 'Role created successfully';
@@ -225,7 +225,7 @@ describe('createRole', function () {
           description: 'Test Description',
           responsibilities: 'Test Responsibilities',
           jobSpec: 'Test Spec',
-          openPostions: 5
+          openPositions: 5
       };
 
       mock.onPost(URL).reply(500);
