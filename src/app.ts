@@ -68,6 +68,5 @@ app.get('/job-apply-:id', allowRoles([UserRole.User]), getApplyJobRolesForm);
 app.post('/job-apply-:id', upload.single('file'), allowRoles([UserRole.User]), postApplyJobRolesForm);
 app.get('/job-roles-:id',allowRoles([UserRole.Admin, UserRole.User]), getJobRole);
 
-app.get('/AI-Job-Search', allowRoles([UserRole.User]), getPromptForm);
+app.get('/AI-Job-Search', allowRoles([UserRole.Admin, UserRole.User]), getPromptForm);
 app.post('/job-roles-personalised', allowRoles([UserRole.Admin, UserRole.User]), postPromptForm);
-app.get('/Job-Roles-AI-Sorted', allowRoles([UserRole.Admin, UserRole.User]), )

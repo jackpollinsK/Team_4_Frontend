@@ -7,21 +7,29 @@ const openai = new OpenAi({
 
 //Need to wait until the add job role is complete
 const exampleJson = {
-    location: "Belfast, Birmingham, Derry, Buenos Aires, Toronto",
-    capability: "Engineering, Platforms, Data and Artificial Intelligence, Cyber Security, Workday, Experience Design, Product, Delivery, Operations, Business Development and Marketing, Organisational Strategy and Planning, People, Commercial and Financial Management, Business Services Support",
-    band: "Apperentice, Trainee, Associate, Senior Associate, Consultant, Manager, Principal, Leadership Community"
+    location: "Location",
+    capability: "capability",
+    band: "band"
 }
+
+const locationExamples = 'Belfast, Birmingham, Derry, Buenos Aires, Toronto';
+const capabilityExamples = 'Engineering, Platforms, Data and Artificial Intelligence, Cyber Security, Workday, Experience Design, Product, Delivery, Operations, Business Development and Marketing, Organisational Strategy and Planning, People, Commercial and Financial Management, Business Services Support'
+const bandExamples = 'Apperentice, Trainee, Associate, Senior Associate, Consultant, Manager, Principal, Leadership Community'
+
 
 export const getQueryParams = async (question: string): Promise<OpenAIRequest> => {
 
-    console.log(exampleJson);
     try {
         //creates prompt and sends to OpenAI API
         const aiResponse = openai.chat.completions.create({
             messages: [
                 {
                     role: "system",
-                    content: "You are an assistant designed to output JSON in this schema: " + exampleJson + ". Location is the place, capability is the type of work, band is the profession level",
+                    content: "You are an assistant designed to output JSON in this schema: " + exampleJson + 
+                    "Location is the place, capability is the type of work, band is the profession level." + 
+                    "For Location find the geographically to the questions location from from: " + locationExamples +
+                    "For capability out of this set of capabilities find the most applicable from: " + capabilityExamples +
+                    "For bands out of this out of this set of bands find the most applicable or if the band is mispelt choose the closest from: " + bandExamples,
                 },
                 {
                     role: "user",
@@ -42,10 +50,14 @@ export const getQueryParams = async (question: string): Promise<OpenAIRequest> =
 
         //Assign to a predefined obeject
         const result: OpenAIRequest = {
-            location: aiJson.location,
-            capability: aiJson.capability,
-            band: aiJson.band,
+            location: aiJson.Location,
+            capability: aiJson.Capability,
+            band: aiJson.Band,
         };
+
+        if (result.band == undefined || result.capability == undefined || result.location == undefined){
+            getQueryParams(question);
+        }
 
         console.log(result);
         return result;

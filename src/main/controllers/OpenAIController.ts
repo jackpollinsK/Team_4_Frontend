@@ -4,7 +4,7 @@ import { getQueryParams } from "../Utils/OpenAI";
 import { jwtDecode } from "jwt-decode";
 
 export const getPromptForm = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/AIPrompt.html', {pageName: "AI Job finder", token: req.session.token, errormessage: res.locals.errormessage});
+    res.render('pages/AIPrompt.html', {pageName: "Job Roles", token: req.session.token, errormessage: res.locals.errormessage});
 }
 
 export const postPromptForm = async (req: express.Request, res: express.Response): Promise<void> => {
@@ -18,6 +18,6 @@ export const postPromptForm = async (req: express.Request, res: express.Response
     } catch (e) {
         console.log(e.message);
         res.locals.errormessage = e.message;
-        res.redirect("/AI-Job-Search");
+        res.render('pages/AIPrompt.html', {pageName: "Job Roles", token: req.session.token, errormessage: res.locals.errormessage});
     }
 }
