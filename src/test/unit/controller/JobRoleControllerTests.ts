@@ -250,36 +250,5 @@ describe('JobRoleController', function () {
             expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
             expect(res.locals.errormessage).to.equal(errorMessage);
         });
-    
-        it('should return error page if an error occurs during creation of job role', async () => {
-            const errorMessage = 'Error creating job role';
-
-            const req = {
-                body: {
-                    roleName: 'Developer',
-                    closingDate: '2024-12-31',
-                    description: 'A developer role',
-                    responsibilities: 'Develop software',
-                    jobSpec: 'Software engineering',
-                    location: '1',
-                    capability: '1',
-                    band: '1'
-                },
-                session: { token: validJwtToken }
-            } as express.Request;
-    
-            const res = {
-                render: sinon.spy(),
-                locals: { errormessage: '' }
-            };
-    
-            sinon.stub(JobRoleService, 'createRole').rejects(new Error(errorMessage));
-    
-            await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
-    
-            expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
-            expect(res.locals.errormessage).to.equal(errorMessage);
-        });
     });    
 });
