@@ -63,7 +63,7 @@ describe('OpenAIService', function () {
             }
 
             try {
-                const result = await aiFiltering(aiFilter, jobList);
+                await aiFiltering(aiFilter, jobList);
             } catch (e) {
                 expect(e.message).to.equal("We couldn't find any jobs that would suit you");
             }
