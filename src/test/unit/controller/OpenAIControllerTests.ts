@@ -41,7 +41,7 @@ describe('JobRoleController', function () {
         it('Should render Prompt form when user is logged in', async () => {
 
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validJwtToken },
               };
         
               const res = {
@@ -93,14 +93,15 @@ describe('JobRoleController', function () {
 
 
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validJwtToken },
+                body: {prompt: 'test'} 
               };
         
               const res = {
                 render: sinon.spy(),
               };
 
-              await postPromptForm(aiQuerryResponse, req.session.token);
+              await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
 
               expect(res.render.calledOnce).to.be.true;
               expect(res.render.calledWith("pages/allJobRolesList.html", {jobRoles: expectedList, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)})).to.be.true;
@@ -113,7 +114,8 @@ describe('JobRoleController', function () {
             sinon.stub(OpenAIService, 'postAIResponse').throws(new Error(expectedErrorMessage));
             
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validJwtToken },
+                body: {prompt: 'test'} 
               };
 
             const res = {
@@ -124,7 +126,7 @@ describe('JobRoleController', function () {
               };
               
               try {
-                await postPromptForm(aiQuerryResponse, req.session.token);
+                await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
               } catch (e) {
                 expect(e.message).to.equal(expectedErrorMessage);
               }
@@ -137,7 +139,8 @@ describe('JobRoleController', function () {
             sinon.stub(OpenAIService, 'postAIResponse').throws(new Error(expectedErrorMessage));
             
             const req = {
-                session: { token: validJwtToken }
+                session: { token: validJwtToken },
+                body: {prompt: 'test'} 
               };
 
             const res = {
@@ -148,7 +151,7 @@ describe('JobRoleController', function () {
               };
               
               try {
-                await postPromptForm(aiQuerryResponse, req.session.token);
+                await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
               } catch (e) {
                 expect(e.message).to.equal(expectedErrorMessage);
               }
