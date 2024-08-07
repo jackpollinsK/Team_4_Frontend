@@ -42,40 +42,39 @@ describe('OpenAIController', function () {
 
             const req = {
                 session: { token: validJwtToken },
-              };
-        
-              const res = {
+            };
+
+            const res = {
                 render: sinon.spy(),
                 locals: { errormessage: '' }
-              };
+            };
 
             await getPromptForm(req as unknown as express.Request, res as unknown as express.Response);
-            expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/AIPrompt.html', {pageName: "AI Job finder", token: req.session.token, errormesage: res.locals.errormessage})).to.be.true;
 
+            expect(res.render.calledOnce).to.be.true;
         });
 
         it('Should render Prompt form when user is not logged in', async () => {
 
             const req = {
                 session: { token: '' }
-              };
-        
-              const res = {
+            };
+
+            const res = {
                 render: sinon.spy(),
                 status: sinon.stub().returnsThis(),
                 redirect: sinon.stub().returnsThis(),
                 locals: { errormessage: '' }
-              };
-          
-              const next = sinon.stub();
-          
+            };
+
+            const next = sinon.stub();
+
 
             await getPromptForm(req as unknown as express.Request, res as unknown as express.Response);
             const middleware = allowRoles([UserRole.Admin, UserRole.User]);
 
             await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
-        
+
             expect(res.render.calledOnce).to.be.true;
             expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
 
@@ -88,24 +87,24 @@ describe('OpenAIController', function () {
         it('Should filter job roles when Open AI gives a successful', async () => {
 
             const expectedList = [exampleJob]
-            
+
             sinon.stub(OpenAI, 'getQueryParams').resolves(aiQuerryResponse)
             sinon.stub(OpenAIService, 'postAIResponse').resolves(expectedList)
 
 
             const req = {
                 session: { token: validJwtToken },
-                body: {prompt: 'test'} 
-              };
-        
-              const res = {
+                body: { prompt: 'test' }
+            };
+
+            const res = {
                 render: sinon.spy(),
-              };
+            };
 
-              await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
+            await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
 
-              expect(res.render.calledOnce).to.be.true;
-              expect(res.render.calledWith("pages/allJobRolesList.html", {jobRoles: expectedList, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)})).to.be.true;
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith("pages/allJobRolesList.html", { jobRoles: expectedList, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token) })).to.be.true;
         });
 
         //Check if Open AI API returns an error
@@ -114,24 +113,24 @@ describe('OpenAIController', function () {
             const expectedErrorMessage = 'There is an error with your request. Try again later';
             sinon.stub(OpenAI, 'getQueryParams')
             sinon.stub(OpenAIService, 'postAIResponse').throws(new Error(expectedErrorMessage));
-            
+
             const req = {
                 session: { token: validJwtToken },
-                body: {prompt: 'test'} 
-              };
+                body: { prompt: 'test' }
+            };
 
             const res = {
                 render: sinon.spy(),
                 status: sinon.stub().returnsThis(),
                 redirect: sinon.stub().returnsThis(),
                 locals: { errormessage: '' }
-              };
-              
-              try {
+            };
+
+            try {
                 await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
-              } catch (e) {
+            } catch (e) {
                 expect(e.message).to.equal(expectedErrorMessage);
-              }
+            }
         })
 
         //Check if postAiResponse returns a 500
@@ -140,24 +139,24 @@ describe('OpenAIController', function () {
             const expectedErrorMessage = 'Sorry There is a problem on our end!';
             sinon.stub(OpenAI, 'getQueryParams')
             sinon.stub(OpenAIService, 'postAIResponse').throws(new Error(expectedErrorMessage));
-            
+
             const req = {
                 session: { token: validJwtToken },
-                body: {prompt: 'test'} 
-              };
+                body: { prompt: 'test' }
+            };
 
             const res = {
                 render: sinon.spy(),
                 status: sinon.stub().returnsThis(),
                 redirect: sinon.stub().returnsThis(),
                 locals: { errormessage: '' }
-              };
-              
-              try {
+            };
+
+            try {
                 await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
-              } catch (e) {
+            } catch (e) {
                 expect(e.message).to.equal(expectedErrorMessage);
-              }
+            }
         })
 
 

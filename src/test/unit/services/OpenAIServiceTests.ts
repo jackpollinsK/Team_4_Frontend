@@ -37,9 +37,6 @@ describe('OpenAIService', function () {
                 expect(e.message).to.equal("Sorry There is a problem on our end!")
             }
         });
-
-        //Check if no results are found
-
     });
 
     describe('aiFiltering', function () {
@@ -71,6 +68,6 @@ describe('OpenAIService', function () {
                 expect(e.message).to.equal("We couldn't find any jobs that would suit you");
             }
 
-        });
-    });
+        })
+    })
 });
