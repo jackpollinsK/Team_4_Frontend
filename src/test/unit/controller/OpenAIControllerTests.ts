@@ -31,11 +31,13 @@ describe('OpenAIController', function () {
         status: 'open'
     }
 
-    const aiQuerryResponse: OpenAIRequest = {
+    const aiQuerryEntry: OpenAIRequest = {
         location: 'Belfast',
         capability: 'enginner',
         band: 'senior'
     }
+
+    const aiQuerryResponse: OpenAIRequest[] = [aiQuerryEntry];
 
     describe('getPropmtForm', function () {
         it('Should render Prompt form when user is logged in', async () => {

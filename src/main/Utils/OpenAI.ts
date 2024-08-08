@@ -17,7 +17,7 @@ const capabilityExamples = 'Engineering, Platforms, Data and Artificial Intellig
 const bandExamples = 'Apperentice, Trainee, Associate, Senior Associate, Consultant, Manager, Principal, Leadership Community'
 
 
-export const getQueryParams = async (question: string): Promise<OpenAIRequest> => {
+export const getQueryParams = async (question: string): Promise<OpenAIRequest[]> => {
 
     try {
         //creates prompt and sends to OpenAI API
@@ -25,11 +25,9 @@ export const getQueryParams = async (question: string): Promise<OpenAIRequest> =
             messages: [
                 {
                     role: "system",
-                    content: "You are an assistant designed to output JSON in this schema: " + exampleJson + 
-                    "Location is the place, capability is the type of work, band is the profession level." + 
-                    "For Location find the geographically to the questions location from from: " + locationExamples +
-                    "For capability out of this set of capabilities find the most applicable from: " + capabilityExamples +
-                    "For bands out of this out of this set of bands find the most applicable or if the band is mispelt choose the closest from: " + bandExamples,
+                    content: "You are an assistant designed to output a list of JSON in this schema: " + exampleJson + 
+                    "Location Examples: " + locationExamples + ". Capability Examples: " + capabilityExamples + ". Band Examples: " + bandExamples +
+                    "Location is the place, capability is the type of work, band is the profession level use your best knowledge to pick out some jobs that would best suit the person using only these examples"
                 },
                 {
                     role: "user",
@@ -37,30 +35,37 @@ export const getQueryParams = async (question: string): Promise<OpenAIRequest> =
                 },
             ],
             model: "gpt-4o-mini",
-            response_format: { type: "json_object" },
             max_tokens: 2048
         });
 
         const aiResponseTest = await aiResponse;
-        console.log(aiResponseTest);
+
+        //Process String to JSON list
+        const aiJobLists = aiResponseTest.choices[0].message.content.substring(aiResponseTest.choices[0].message.content.indexOf('`') + 7 ,aiResponseTest.choices[0].message.content.lastIndexOf('`') -2)
 
         //Parse response to get an actual Json object
-        const aiJson = JSON.parse((await aiResponse).choices[0].message.content);
-        console.log(aiJson);
+        const aiJson = JSON.parse(aiJobLists);
 
         //Assign to a predefined obeject
-        const result: OpenAIRequest = {
-            location: aiJson.Location,
-            capability: aiJson.Capability,
-            band: aiJson.Band,
-        };
+        const resultAi: OpenAIRequest[] = [];
 
-        if (result.band == undefined || result.capability == undefined || result.location == undefined){
-            getQueryParams(question);
-        }
 
-        console.log(result);
-        return result;
+        //Loop through to generate filter
+        aiJson.forEach((entry: { Location: string; Capability: string; Band: string; }) => {
+
+            console.log("New Entry " + entry.Location + ', ' + entry.Capability  + ', ' + entry.Band + '\n');
+
+            const valid: OpenAIRequest = {
+                location: entry.Location,
+                capability: entry.Capability,
+                band: entry.Band,
+            };
+
+            resultAi.push(valid);
+            
+        });
+
+        return resultAi;
 
     } catch (e) {
         console.log(e);
