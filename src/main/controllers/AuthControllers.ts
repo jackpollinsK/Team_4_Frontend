@@ -1,7 +1,6 @@
 import { LoginRequest } from "../models/LoginRequest";
 import { getTokenByloggingIn} from "../services/AuthService";
 import express from "express";
-import { jwtDecode } from "jwt-decode";
 
 export const getLoginForm = async (req: express.Request, res: express.Response): Promise<void> => {
     res.render('pages/loginPage.html', {pageName: 'Login Page', token: req.session.token});
