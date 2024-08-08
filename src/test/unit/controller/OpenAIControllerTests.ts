@@ -9,7 +9,6 @@ import * as OpenAIService from '../../../main/services/OpenAIService';
 import * as OpenAI from '../../../main/Utils/OpenAI';
 import { allowRoles } from '../../../main/middleware/AuthMiddleware';
 import { JobRoleResponse } from '../../../main/models/JobRoleResponse';
-import { jwtDecode } from 'jwt-decode';
 import { OpenAIRequest } from '../../../main/models/OpenAIRequest';
 import { JobAppliedResponse } from '../../../main/models/JobAppliedResponse';
 import * as ApplicationService from '../../../main/services/ApplicationService'
