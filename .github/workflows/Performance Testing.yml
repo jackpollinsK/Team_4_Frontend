@@ -30,7 +30,7 @@ jobs:
           
     - name: Run JMeter test
       run: |
-        /apache-jmeter-5.4.1/bin/jmeter -n -t JDD-Performance-Testing.jmx -l results.jtl -e -o report
+        ./apache-jmeter-5.4.1/bin/jmeter -n -t JDD-Performance-Testing.jmx -l results.jtl -e -o report
 
         
     - name: Upload JMeter report
