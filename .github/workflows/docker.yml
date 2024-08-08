@@ -27,6 +27,7 @@ jobs:
     - name: Build & push the Docker image
       env:
         API_URL: ${{ secrets.API_URL }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         
         BUCKET_ACCESS_KEY_ID: ${{ secrets.BUCKET_ACCESS_KEY_ID }}
         BUCKET_SECRET_ACCESS_KEY: ${{ secrets.BUCKET_SECRET_ACCESS_KEY }}
@@ -37,5 +38,5 @@ jobs:
         ECR_REPOSITORY: employee_demo
         IMAGE_TAG: team4-web
       run: |
-        docker build --build-arg API_URL=${API_URL} --build-arg BUCKET_ACCESS_KEY_ID=${BUCKET_ACCESS_KEY_ID} --build-arg BUCKET_SECRET_ACCESS_KEY=${BUCKET_SECRET_ACCESS_KEY} --build-arg BUCKET_NAME=${BUCKET_NAME} --build-arg BUCKET_REGION=${BUCKET_REGION} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build --build-arg API_URL=${API_URL} --build-arg BUCKET_ACCESS_KEY_ID=${BUCKET_ACCESS_KEY_ID} --build-arg BUCKET_SECRET_ACCESS_KEY=${BUCKET_SECRET_ACCESS_KEY} --build-arg BUCKET_NAME=${BUCKET_NAME} --build-arg BUCKET_REGION=${BUCKET_REGION} --build-arg OPENAI_API_KEY=${OPENAI_API_KEY} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
