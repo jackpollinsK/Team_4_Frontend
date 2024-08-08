@@ -1,8 +1,9 @@
 name: Run performance testing
 
 on:
-  schedule:
-    - cron: '0 0 * * *' 
+  push:
+    branches:
+      - main 
 
 jobs: 
   performanceTesting:
