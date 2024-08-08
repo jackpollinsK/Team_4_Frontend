@@ -2,6 +2,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const pa11y = require('pa11y');
+require('dotenv').config();
+
+const EMAIL1 = process.env.LOGIN_EMAIL_1
+const PASSWORD1 = process.env.LOGIN_PASSWORD_1
+const EMAIL2 = process.env.LOGIN_EMAIL_2
+const PASSWORD2 = process.env.LOGIN_PASSWORD_2
 
 // Define URLs and actions to test
 const URLsToTest = [
@@ -25,8 +31,8 @@ const URLsToTest = [
         url: 'http://localhost:3000/notAuthorised',
         actions: [
             'navigate to http://localhost:3000/loginForm',
-            'set field #email to eoghan@random.com',
-            'set field #password to password321',
+            `set field #email to ${EMAIL2}`,
+            `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
             'navigate to http://localhost:3000/notAuthorised',
@@ -36,8 +42,8 @@ const URLsToTest = [
         url: 'http://localhost:3000/AIJobSearch',
         actions: [
             'navigate to http://localhost:3000/loginForm',
-            'set field #email to adam@random.com',
-            'set field #password to pass123',
+            `set field #email to ${EMAIL1}`,
+            `set field #password to ${PASSWORD1}`,
             'click element #submit',
             'wait for path to be /',
             'navigate to http://localhost:3000/AIJobSearch',
@@ -47,8 +53,8 @@ const URLsToTest = [
         url: 'http://localhost:3000/jobRoles',
         actions: [
             'navigate to http://localhost:3000/loginForm',
-            'set field #email to eoghan@random.com',
-            'set field #password to password321',
+            `set field #email to ${EMAIL2}`,
+            `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
             'navigate to http://localhost:3000/jobRoles',
@@ -58,8 +64,8 @@ const URLsToTest = [
         url: 'http://localhost:3000/jobRoles-1',
         actions: [
             'navigate to http://localhost:3000/loginForm',
-            'set field #email to eoghan@random.com',
-            'set field #password to password321',
+            `set field #email to ${EMAIL2}`,
+            `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
             'navigate to http://localhost:3000/jobRoles-1',
@@ -69,8 +75,8 @@ const URLsToTest = [
         url: 'http://localhost:3000/jobRolesApply-1',
         actions: [
             'navigate to http://localhost:3000/loginForm',
-            'set field #email to adam@random.com',
-            'set field #password to pass123',
+            `set field #email to ${EMAIL1}`,
+            `set field #password to ${PASSWORD1}`,
             'click element #submit',
             'wait for path to be /',
             'navigate to http://localhost:3000/jobRolesApply-1',
