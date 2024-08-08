@@ -5,6 +5,12 @@
 2. Start the application with `npm start` or `npm run dev` to reload the server when changes are made
 3. To check that your application is running enter url http://localhost:3000
 
+## How to run UI tests locally 
+1. Make sure you install pa11yci with `npm install -g pa11y-ci` to install
+2. Open two terminals
+3. In terminal one, run `npm start`, to start localhost 3000 server
+4. In terminal two, run `node pa11yTest.js`, to run local pa11y tests
+
 ## How to run the accessibillity tests (pa11y-ci) on AWS
 1. Make sure you install pa11yci with `npm install -g pa11y-ci` to install
 2. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
