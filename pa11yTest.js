@@ -25,11 +25,22 @@ const URLsToTest = [
         url: 'http://localhost:3000/notAuthorised',
         actions: [
             'navigate to http://localhost:3000/loginForm',
+            'set field #email to eoghan@random.com',
+            'set field #password to password321',
+            'click element #submit',
+            'wait for path to be /',
+            'navigate to http://localhost:3000/notAuthorised',
+        ]
+    },
+    {
+        url: 'http://localhost:3000/AIJobSearch',
+        actions: [
+            'navigate to http://localhost:3000/loginForm',
             'set field #email to adam@random.com',
             'set field #password to pass123',
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/notAuthorised',
+            'navigate to http://localhost:3000/AIJobSearch',
         ]
     },
     {
