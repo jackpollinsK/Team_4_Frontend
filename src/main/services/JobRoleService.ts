@@ -62,13 +62,19 @@ export const deleteJobRoleById = async (id: string, token: string) => {
 }
 
 export const createRole = async (jobRoleRequest: JobRoleRequest, token: string): Promise<string> => {
-    validateJobRoleRequest(jobRoleRequest);
-
     try {
-        const response: AxiosResponse<string> = await axios.post(URL, jobRoleRequest, getHeader(token));
-        return response.data;
+        const errors = validateJobRoleRequest(jobRoleRequest);
+
+        if (errors.length > 0) {
+            console.error('Validation errors:', errors);
+            throw new Error(errors.join(', '));
+        } else {
+            const response: AxiosResponse<string> = await axios.post(URL, jobRoleRequest, getHeader(token));
+            return response.data;
+        }
     } catch (e) {
-        throw new Error('Failed to create Job Role');
+        console.error('Error creating job role:', e.message);
+        throw new Error('Failed to create Job Role ' + e.message);
     }
 }
 

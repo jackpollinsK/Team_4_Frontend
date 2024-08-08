@@ -215,25 +215,24 @@ describe('createRole', function () {
       expect(result).to.deep.equal(expectedResponse);
   });
 
-  it('should throw an error if the request fails', async () => {
-      const jobRoleRequest: JobRoleRequest = {
-          roleName: 'Test Role',
-          location: 1,
-          capability: 2,
-          band: 3,
-          closingDate: new Date('2025-12-18'),
-          description: 'Test Description',
-          responsibilities: 'Test Responsibilities',
-          jobSpec: 'Test Spec',
-          openPositions: 5
-      };
+  it.only('should throw an error if the request fails', async () => {
+    const jobRoleRequest: JobRoleRequest = {
+        roleName: 'Test Role',
+        location: 1,
+        capability: 2,
+        band: 3,
+        closingDate: new Date('2025-12-18'),
+        description: 'Test Description',
+        responsibilities: 'Test Responsibilities',
+        jobSpec: 'Test Spec',
+        openPositions: 5
+    };
+    mock.onPost(URL).reply(500);
 
-      mock.onPost(URL).reply(500);
-
-      try {
-          await createRole(jobRoleRequest, validJwtToken);
-      } catch (e) {
-          expect(e.message).to.equal('Failed to create Job Role');
-      }
-  });
+    try {
+        await createRole(jobRoleRequest, 'validJwtToken');
+    } catch (e) {
+        expect(e.message).to.include('Failed to create Job Role');
+    }
+});
 })

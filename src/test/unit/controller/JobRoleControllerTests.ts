@@ -315,17 +315,18 @@ describe('JobRoleController', function () {
                     description: 'Description',
                     responsibilities: 'Responsibilities',
                     jobSpec: 'Job Spec',
-                    openPositions: 5
+                    openPositions: 5,
                 };
+                const Id = '1'
                 const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
-                const res = { redirect: sinon.stub() };
-    
-                sinon.stub(JobRoleService, 'createRole').resolves();
-    
+                const res = { redirect: sinon.stub(),locals: { errormessage: '' }, render: sinon.stub};
+                
+                sinon.stub(JobRoleService, 'createRole').resolves(Id);
+
                 await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
     
                 expect(res.redirect.calledOnce).to.be.true;
-                expect(res.redirect.calledWith('/')).to.be.true;
+                expect(res.redirect.calledWith('/jobRoles-1')).to.be.true;
             });
 
             it('should render error page if job role creation fails', async () => {
