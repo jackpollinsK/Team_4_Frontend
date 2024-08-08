@@ -45,9 +45,14 @@ export class JobRolesTestPage extends ChromeDriver {
         await this.clickCell(id, row, col);
     }    
 
-   //Login button needs ID
+
     async clickLogin(): Promise<void> {
         const element = 'not-logged-in';
         await this.clickById(element);
+    }
+
+    async clickViewJobs(): Promise<void> {
+        const element = 'Click here to see all Job Roles';
+        await this.clickByLinkText(element);
     }
 }
