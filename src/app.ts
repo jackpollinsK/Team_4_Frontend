@@ -11,6 +11,7 @@ import { getHomePage } from "./main/controllers/HomeController";
 import { allowRoles } from "./main/middleware/AuthMiddleware";
 import { UserRole } from "./main/models/JwtToken";
 import { getApplyJobRolesForm, postApplyJobRolesForm } from "./main/controllers/ApplicationController";
+import { getPromptForm, postPromptForm } from "./main/controllers/OpenAIController";
 
 const app = express();
 
@@ -70,3 +71,6 @@ app.get('/jobRoleForm',allowRoles([UserRole.Admin]),getRoleForm);
 app.post('/jobRoleForm',allowRoles([UserRole.Admin]),postRoleForm);
 
 app.get('/jobRolesDelete-:id', allowRoles([UserRole.Admin]), deleteJobRole);
+
+app.get('/AIJobSearch', allowRoles([UserRole.Admin, UserRole.User]), getPromptForm);
+app.post('/jobRolesPersonalised', allowRoles([UserRole.Admin, UserRole.User]), postPromptForm);
