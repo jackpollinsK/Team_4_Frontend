@@ -31,15 +31,19 @@
                     <td id = "deleteButton"><a href="/jobRolesDelete-{{jobRole.id}}" onclick="return confirm('Are you sure you want to delete this Job Role?');" class="btnKainos">Delete</a></td>
                     {% endif %}
                     {% if userLevel.Role == 2 %}
-                        {% for jobApplication in jobApplied %}
-                            {% if jobApplication.jobId != jobRole.id %}
-                                <td  id = "applyButton"><a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
-                            {% else %}
-                                <td>In Progress</td>
+                        {% set matchFound = false %}
+                        
+                        {% for jobApplied in appliedJobs %}
+                            {% if jobApplied.roleID == jobRole.id %}
+                                {% set matchFound = true %}
+                                <td id="applyButton">In Progress</td>
                             {% endif %}
                         {% endfor %}
-                    {% endif %}
-                </tr>
+                        
+                        {% if not matchFound %}
+                            <td id="applyButton"><a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+                        {% endif %}
+                {% endif %}
                 {% endfor %}
             <div class="container" >
         <div class="row m-5" >

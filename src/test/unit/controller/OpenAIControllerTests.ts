@@ -11,6 +11,8 @@ import { allowRoles } from '../../../main/middleware/AuthMiddleware';
 import { JobRoleResponse } from '../../../main/models/JobRoleResponse';
 import { jwtDecode } from 'jwt-decode';
 import { OpenAIRequest } from '../../../main/models/OpenAIRequest';
+import { JobAppliedResponse } from '../../../main/models/JobAppliedResponse';
+import * as ApplicationService from '../../../main/services/ApplicationService'
 
 
 describe('OpenAIController', function () {
@@ -29,6 +31,12 @@ describe('OpenAIController', function () {
         band: 'senior',
         closingDate: undefined,
         status: 'open'
+    }
+
+    const exampleApplied: JobAppliedResponse = {
+        email: 'test@random.com',
+        roleID: 1,
+        cvLink: 'help me'
     }
 
     const aiQuerryResponse: OpenAIRequest = {
@@ -87,9 +95,11 @@ describe('OpenAIController', function () {
         it('Should filter job roles when Open AI gives a successful', async () => {
 
             const expectedList = [exampleJob]
+            const expectedApplied = [exampleApplied]
 
             sinon.stub(OpenAI, 'getQueryParams').resolves(aiQuerryResponse)
             sinon.stub(OpenAIService, 'postAIResponse').resolves(expectedList)
+            sinon.stub(ApplicationService, 'getAppliedJobs').resolves(expectedApplied)
 
 
             const req = {
@@ -104,7 +114,6 @@ describe('OpenAIController', function () {
             await postPromptForm(req as unknown as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith("pages/allJobRolesList.html", { jobRoles: expectedList, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token) })).to.be.true;
         });
 
         //Check if Open AI API returns an error

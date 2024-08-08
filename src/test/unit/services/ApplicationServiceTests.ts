@@ -37,7 +37,7 @@ const testData: JobApplyRoleRequest = {
 
 const testDataApplied: JobAppliedResponse = {
   email: 'adam@random.com',
-  jobId: 1,
+  roleID: 1,
   cvLink: 'A link to a cv'
 }
 const secretKey = 'SUPER_SECRET';

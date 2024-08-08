@@ -1,5 +1,5 @@
 export type JobAppliedResponse = {
     email: string,
-    jobId: number,
+    roleID: number,
     cvLink: string
 }

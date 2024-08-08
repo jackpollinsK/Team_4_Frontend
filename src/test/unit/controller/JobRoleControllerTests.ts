@@ -49,7 +49,7 @@ describe('JobRoleController', function () {
 
             const jobRoleList = [expectedJobRole];
 
-            const appliedJobs: JobAppliedResponse[] = [{ email: 'test1@random.com', jobId: 1, cvLink: 'test'}];
+            const appliedJobs: JobAppliedResponse[] = [{ email: 'test1@random.com', roleID: 1, cvLink: 'test'}];
 
             const req = {
                 session: { token: validUserJwtToken }
