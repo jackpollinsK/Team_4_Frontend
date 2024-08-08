@@ -21,19 +21,18 @@ jobs:
 
     - name: Install JMeter
       run: |
-        wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.1.zip
-        unzip apache-jmeter-5.4.1.zip
-        export JMETER_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.4.1
-        export PATH=$JMETER_HOME/bin:$PATH
-    - name: Install JMeter
-      run: |
-        wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.4.1.zip
-        unzip apache-jmeter-5.4.1.zip
-        export JMETER_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.4.1
-        export PATH=$JMETER_HOME/bin:$PATH
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.1.tgz
+          tar -xvzf apache-jmeter-5.4.1.tgz
+          export JMETER_HOME=$(pwd)/apache-jmeter-5.4.1
+          export PATH=$JMETER_HOME/bin:$PATH
+          
     - name: Run JMeter test
       run: |
-        jmeter -n -t JDD-Performance-Testing.jmx -l results.jtl -e -o report
+        /apache-jmeter-5.4.1/bin/jmeter -n -t JDD-Performance-Testing.jmx -l results.jtl -e -o report
+
+        
     - name: Upload JMeter report
       uses: actions/upload-artifact@v2
       with:
