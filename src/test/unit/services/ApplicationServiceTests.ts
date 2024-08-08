@@ -2,13 +2,14 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { describe, it } from "node:test";
-import { postJobRoleAplication, processJobRoleAplication } from "../../../main/services/ApplicationService";
+import { getAppliedJobs, postJobRoleAplication, processJobRoleAplication } from "../../../main/services/ApplicationService";
 import { JobApplyRoleRequest } from "../../../main/models/JobApplyRoleRequest";
 import * as AwsUtil from "../../../main/Utils/AwsUtil"
 import sinon from "sinon";
 import jwt from 'jsonwebtoken';
 import { UserRole } from "../../../main/models/JwtToken";
 import express from "express";
+import { JobAppliedResponse } from "../../../main/models/JobAppliedResponse";
 
 const mock = new MockAdapter(axios);
 
@@ -31,6 +32,12 @@ interface testReq1 {
 const testData: JobApplyRoleRequest = {
   email: 'adam@random.com',
   roleID: 1,
+  cvLink: 'A link to a cv'
+}
+
+const testDataApplied: JobAppliedResponse = {
+  email: 'adam@random.com',
+  jobId: 1,
   cvLink: 'A link to a cv'
 }
 const secretKey = 'SUPER_SECRET';
@@ -154,6 +161,33 @@ describe('ApplicationService', function () {
     });
 
   })
+
+  describe('getAppliedJobs', function () {
+    it("Should return a appliedJobsList when api has succesful request", async () => {
+      mock.onPost("/api/getAppliedJobs").reply(201, testDataApplied);
+
+      const req = {
+        session: { token: validJwtToken },
+      }
+
+      const response = await getAppliedJobs(req as unknown as express.Request)
+      expect(response).to.deep.equal(testDataApplied);
+    })
+
+    it("Should return a 500 error when api has unsuccesful request", async () => {
+      mock.onPost("/api/applyForJobRole").reply(500);
+
+      const req = {
+        session: { token: validJwtToken },
+      }
+
+      try {
+        await getAppliedJobs(req as unknown as express.Request)
+      } catch (e) {
+        expect(e.message).to.equal("Internal Server Error.");
+      }
+    })
+  });
 
 })
 

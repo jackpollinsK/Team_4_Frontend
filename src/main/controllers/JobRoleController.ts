@@ -2,10 +2,11 @@ import express from "express";
 import { deleteJobRoleById, getJobRoleById, getJobRoles } from "../services/JobRoleService"
 import { JobRoleSingleResponse } from "../models/JobRoleSingleResponse";
 import { jwtDecode } from "jwt-decode";
+import { getAppliedJobs } from "../services/ApplicationService";
 
 export const getAllJobRoles = async (req: express.Request, res: express.Response): Promise<void> => {
     try{
-        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
+        res.render('pages/allJobRolesList.html', {jobRoles: await getJobRoles(req.session.token), appliedJobs: await getAppliedJobs(req) ,pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token)});
     }catch (e) {
         res.locals.errormessage = e.message;
         res.locals.pageName = "An Error Occured";

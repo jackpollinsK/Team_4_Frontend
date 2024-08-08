@@ -6,6 +6,7 @@ import { uploadFileToS3 } from "../Utils/AwsUtil";
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
 import Express from "express";
 import { getHeader } from "./AuthUtil";
+import { JobAppliedResponse } from "../models/JobAppliedResponse";
 
 export const postJobRoleAplication = async (application: JobApplyRoleRequest, token: string): Promise<JobApplyRoleRequest> => {
     try {
@@ -23,6 +24,22 @@ export const postJobRoleAplication = async (application: JobApplyRoleRequest, to
         }
     }
 
+}
+
+export const getAppliedJobs = async (req: Express.Request): Promise<JobAppliedResponse[]> => {
+    //Get Users email
+    const uEmail = jwtDecode(req.session.token).sub;
+    try {
+        const response: AxiosResponse = await axios.post("/api/getAppliedJobs", uEmail, getHeader(req.session.token))
+        return response.data;
+    } catch (e) {
+        if (e.response.status == 500) {
+            throw new Error("Internal Server Error.");
+        }
+        else {
+            throw new Error(e.message);
+        }
+    }
 }
 
 export const processJobRoleAplication = async (req: Express.Request) => {

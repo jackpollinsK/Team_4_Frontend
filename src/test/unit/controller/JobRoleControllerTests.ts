@@ -9,6 +9,8 @@ import { allowRoles } from "../../../main/middleware/AuthMiddleware";
 import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
+import * as ApplicationService from "../../../main/services/ApplicationService";
+import { JobAppliedResponse } from "../../../main/models/JobAppliedResponse";
 
 const expectedJobRole: JobRoleResponse = {
     id: 1,
@@ -47,6 +49,8 @@ describe('JobRoleController', function () {
 
             const jobRoleList = [expectedJobRole];
 
+            const appliedJobs: JobAppliedResponse[] = [{ email: 'test1@random.com', jobId: 1, cvLink: 'test'}];
+
             const req = {
                 session: { token: validUserJwtToken }
             };
@@ -56,10 +60,12 @@ describe('JobRoleController', function () {
             };
 
             sinon.stub(JobRoleService, 'getJobRoles').resolves(jobRoleList);
+            sinon.stub(ApplicationService, 'getAppliedJobs').resolves(appliedJobs)
+
             await JobRoleController.getAllJobRoles(req as express.Request, res as unknown as express.Response);
 
             expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/allJobRolesList.html', { jobRoles: jobRoleList, pageName: "Job Roles", token: req.session.token, userLevel: jwtDecode(req.session.token) })).to.be.true;
+            expect(res.render.calledWith('pages/allJobRolesList.html', { jobRoles: jobRoleList, pageName: "Job Roles", appliedJobs: appliedJobs, token: req.session.token, userLevel: jwtDecode(req.session.token) })).to.be.true;
         });
 
         it('should render view with error message when error thrown, and user is logged in', async () => {
