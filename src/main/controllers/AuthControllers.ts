@@ -33,5 +33,5 @@ export const getNotLoggedIn = async (req: express.Request, res: express.Response
 }
 
 export const getNotAuthorised = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('pages/notAuthorised.html', {pageName: 'Not Authorised', token: req.session.token, userLevel: jwtDecode(req.session.token)});
+    res.render('pages/notAuthorised.html', {pageName: 'Not Authorised', token: req.session.token});
 }
