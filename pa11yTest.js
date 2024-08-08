@@ -12,74 +12,74 @@ const PASSWORD2 = process.env.LOGIN_PASSWORD_2
 // Define URLs and actions to test
 const URLsToTest = [
     {
-        url: 'http://localhost:3000/',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/',
         actions: []
     },
     {
-        url: 'http://localhost:3000/loginForm',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm',
         actions: []
     },
     {
-        url: 'http://localhost:3000/logoutForm',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/logoutForm',
         actions: []
     },
     {
-        url: 'http://localhost:3000/notLoggedIn',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/notLoggedIn',
         actions: []
     },
     {
-        url: 'http://localhost:3000/notAuthorised',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/notAuthorised',
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm',
             `set field #email to ${EMAIL2}`,
             `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/notAuthorised',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/notAuthorised',
         ]
     },
     {
-        url: 'http://localhost:3000/AIJobSearch',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/AIJobSearch',
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm',
             `set field #email to ${EMAIL1}`,
             `set field #password to ${PASSWORD1}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/AIJobSearch',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/AIJobSearch',
         ]
     },
     {
-        url: 'http://localhost:3000/jobRoles',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRoles',
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm',
             `set field #email to ${EMAIL2}`,
             `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/jobRoles',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRoles',
         ]
     },
     {
-        url: 'http://localhost:3000/jobRoles-1',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRoles-1',
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm',
             `set field #email to ${EMAIL2}`,
             `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/jobRoles-1',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRoles-1',
         ]
     },
     {
-        url: 'http://localhost:3000/jobRolesApply-1',
+        url: 'https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRolesApply-1',
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/loginForm',
             `set field #email to ${EMAIL1}`,
             `set field #password to ${PASSWORD1}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/jobRolesApply-1',
+            'navigate to https://nczcbkjcc7.eu-west-1.awsapprunner.com/jobRolesApply-1',
         ]
     },
 ];

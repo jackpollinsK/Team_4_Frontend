@@ -5,10 +5,10 @@
 2. Start the application with `npm start` or `npm run dev` to reload the server when changes are made
 3. To check that your application is running enter url http://localhost:3000
 
-## How to run the accessibillity tests (pa11y-ci) locally
+## How to run the accessibillity tests (pa11y-ci) on AWS
 1. Make sure you install pa11yci with `npm install -g pa11y-ci` to install
 2. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
-3. Run `node pa11yTest.js`in the terminal
+5. In terminal, run `node pa11yTest.js`, to run pa11y tests on AWS.
 
 ## How to run unit tests locally
 1. Make sure that your have ran `npm install` to install dependencies
