@@ -22,21 +22,54 @@
             <tbody>
                 {% for jobRole in jobRoles %}
                 <tr>
-                    <td id = "jobRoleName"><a href="/jobRoles-{{jobRole.id}}">{{ jobRole.roleName }}</td>
-                    <td id = "jobRoleLocation">{{ jobRole.location }}</td>
-                    <td id = "jobRoleCapability">{{ jobRole.capability }}</td>
-                    <td id = "jobRoleBand">{{ jobRole.band }}</td>
-                    <td id = "jobRoleClosingDate">{{ jobRole.closingDate | date }}</td>
+                    <td id="jobRoleName-{{jobRole.id}}">
+                        <a href="/jobRoles-{{jobRole.id}}">{{ jobRole.roleName }}</a>
+                    </td>
+                    <td id="jobRoleLocation-{{jobRole.id}}">
+                        {{ jobRole.location }}
+                    </td>
+                    <td id="jobRoleCapability-{{jobRole.id}}">
+                        {{ jobRole.capability }}
+                    </td>
+                    <td id="jobRoleBand-{{jobRole.id}}">
+                        {{ jobRole.band }}
+                    </td>
+                    <td id="jobRoleClosingDate-{{jobRole.id}}">
+                        {{ jobRole.closingDate | date }}
+                    </td>
                     {% if userLevel.Role == 1 %}
-                    <td id = "deleteButton"><a href="/jobRolesDelete-{{jobRole.id}}" onclick="return confirm('Are you sure you want to delete this Job Role?');" class="btnKainos">Delete</a></td>
+                    <td id="deleteButton-{{jobRole.id}}">
+                        <a href="/jobRolesDelete-{{jobRole.id}}"
+                           onclick="return confirm('Are you sure you want to delete this Job Role?');"
+                           class="btnKainos">Delete
+                        </a>
+                    </td>
                     {% endif %}
                     {% if userLevel.Role == 2 %}
-                    <td  id = "applyButton"><a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a></td>
+                    <td id="applyButton-{{jobRole.id}}">
+                        <a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a>
+                    </td>
                     {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+    <div class="row m-5">
+        <div class="col-sm-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Job Roles</h3>
+                    <h5 class="card-text text-center mb-2">Need help? Why not ask our AI bot?</h5>
+                    <a href="/AIJobSearch" class="btnKainos mt-2 d-block mx-auto" style="width: 200px;">Click here for the bot</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block footer %}
+{% include "snippets/footer.html" %}
 {% endblock %}
