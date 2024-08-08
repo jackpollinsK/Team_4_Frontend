@@ -64,6 +64,7 @@ export const postRoleForm = async (req: express.Request, res: express.Response):
     try {
         const jobRoleRequest: JobRoleRequest = req.body;
         const errors = validateJobRoleRequest(jobRoleRequest);
+        console.log(errors)
 
         if (errors.length > 0) {
             const [bands, locations, capabilities] = await Promise.all([

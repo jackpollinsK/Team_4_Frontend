@@ -248,53 +248,111 @@ describe('JobRoleController', function () {
             expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
             expect(res.locals.errormessage).to.equal(errorMessage);
         });
+        it('should render notLoggedIn page if the user is not logged in ', async () => {
+            const req = {
+                            session: { token: '' }
+                        };
 
-        it('should create a new job role and redirect on successful submission', async () => {
-            const jobRoleRequest: JobRoleRequest = {
-                roleName: 'New Role',
-                location: 1,
-                capability: 1,
-                band: 1,
-                closingDate: new Date(),
-                description: 'Description',
-                responsibilities: 'Responsibilities',
-                jobSpec: 'Job Spec',
-                openPositions: 5
+            const res = {
+                render: sinon.spy(),
+                status: sinon.stub().returnsThis(),
+                redirect: sinon.stub().returnsThis(),
+                locals: { errormessage: '' }
             };
-            const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
-            const res = { redirect: sinon.stub() };
 
-            sinon.stub(JobRoleService, 'createRole').resolves();
+            const next = sinon.stub();
 
-            await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+            sinon.stub(JobRoleService, 'createRole')
 
+            await JobRoleController.getRoleForm(req as unknown as express.Request, res as unknown as express.Response);
+
+            const middleware = allowRoles([UserRole.Admin]);
+
+            await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
+
+            expect((res.status as sinon.SinonStub).calledWith(401)).to.be.true;
+            expect(req.session.token).to.equal('');
             expect(res.redirect.calledOnce).to.be.true;
-            expect(res.redirect.calledWith('/')).to.be.true;
+            expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
         });
-        it('should render error page if job role creation fails', async () => {
-            const jobRoleRequest: JobRoleRequest = {
-                roleName: 'New Role',
-                location: 1,
-                capability: 1,
-                band: 1,
-                closingDate: new Date(),
-                description: 'Description',
-                responsibilities: 'Responsibilities',
-                jobSpec: 'Job Spec',
-                openPositions: 5
+        it('should render notAuthorised page if the user is not authorised ', async () => {
+            const req = {
+                            session: { token: validUserJwtToken }
+                        };
+
+            const res = {
+                render: sinon.spy(),
+                status: sinon.stub().returnsThis(),
+                redirect: sinon.stub().returnsThis(),
+                locals: { errormessage: '' }
             };
-            const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
-            const res = { render: sinon.spy(), locals: { errormessage: '' } };
 
-            sinon.stub(JobRoleService, 'createRole').rejects(new Error('Creation failed'));
+            const next = sinon.stub();
 
-            await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+            sinon.stub(JobRoleService, 'createRole')
 
-            expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
-            expect(res.locals.errormessage).to.equal('Creation failed');
+            await JobRoleController.getRoleForm(req as unknown as express.Request, res as unknown as express.Response);
+
+            const middleware = allowRoles([UserRole.Admin]);
+
+            await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
+
+            expect((res.status as sinon.SinonStub).calledWith(403)).to.be.true;
+            expect(req.session.token).to.equal(validUserJwtToken);
+            expect(res.redirect.calledOnce).to.be.true;
+            expect(res.redirect.calledWith('/notAuthorised')).to.be.true;
         });
     });
+
+        describe('postRoleForm', function () {
+            it('should create a new job role and redirect on successful submission', async () => {
+                const jobRoleRequest: JobRoleRequest = {
+                    roleName: 'New Role',
+                    location: 1,
+                    capability: 1,
+                    band: 1,
+                    closingDate: new Date(),
+                    description: 'Description',
+                    responsibilities: 'Responsibilities',
+                    jobSpec: 'Job Spec',
+                    openPositions: 5
+                };
+                const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
+                const res = { redirect: sinon.stub() };
+    
+                sinon.stub(JobRoleService, 'createRole').resolves();
+    
+                await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+    
+                expect(res.redirect.calledOnce).to.be.true;
+                expect(res.redirect.calledWith('/')).to.be.true;
+            });
+
+            it('should render error page if job role creation fails', async () => {
+                const jobRoleRequest: JobRoleRequest = {
+                    roleName: 'New Role',
+                    location: 1,
+                    capability: 1,
+                    band: 1,
+                    closingDate: new Date(),
+                    description: 'Description',
+                    responsibilities: 'Responsibilities',
+                    jobSpec: 'Job Spec',
+                    openPositions: 5
+                };
+                const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
+                const res = { render: sinon.spy(), locals: { errormessage: '' } };
+    
+                sinon.stub(JobRoleService, 'createRole').rejects(new Error('Creation failed'));
+    
+                await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+    
+                expect(res.render.calledOnce).to.be.true;
+                expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+                expect(res.locals.errormessage).to.equal('Creation failed');
+            });
+        });
+        
 
     describe('deleteJobRole', function () {
         it('should delete selected job role, then return to view all job roles, when Admin user is logged in', async () => {
