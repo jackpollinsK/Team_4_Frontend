@@ -14,8 +14,8 @@ export class JobRoleTestPage extends ChromeDriver {
         await this.go_to_url(JOBROLE_URL);
     }
 
-    async getRoleName(): Promise<string> {
-        const id = 'role-name'; 
+    async getRoleName(ID: number): Promise<string> {
+        const id = `role-name-${ID}`; 
         return await this.getTextById(id);
     }
 

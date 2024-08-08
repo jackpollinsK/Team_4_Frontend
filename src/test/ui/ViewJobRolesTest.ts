@@ -127,12 +127,12 @@ describe('View job roles Test', function () {
 
         //Verifying Role column
         for(let index = 1; index <= rows; index++){
-            const tableRoleName = await jobRolesPage.getData(index,1)
+            const tableRoleName = await jobRolesPage.getData(1,1)
             console.log('Expected role name : ' + tableRoleName)
             
             await jobRolesPage.clickTableCell(index,1)
             
-            const actualRoleName = await jobRolePage.getRoleName()
+            const actualRoleName = await jobRolePage.getRoleName(1)
             console.log('Actual role name: ' + actualRoleName)
             expect(actualRoleName).to.equal(tableRoleName);  
 
