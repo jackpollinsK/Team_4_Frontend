@@ -1,4 +1,3 @@
-import { fileFromPath } from "openai";
 import { JobRoleResponse } from "../models/JobRoleResponse";
 import { OpenAIRequest } from "../models/OpenAIRequest";
 import { getJobRoles } from "./JobRoleService";
