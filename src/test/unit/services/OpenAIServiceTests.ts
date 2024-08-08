@@ -16,11 +16,13 @@ const job: JobRoleResponse = {
     status: "Open"
 }
 
-const aiFilter: OpenAIRequest = {
+const aiFilterEntry: OpenAIRequest = {
     location: "belfast city center",
     capability: "software engineer",
     band: "senior"
 }
+
+const aiFilterTest: OpenAIRequest[] = [aiFilterEntry];
 
 const jobList: JobRoleResponse[] = [job]
 
@@ -32,7 +34,7 @@ describe('OpenAIService', function () {
             sinon.stub(JobRoleService, 'getJobRoles').throws(new Error("Failed to get JobRoles"));
 
             try {
-                await postAIResponse(aiFilter, '');
+                await postAIResponse(aiFilterTest, '');
             } catch (e) {
                 expect(e.message).to.equal("Sorry There is a problem on our end!")
             }
@@ -43,29 +45,49 @@ describe('OpenAIService', function () {
         //Check if job role is returned
         it("Should return a job role when filter matches aiParameters", async () => {
 
-            const aiFilter: OpenAIRequest = {
+            const aiEntrySuccess: OpenAIRequest = {
                 location: "belfast city center",
                 capability: "software engineer",
                 band: "senior"
             }
 
-            const result = await aiFiltering(aiFilter, jobList);
+            const aiScucess = [aiEntrySuccess];
+
+            const result = await aiFiltering(aiScucess, jobList);
 
             expect(result).deep.equal(jobList);
         });
 
         //Check error when no jobs are returned
         it("Should return an error when no job matches the ai Parameters", async () => {
-            const aiFilter: OpenAIRequest = {
+            const aiEntryAiError: OpenAIRequest = {
                 location: "Tilted towers",
                 capability: "software engineer",
                 band: "pro"
             }
+            const aiError = [aiEntryAiError];
 
             try {
-                await aiFiltering(aiFilter, jobList);
+                await aiFiltering(aiError, jobList);
             } catch (e) {
                 expect(e.message).to.equal("We couldn't find any jobs that would suit you");
+            }
+
+        })
+
+        it("Should return an error when filter has any bad values", async () => {
+            const aiEntryValueError: OpenAIRequest = {
+                location: undefined,
+                capability: undefined,
+                band: undefined
+            }
+
+            const aiError = [aiEntryValueError];
+
+            try {
+                await aiFiltering(aiError, jobList);
+            } catch (e) {
+                expect(e.message).to.equal("Something went wrong please try again");
             }
 
         })
