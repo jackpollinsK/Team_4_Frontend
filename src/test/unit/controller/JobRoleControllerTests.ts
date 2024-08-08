@@ -9,6 +9,8 @@ import { allowRoles } from "../../../main/middleware/AuthMiddleware";
 import { UserRole } from "../../../main/models/JwtToken";
 import jwt from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
+import { JobRoleRequest } from "../../../main/models/JobRoleRequest";
+
 
 const expectedJobRole: JobRoleResponse = {
     id: 1,
@@ -181,6 +183,177 @@ describe('JobRoleController', function () {
             expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
         });
     });
+    describe('getRoleForm', function () {
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('should render the job role form with dropdown options', async () => {
+            const locations = [{ id: 1, name: 'test location', address: 'test address', phone: 123456789 }];
+            const capabilities = [{ id: 1, name: 'test capability' }];
+            const bands = [{ id: 1, name: 'test band' }];
+
+            const req = {
+                session: { token: validAdminJwtToken }
+            };
+
+            const res = {
+                render: sinon.spy(),
+            };
+
+            sinon.stub(JobRoleService, 'getLocations').resolves(locations);
+            sinon.stub(JobRoleService, 'getCapabilities').resolves(capabilities);
+            sinon.stub(JobRoleService, 'getBands').resolves(bands);
+
+            await JobRoleController.getRoleForm(req as express.Request, res as unknown as express.Response);
+
+            expect(res.render.calledOnce).to.be.true;
+            res.render('pages/jobRoleForm.html', {
+                pageName: "Create New Role",
+                capabilities: capabilities,
+                locations: locations,
+                bands: bands,
+                roleName: "",
+                description: "",
+                responsibilities: "",
+                jobSpec: "",
+                closingDate: "",
+                selectedLocation: "",
+                selectedBand: "",
+                selectedCapability: "",
+                openPostions: "",
+                token: req.session.token
+            });
+        });
+
+        it('should render error page if there is an error getting dropdown options', async () => {
+            const errorMessage = 'Error retrieving dropdown options';
+
+            const req = {
+                session: { token: validAdminJwtToken }
+            };
+
+            const res = {
+                render: sinon.spy(),
+                locals: { errormessage: '' }
+            };
+
+            sinon.stub(JobRoleService, 'getLocations').rejects(new Error(errorMessage));
+            sinon.stub(JobRoleService, 'getCapabilities').resolves([]);
+            sinon.stub(JobRoleService, 'getBands').resolves([]);
+
+            await JobRoleController.getRoleForm(req as express.Request, res as unknown as express.Response);
+
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+            expect(res.locals.errormessage).to.equal(errorMessage);
+        });
+        it('should render notLoggedIn page if the user is not logged in ', async () => {
+            const req = {
+                            session: { token: '' }
+                        };
+
+            const res = {
+                render: sinon.spy(),
+                status: sinon.stub().returnsThis(),
+                redirect: sinon.stub().returnsThis(),
+                locals: { errormessage: '' }
+            };
+
+            const next = sinon.stub();
+
+            sinon.stub(JobRoleService, 'createRole')
+
+            await JobRoleController.getRoleForm(req as unknown as express.Request, res as unknown as express.Response);
+
+            const middleware = allowRoles([UserRole.Admin]);
+
+            await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
+
+            expect((res.status as sinon.SinonStub).calledWith(401)).to.be.true;
+            expect(req.session.token).to.equal('');
+            expect(res.redirect.calledOnce).to.be.true;
+            expect(res.redirect.calledWith('/notLoggedIn')).to.be.true;
+        });
+        it('should render notAuthorised page if the user is not authorised ', async () => {
+            const req = {
+                            session: { token: validUserJwtToken }
+                        };
+
+            const res = {
+                render: sinon.spy(),
+                status: sinon.stub().returnsThis(),
+                redirect: sinon.stub().returnsThis(),
+                locals: { errormessage: '' }
+            };
+
+            const next = sinon.stub();
+
+            sinon.stub(JobRoleService, 'createRole')
+
+            await JobRoleController.getRoleForm(req as unknown as express.Request, res as unknown as express.Response);
+
+            const middleware = allowRoles([UserRole.Admin]);
+
+            await middleware(req as unknown as express.Request, res as unknown as express.Response, next);
+
+            expect((res.status as sinon.SinonStub).calledWith(403)).to.be.true;
+            expect(req.session.token).to.equal(validUserJwtToken);
+            expect(res.redirect.calledOnce).to.be.true;
+            expect(res.redirect.calledWith('/notAuthorised')).to.be.true;
+        });
+    });
+
+        describe('postRoleForm', function () {
+            it('should create a new job role and redirect on successful submission', async () => {
+                const jobRoleRequest: JobRoleRequest = {
+                    roleName: 'New Role',
+                    location: 1,
+                    capability: 1,
+                    band: 1,
+                    closingDate: new Date(),
+                    description: 'Description',
+                    responsibilities: 'Responsibilities',
+                    jobSpec: 'Job Spec',
+                    openPositions: 5,
+                };
+                const Id = '1'
+                const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
+                const res = { redirect: sinon.stub(),locals: { errormessage: '' }, render: sinon.stub};
+                
+                sinon.stub(JobRoleService, 'createRole').resolves(Id);
+
+                await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+    
+                expect(res.redirect.calledOnce).to.be.true;
+                expect(res.redirect.calledWith('/jobRoles-1')).to.be.true;
+            });
+
+            it('should render error page if job role creation fails', async () => {
+                const jobRoleRequest: JobRoleRequest = {
+                    roleName: 'New Role',
+                    location: 1,
+                    capability: 1,
+                    band: 1,
+                    closingDate: new Date(),
+                    description: 'Description',
+                    responsibilities: 'Responsibilities',
+                    jobSpec: 'Job Spec',
+                    openPositions: 5
+                };
+                const req = { body: jobRoleRequest, session: { token: validAdminJwtToken } };
+                const res = { render: sinon.spy(), locals: { errormessage: '' } };
+    
+                sinon.stub(JobRoleService, 'createRole').rejects(new Error('Creation failed'));
+    
+                await JobRoleController.postRoleForm(req as express.Request, res as unknown as express.Response);
+    
+                expect(res.render.calledOnce).to.be.true;
+                expect(res.render.calledWith('pages/errorPage.html')).to.be.true;
+                expect(res.locals.errormessage).to.equal('Creation failed');
+            });
+        });
+        
 
     describe('deleteJobRole', function () {
         it('should delete selected job role, then return to view all job roles, when Admin user is logged in', async () => {

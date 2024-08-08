@@ -71,6 +71,8 @@ describe('View job roles Test', function () {
 
         await navBarPage.clickJobsButton();
 
+        await jobRolesPage.clickViewJobs();
+
         //Verifying that jobs are displayed
         const tabledata = await jobRolesPage.getData(1,1);
         expect(tabledata).to.equal('Software Engineer');        

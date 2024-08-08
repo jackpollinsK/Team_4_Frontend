@@ -1,0 +1,77 @@
+{% extends "siteTemplate.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center">
+        <div class="bg-body-secondary card p-4">
+            <h2 class="mb-4">Create New Role</h2>
+            <form class="form" action="/jobRoleForm" method="post">
+                <div class="mb-3">
+                    <label for="roleName" class="form-label">Role Name:</label>
+                    <input type="text" class="form-control" id="roleName" name="roleName" value="{{ jobRoleRequest.roleName }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location:</label>
+                    <select class="form-select" id="location" name="location" required>
+                        {% for location in locations %}
+                            <option value="{{ location.id }}" {% if location.id == jobRoleRequest.location %}selected{% endif %}>{{ location.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="band" class="form-label">Band:</label>
+                    <select class="form-select" id="band" name="band" required>
+                        {% for band in bands %}
+                            <option value="{{ band.id }}" {% if band.id == jobRoleRequest.band %}selected{% endif %}>{{ band.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="capability" class="form-label">Capability:</label>
+                    <select class="form-select" id="capability" name="capability" required>
+                        {% for capability in capabilities %}
+                            <option value="{{ capability.id }}" {% if capability.id == jobRoleRequest.capability %}selected{% endif %}>{{ capability.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="closingDate" class="form-label">Closing Date:</label>
+                    <input type="date" class="form-control" id="closingDate" name="closingDate" value="{{ jobRoleRequest.closingDate }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description" value="{{ jobRoleRequest.description }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="responsibilities" class="form-label">Responsibilities:</label>
+                    <input type="text" class="form-control" id="responsibilities" name="responsibilities" value="{{ jobRoleRequest.responsibilities }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="jobSpec" class="form-label">Job Spec Link:</label>
+                    <input type="text" class="form-control" id="jobSpec" name="jobSpec" value="{{ jobRoleRequest.jobSpec }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="openPositions" class="form-label">Open Positions:</label>
+                    <select class="form-select" id="openPositions" name="openPositions" required>
+                        {% for i in range(1, 10) %}
+                            <option value="{{ i }}" {% if i == jobRoleRequest.openPositions %}selected{% endif %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% if errorMessages %}
+                    <div class="alert alert-danger mt-2">
+                        <ul>
+                            {% for message in errorMessages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
