@@ -558,9 +558,9 @@
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name=" Test CV.pdf" elementType="HTTPFileArg">
+              <elementProp name="Test CV.pdf" elementType="HTTPFileArg">
                 <stringProp name="File.mimetype">application/pdf</stringProp>
-                <stringProp name="File.path"> Test CV.pdf</stringProp>
+                <stringProp name="File.path">Test CV.pdf</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
               </elementProp>
             </collectionProp>
