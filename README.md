@@ -8,7 +8,7 @@
 ## How to run the accessibillity tests (pa11y-ci) locally
 1. Make sure you install pa11yci with `npm install -g pa11y-ci` to install
 2. Make sure that in the .pa11yci file, the URLS of the pages you would like to test are included
-3. Run `pa11y-ci`in the terminal
+3. Run `node pa11yTest.js`in the terminal
 
 ## How to run unit tests locally
 1. Make sure that your have ran `npm install` to install dependencies

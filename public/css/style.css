@@ -68,3 +68,8 @@ html{
     justify-content: center;
     align-items: center;
 }
+
+#job-spec-link {
+    color: #000000; /* Dark text color for better contrast */
+    background-color: #ffffff; /* Light background color */
+}
