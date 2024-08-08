@@ -225,7 +225,7 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="View job roles page when logged in as a user" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="View job roles page when logged in as a user">
           <stringProp name="HTTPSampler.domain">nczcbkjcc7.eu-west-1.awsapprunner.com</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/jobRoles</stringProp>
@@ -558,9 +558,9 @@
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/Users/kaja.traczykowska/Downloads/ISTQB CTFL v4.0 Sample Exam C Questions v1.2.pdf" elementType="HTTPFileArg">
+              <elementProp name=" Test CV" elementType="HTTPFileArg">
                 <stringProp name="File.mimetype">application/pdf</stringProp>
-                <stringProp name="File.path">/Users/kaja.traczykowska/Downloads/ISTQB CTFL v4.0 Sample Exam C Questions v1.2.pdf</stringProp>
+                <stringProp name="File.path"> Test CV</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
               </elementProp>
             </collectionProp>
