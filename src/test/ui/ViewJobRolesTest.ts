@@ -3,7 +3,7 @@ import { LoginTestPage } from "./LoginTestPage";
 import { HomeTestPage } from "../ui/HomeTestPage";
 import { NavbarTestPage } from "./NavbarTestPage";
 import { JobRolesTestPage } from "./JobRolesTestPage";
-//import { JobRoleTestPage } from "./JobRoleTestPage";
+import { JobRoleTestPage } from "./JobRoleTestPage";
 import { WebDriver } from 'selenium-webdriver';
 import { ChromeDriver } from './ChromeDriver';
 
@@ -16,12 +16,12 @@ describe('View job roles Test', function () {
     let homePage: HomeTestPage;
     let navBarPage: NavbarTestPage;
     let jobRolesPage: JobRolesTestPage;
-    // let jobRolePage: JobRoleTestPage;
+    let jobRolePage: JobRoleTestPage;
 
-    // const Roles = ['Software Engineer', 'Product Manager', 'Engineering Apprentice Role', 'Engineering Trainee Role', 'Engineering Associate Role', 'Data Scientist', 'UX Designer', 'DevOps Engineer', 'Engineering Senior Associate Role', 'Engineering Consultant Role', 'Engineering Principal Role', 'Engineering Consultant Role', 'Engineering Consultant Role', 'Engineering Consultant Role', 'Engineering Consultant Role', 'Engineering Manager Role', 'Engineering Leadership Community Role', 'Platforms Apprentice Role'];
-    // const Location = ['Belfast', 'Birmingham', 'Derry'];
-    // const Capability = ['Engineering', 'Data and Artificial Intelligence'];
-    // const Band = ['Apprentice', 'Trainee', 'Associate', 'Senior Associate', 'Consultant', 'Manager' ]
+    const Roles = ['Software Engineer', 'Product Manager', 'Engineering Apprentice Role', 'Engineering Trainee Role', 'Engineering Associate Role', 'Data Scientist', 'UX Designer', 'DevOps Engineer', 'Engineering Senior Associate Role', 'Engineering Consultant Role', 'Engineering Principal Role', 'Engineering Consultant Role', 'Engineering Consultant Role', 'Engineering Consultant Role', 'Engineering Consultant Role', 'Engineering Manager Role', 'Engineering Leadership Community Role', 'Platforms Apprentice Role'];
+    const Location = ['Belfast', 'Birmingham', 'Derry'];
+    const Capability = ['Engineering', 'Data and Artificial Intelligence'];
+    const Band = ['Apprentice', 'Trainee', 'Associate', 'Senior Associate', 'Consultant', 'Manager' ]
 
     before(async function () {
 
@@ -30,7 +30,7 @@ describe('View job roles Test', function () {
         homePage = await new HomeTestPage(driver);
         navBarPage = await new NavbarTestPage(driver);
         jobRolesPage = await new JobRolesTestPage(driver);
-        // jobRolePage = await new JobRoleTestPage(driver);
+        jobRolePage = await new JobRoleTestPage(driver);
 
     });
 
@@ -80,65 +80,65 @@ describe('View job roles Test', function () {
 
     });
 
-    // it('Verify valid field names', async function () {
+    it('Verify valid field names', async function () {
 
-    //     await jobRolesPage.open();
+        await jobRolesPage.open();
 
-    //     const rows = await jobRolesPage.getNumRows();
-    //     const colms = await jobRolesPage.getNumCols();
-    //     console.log('Num of rows: ' + rows);
-    //     console.log('Num of columns: ' + colms);
+        const rows = await jobRolesPage.getNumRows();
+        const colms = await jobRolesPage.getNumCols();
+        console.log('Num of rows: ' + rows);
+        console.log('Num of columns: ' + colms);
 
-    //     //Verifying Role column
-    //     for (let index = 1; index <= 10; index++) {
-    //         const tabledata = await jobRolesPage.getData(index, 1)
-    //         console.log('Role: ' + tabledata)
-    //         expect(Roles).to.include(tabledata);
-    //     }
+        //Verifying Role column
+        for (let index = 1; index <= 10; index++) {
+            const tabledata = await jobRolesPage.getData(index, 1)
+            console.log('Role: ' + tabledata)
+            expect(Roles).to.include(tabledata);
+        }
 
-    //     //Verifying Location column        
-    //     for (let index = 1; index <= 10; index++) {
-    //         const tabledata = await jobRolesPage.getData(index, 2)
-    //         console.log('Location: ' + tabledata)
-    //         expect(Location).to.include(tabledata);
-    //     }
+        //Verifying Location column        
+        for (let index = 1; index <= 10; index++) {
+            const tabledata = await jobRolesPage.getData(index, 2)
+            console.log('Location: ' + tabledata)
+            expect(Location).to.include(tabledata);
+        }
 
-    //     //Verifying Capability column
-    //     for (let index = 1; index <= 3; index++) {
-    //         const tabledata = await jobRolesPage.getData(index, 3)
-    //         console.log('Capability: ' + tabledata)
-    //         expect(Capability).to.include(tabledata);
-    //     }
+        //Verifying Capability column
+        for (let index = 1; index <= 3; index++) {
+            const tabledata = await jobRolesPage.getData(index, 3)
+            console.log('Capability: ' + tabledata)
+            expect(Capability).to.include(tabledata);
+        }
 
-    //     //Verifying Band column        
-    //     for (let index = 1; index <= 10; index++) {
-    //         const tabledata = await jobRolesPage.getData(index, 4)
-    //         console.log('Band: ' + tabledata)
-    //         expect(Band).to.include(tabledata);
-    //     }
+        //Verifying Band column        
+        for (let index = 1; index <= 10; index++) {
+            const tabledata = await jobRolesPage.getData(index, 4)
+            console.log('Band: ' + tabledata)
+            expect(Band).to.include(tabledata);
+        }
 
-    // });
+    });
 
-    // it('Verify job role links work', async function () {
+    it('Verify job role links work', async function () {
 
-    //     await jobRolesPage.open();
+        await jobRolesPage.open();
 
-    //    // const rows = await jobRolesPage.getNumRows();
+        //const rows = await jobRolesPage.getNumRows();
 
-    //     //Verifying Role column
-    //     for (let index = 1; index <= 10; index++) {
-    //         const tableRoleName = await jobRolesPage.getData(index, 1)
-    //         console.log('Expected table role name : ' + tableRoleName)
+        //Verifying Role column
+        for (let index = 1; index <= 10; index++) {
+            const tableRoleName = await jobRolesPage.getData(index, 1)
+            console.log('Expected table role name : ' + tableRoleName)
 
-    //         await jobRolesPage.clickTableCellLink(index, 1)
+            await jobRolesPage.clickTableCellLink(index, 1)
 
-    //         const actualRoleName = await jobRolePage.getRoleName()
-    //         console.log('Actual single role name: ' + actualRoleName)
-    //         expect(tableRoleName).to.equal(actualRoleName);
+            const actualRoleName = await jobRolePage.getRoleName()
+            console.log('Actual single role name: ' + actualRoleName)
+            expect(tableRoleName).to.equal(actualRoleName);
 
-    //         await jobRolesPage.open();
-    //     }
+            await jobRolesPage.open();
+        }
 
-    // });
+    });
 
 });
