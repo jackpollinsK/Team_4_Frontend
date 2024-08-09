@@ -4,6 +4,7 @@
 const pa11y = require('pa11y');
 require('dotenv').config();
 
+const WEBSITE_URL = process.env.WEBSITE_URL || "http://localhost:3000";
 const EMAIL1 = process.env.LOGIN_EMAIL_1
 const PASSWORD1 = process.env.LOGIN_PASSWORD_1
 const EMAIL2 = process.env.LOGIN_EMAIL_2
@@ -12,74 +13,74 @@ const PASSWORD2 = process.env.LOGIN_PASSWORD_2
 // Define URLs and actions to test
 const URLsToTest = [
     {
-        url: 'http://localhost:3000/',
+        url: `${WEBSITE_URL}/`,
         actions: []
     },
     {
-        url: 'http://localhost:3000/loginForm',
+        url: `${WEBSITE_URL}/loginForm`,
         actions: []
     },
     {
-        url: 'http://localhost:3000/logoutForm',
+        url: `${WEBSITE_URL}/logoutForm`,
         actions: []
     },
     {
-        url: 'http://localhost:3000/notLoggedIn',
+        url: `${WEBSITE_URL}/notLoggedIn`,
         actions: []
     },
     {
-        url: 'http://localhost:3000/notAuthorised',
+        url: `${WEBSITE_URL}/notAuthorised`,
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            `navigate to ${WEBSITE_URL}/loginForm`,
             `set field #email to ${EMAIL2}`,
             `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/notAuthorised',
+            `navigate to ${WEBSITE_URL}/notAuthorised`,
         ]
     },
     {
-        url: 'http://localhost:3000/AIJobSearch',
+        url: `${WEBSITE_URL}/AIJobSearch`,
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            `navigate to ${WEBSITE_URL}/loginForm`,
             `set field #email to ${EMAIL1}`,
             `set field #password to ${PASSWORD1}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/AIJobSearch',
+            `navigate to ${WEBSITE_URL}/AIJobSearch`,
         ]
     },
     {
-        url: 'http://localhost:3000/jobRoles',
+        url: `${WEBSITE_URL}/jobRoles`,
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            `navigate to ${WEBSITE_URL}/loginForm`,
             `set field #email to ${EMAIL2}`,
             `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/jobRoles',
+            `navigate to ${WEBSITE_URL}/jobRoles`,
         ]
     },
     {
-        url: 'http://localhost:3000/jobRoles-1',
+        url: `${WEBSITE_URL}/jobRoles-1`,
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            `navigate to ${WEBSITE_URL}/loginForm`,
             `set field #email to ${EMAIL2}`,
             `set field #password to ${PASSWORD2}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/jobRoles-1',
+            `navigate to ${WEBSITE_URL}/jobRoles-1`,
         ]
     },
     {
-        url: 'http://localhost:3000/jobRolesApply-1',
+        url: `${WEBSITE_URL}/jobRolesApply-1`,
         actions: [
-            'navigate to http://localhost:3000/loginForm',
+            `navigate to ${WEBSITE_URL}/loginForm`,
             `set field #email to ${EMAIL1}`,
             `set field #password to ${PASSWORD1}`,
             'click element #submit',
             'wait for path to be /',
-            'navigate to http://localhost:3000/jobRolesApply-1',
+            `navigate to ${WEBSITE_URL}/jobRolesApply-1`,
         ]
     },
 ];

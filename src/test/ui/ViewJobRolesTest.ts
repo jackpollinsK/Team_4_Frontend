@@ -21,7 +21,7 @@ describe('View job roles Test', function () {
     const Roles = ['Software Engineer', 'Product Manager'];
     const Location = ['Belfast', 'Birmingham', 'Derry'];
     const Capability = ['Engineering', 'Data and Artificial Intelligence'];
-    const Band = ['Apprentice', 'Trainee', 'Associate']    
+    const Band = ['Apprentice', 'Trainee', 'Associate']
 
     before(async function () {
 
@@ -47,17 +47,17 @@ describe('View job roles Test', function () {
         await homePage.open();
 
         await navBarPage.clickJobsButton();
-        
+
         //Verify 
         const actualText1 = await jobRolesPage.getLoginButtonText();
-        expect(actualText1).to.equal('Login');        
-        
+        expect(actualText1).to.equal('Login');
+
     });
 
     it('Should able able to view jobs if logged in', async function () {
 
         await homePage.open();
- 
+
         await navBarPage.clickJobsButton();
 
         await jobRolesPage.clickLogin();
@@ -74,10 +74,10 @@ describe('View job roles Test', function () {
         await jobRolesPage.clickViewJobs();
 
         //Verifying that jobs are displayed
-        const tabledata = await jobRolesPage.getData(1,1);
-        expect(tabledata).to.equal('Software Engineer');        
-        
-        
+        const tabledata = await jobRolesPage.getData(1, 1);
+        expect(tabledata).to.equal('Software Engineer');
+
+
     });
 
     it('Verify valid field names', async function () {
@@ -90,33 +90,33 @@ describe('View job roles Test', function () {
         console.log('Num of columns: ' + colms);
 
         //Verifying Role column
-        for(let index = 1; index <= rows; index++){
-            const tabledata = await jobRolesPage.getData(index,1)
+        for (let index = 1; index <= rows; index++) {
+            const tabledata = await jobRolesPage.getData(index, 1)
             console.log('Role: ' + tabledata)
-            expect(Roles).to.include(tabledata); 
+            expect(Roles).to.include(tabledata);
         }
 
         //Verifying Location column        
-        for(let index = 1; index <= rows; index++){
-            const tabledata = await jobRolesPage.getData(index,2)
+        for (let index = 1; index <= rows; index++) {
+            const tabledata = await jobRolesPage.getData(index, 2)
             console.log('Location: ' + tabledata)
-            expect(Location).to.include(tabledata); 
+            expect(Location).to.include(tabledata);
         }
 
         //Verifying Capability column
-        for(let index = 1; index <= rows; index++){
-            const tabledata = await jobRolesPage.getData(index,3)
+        for (let index = 1; index <= rows; index++) {
+            const tabledata = await jobRolesPage.getData(index, 3)
             console.log('Capability: ' + tabledata)
-            expect(Capability).to.include(tabledata); 
+            expect(Capability).to.include(tabledata);
         }
 
         //Verifying Band column        
-        for(let index = 1; index <= rows; index++){
-            const tabledata = await jobRolesPage.getData(index,4)
+        for (let index = 1; index <= rows; index++) {
+            const tabledata = await jobRolesPage.getData(index, 4)
             console.log('Band: ' + tabledata)
-            expect(Band).to.include(tabledata); 
-        }       
- 
+            expect(Band).to.include(tabledata);
+        }
+
     });
 
     it('Verify job role links work', async function () {
@@ -126,19 +126,19 @@ describe('View job roles Test', function () {
         const rows = await jobRolesPage.getNumRows();
 
         //Verifying Role column
-        for(let index = 1; index <= rows; index++){
-            const tableRoleName = await jobRolesPage.getData(index,1)
-            console.log('Expected role name : ' + tableRoleName)
-            
-            await jobRolesPage.clickTableCell(index,1)
-            
-            const actualRoleName = await jobRolePage.getRoleName()
-            console.log('Actual role name: ' + actualRoleName)
-            expect(actualRoleName).to.equal(tableRoleName);  
+        for (let index = 1; index <= rows; index++) {
+            const tableRoleName = await jobRolesPage.getData(index, 1)
+            console.log('Expected table role name : ' + tableRoleName)
 
-            await jobRolesPage.open()
+            await jobRolesPage.clickTableCellLink(index, 1)
+
+            const actualRoleName = await jobRolePage.getRoleName()
+            console.log('Actual single role name: ' + actualRoleName)
+            expect(tableRoleName).to.equal(actualRoleName);
+
+            await jobRolesPage.open();
         }
-        
+
     });
 
 });
