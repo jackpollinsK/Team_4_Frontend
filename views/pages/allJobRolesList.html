@@ -55,13 +55,13 @@
                     <td id="deleteButton-{{jobRole.id}}">
                         <a href="/jobRolesDelete-{{jobRole.id}}"
                             onclick="return confirm('Are you sure you want to delete this Job Role?');"
-                            class="btnKainos">Delete
+                            class="btnKainos mt-2 text-center">Delete
                         </a>
                     </td>
                     {% endif %}
                     {% if userLevel.Role == 2 %}
                     <td id="applyButton-{{jobRole.id}}">
-                        <a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos">Apply Now</a>
+                        <a href="/jobRolesApply-{{jobRole.id}}" class="btnKainos mt-2 text-center">Apply Now</a>
                     </td>
                     {% endif %}
                 </tr>
